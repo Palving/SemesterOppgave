@@ -12,7 +12,7 @@ public class FXMLController {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        label.setText("Jon er homo");
+        label.setText("Jon er homo, og liker små gutter");
     }
     
     public void initialize() {
