@@ -4,9 +4,9 @@ class Lokale {
     private String lokale;
     private int antallPlasser;
 
-    public Lokale (String lokale, int plasser){
+    public Lokale (String lokale, int antallPlasser){
         this.lokale = lokale;
-        this.plasser = antallPlasser;
+        this.antallPlasser = antallPlasser;
 
     }
 
@@ -14,15 +14,15 @@ class Lokale {
         return lokale;
     }
 
-    public String setLokale(String lokale){
-        this.lokale= lokale;
+    public void setLokale(String lokale){
+        this.lokale = lokale;
     }
 
     public int getAntallPlasser(){
         return antallPlasser;
     }
 
-    public int setAntallPlasser(int antallPlasser){
+    public void setAntallPlasser(int antallPlasser){
         this.antallPlasser = antallPlasser;
     }
 }
