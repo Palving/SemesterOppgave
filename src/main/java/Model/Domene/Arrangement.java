@@ -14,7 +14,7 @@ public class Arrangement {
     private KontaktPerson kontaktPerson;
     private Artist artist;
     
-    public Arrangement(String type, String navnPaaArrangement,String program, String sted, Date tidspunkt, int billettPris, int billettSalg, Artist artist, KontaktPerson kontaktPerson){
+    public Arrangement(String type, String navnPaaArrangement, String program, String sted, Date tidspunkt, int billettPris, int billettSalg, Artist artist, KontaktPerson kontaktPerson){
         this.type=type;
         this.navnPaaArrangement=navnPaaArrangement;
         this.program=program;
@@ -24,6 +24,22 @@ public class Arrangement {
         this.billettSalg=billettSalg;
         this.kontaktPerson=kontaktPerson;
         this.artist=artist;
+    }
+
+    public KontaktPerson getKontaktPerson() {
+        return kontaktPerson;
+    }
+
+    public void setKontaktPerson(KontaktPerson kontaktPerson) {
+        this.kontaktPerson = kontaktPerson;
+    }
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
     }
 
     public String getType() {
