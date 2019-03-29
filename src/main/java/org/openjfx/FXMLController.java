@@ -1,5 +1,6 @@
 package org.openjfx;
 
+import Model.Domene.Artist;
 import Model.Domene.Person;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,7 @@ public class FXMLController {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
-        Person p=new Person("Jon", "Rafoss");
+        Person p=new Artist("Jon", "Rafoss", "","Sanger");
         label.setText(p.toString());
     }
     

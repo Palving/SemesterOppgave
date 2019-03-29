@@ -1,7 +1,7 @@
 
 package Model.Domene;
 
-public class Person {
+public abstract class Person {
     
     private String fornavn;
     private String etternavn;

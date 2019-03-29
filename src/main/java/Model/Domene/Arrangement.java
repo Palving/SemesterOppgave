@@ -14,14 +14,13 @@ public class Arrangement {
     private KontaktPerson kontaktPerson;
     private Artist artist;
     
-    public Arrangement(String type, String navnPaaArrangement, String program, String sted, Date tidspunkt, int billettPris, int billettSalg, Artist artist, KontaktPerson kontaktPerson){
+    public Arrangement(String type, String navnPaaArrangement, String program, String sted, Date tidspunkt, int billettPris, Artist artist, KontaktPerson kontaktPerson){
         this.type=type;
         this.navnPaaArrangement=navnPaaArrangement;
         this.program=program;
         this.sted=sted;
         this.tidspunkt=tidspunkt;
         this.billettPris=billettPris;
-        this.billettSalg=billettSalg;
         this.kontaktPerson=kontaktPerson;
         this.artist=artist;
     }
