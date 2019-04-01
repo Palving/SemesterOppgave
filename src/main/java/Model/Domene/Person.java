@@ -1,6 +1,8 @@
 
 package Model.Domene;
 
+import java.util.ArrayList;
+
 public abstract class Person {
     
     private String fornavn;
@@ -12,6 +14,12 @@ public abstract class Person {
         this.fornavn=fornavn;
         this.etternavn=etternavn;
         this.tlf=tlf;
+    }
+     public Person(ArrayList<String> data){
+         this.fornavn=data.get(0);
+         this.etternavn=data.get(1);
+         this.tlf=data.get(2);
+        
     }
 
     public String getFornavn() {

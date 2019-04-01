@@ -18,6 +18,10 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <RadioButton id="artistReg" fx:id="artistReg" layoutX="49.0" layoutY="93.0" mnemonicParsing="false" onAction="#artistReg" text="Artist" />
+      <RadioButton id="artistReg" fx:id="artistRadio" layoutX="49.0" layoutY="93.0" mnemonicParsing="false" text="Artist" />
+      <RadioButton id="artistReg" fx:id="lokaleRadio" layoutX="123.0" layoutY="93.0" mnemonicParsing="false" text="Lokale" />
+      <RadioButton id="artistReg" fx:id="arrangRadio" layoutX="203.0" layoutY="93.0" mnemonicParsing="false" text="Arrangement" />
+      <RadioButton id="artistReg" fx:id="kontaktPersonRadio" layoutX="310.0" layoutY="93.0" mnemonicParsing="false" text="Kontakt Person" />
+      <RadioButton id="artistReg" fx:id="billettRadio" layoutX="433.0" layoutY="93.0" mnemonicParsing="false" text="Billett" />
    </children>
 </AnchorPane>

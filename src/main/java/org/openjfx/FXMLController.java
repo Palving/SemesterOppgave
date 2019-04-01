@@ -30,8 +30,7 @@ public class FXMLController {
     Parent root1 = (Parent) fxmlLoader.load();
     Stage stage = new Stage();
     stage.initModality(Modality.APPLICATION_MODAL);
-    //stage.initStyle(StageStyle.UNDECORATED);
-    stage.setTitle("ABC");
+    stage.setTitle("Registrer");
     stage.setScene(new Scene(root1));  
     stage.show();
      
