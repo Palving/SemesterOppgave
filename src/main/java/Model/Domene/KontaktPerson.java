@@ -21,5 +21,31 @@ public class KontaktPerson extends Person {
         this.firma=firma;
         this.info=info;
     }
+
+    public String getNettSide() {
+        return nettSide;
+    }
+
+    public void setNettSide(String nettSide) {
+        this.nettSide = nettSide;
+    }
+
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+    
+    
     
 }

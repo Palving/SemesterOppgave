@@ -1,3 +1,9 @@
 .button {
     -fx-font-weight: bold;
+    -fx-color: red;
+}
+
+.label
+{
+    -fx-font-color: yellow;   
 }

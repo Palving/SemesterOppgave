@@ -17,5 +17,15 @@ public class Artist extends Person {
         this.typeArtist=typeArtist;
         
     }
+
+    public String getTypeArtist() {
+        return typeArtist;
+    }
+
+    public void setTypeArtist(String typeArtist) {
+        this.typeArtist = typeArtist;
+    }
+    
+    
     
 }

@@ -1,21 +1,21 @@
 package Model.Domene;
 
 class Lokale {
-    private String lokale;
+    private String lokaleNavn;
     private int antallPlasser;
 
-    public Lokale (String lokale, int antallPlasser){
-        this.lokale = lokale;
+    public Lokale (String lokaleNavn, int antallPlasser){
+        this.lokaleNavn = lokaleNavn;
         this.antallPlasser = antallPlasser;
 
     }
 
-    public String getLokale(){
-        return lokale;
+    public String getLokaleNavn(){
+        return lokaleNavn;
     }
 
-    public void setLokale(String lokale){
-        this.lokale = lokale;
+    public void setLokaleNavn(String lokale){
+        this.lokaleNavn = lokale;
     }
 
     public int getAntallPlasser(){
