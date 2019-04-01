@@ -7,10 +7,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="383.0" prefWidth="437.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
+<AnchorPane id="ap" fx:id="ap" prefHeight="553.0" prefWidth="582.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
     <children>
-        <Button layoutX="180.0" layoutY="248.0" onAction="#handleButtonAction" text="Click Me!" />
+        <Button id="registrer" fx:id="registrer" layoutX="205.0" layoutY="26.0" onAction="#registrer" text="Registrer element" />
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <TableView id="tabell" fx:id="tabell" layoutX="49.0" layoutY="20.0" prefHeight="200.0" prefWidth="341.0" />
+      <TableView id="tabell" fx:id="tabell" layoutX="97.0" layoutY="257.0" prefHeight="200.0" prefWidth="341.0" />
+      <Button id="lagre" layoutX="90.0" layoutY="211.0" text="Lagre til fil" />
+      <CheckBox layoutX="176.0" layoutY="231.0" mnemonicParsing="false" text="CSV" />
+      <CheckBox layoutX="176.0" layoutY="206.0" mnemonicParsing="false" text="Java-Objekt" />
     </children>
 </AnchorPane>

@@ -26,6 +26,9 @@ public class Artist extends Person {
         this.typeArtist = typeArtist;
     }
     
-    
+    @Override
+    public String toString(){
+        return "Artist: "+super.getFornavn()+" "+super.getEtternavn()+" "+super.getTlf()+" "+getTypeArtist();
+    }
     
 }
