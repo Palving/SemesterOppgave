@@ -19,11 +19,7 @@ public class Artist extends Person {
         this.typeArtist=typeArtist;
         
     }
-    public Artist(ArrayList<String> data){
-        super(data.get(0),data.get(1),data.get(2));
-        typeArtist=data.get(3);
-    }
-
+   
     public String getTypeArtist() {
         return typeArtist;
     }
