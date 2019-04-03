@@ -1,6 +1,6 @@
 package org.openjfx;
 
-import Model.Domene.Artist;
+import Model.Domene.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -34,12 +34,12 @@ private ToggleGroup radioGrp;
  private RadioButton artistRadio, lokaleRadio, kontaktPersonRadio, arrangRadio, billettRadio; 
  
  @FXML
- private AnchorPane ap;
+ private AnchorPane anchorPane;
  
  @FXML
  private Button btn;
  
- String[] att;
+ String[] attributter;
  
 
  private void refreshTextFields(){
@@ -47,9 +47,9 @@ private ToggleGroup radioGrp;
          return;
      }
      for (TextField f : input){
-         ap.getChildren().remove(f);
+         anchorPane.getChildren().remove(f);
      }
-     ap.getChildren().remove(btn);
+     anchorPane.getChildren().remove(btn);
      
  }
  
@@ -65,18 +65,24 @@ private ToggleGroup radioGrp;
       
       switch(valgt){
           case "Artist":
-               att=artistAttributes;
+               attributter=artistAttributes;
+               break;
           case "Lokale":
-               att=lokaleAttributes;
+               attributter=lokaleAttributes;
+               break;
           case "Arrangement":
-              att=arrangAttributes;
+              attributter=arrangAttributes;
+              break;
           case "KontaktPerson":
-              att=kontaktPersonAttributes;
+              attributter=kontaktPersonAttributes;
+              break;
           case "Billett":
+              attributter=billettAttributes;
+              break;
           
       }
     
-     input=new TextField[att.length];
+     input=new TextField[attributter.length];
    
      int teller=0;
      
@@ -86,7 +92,7 @@ private ToggleGroup radioGrp;
      }
     for (TextField t : input){
         t=new TextField();
-       t.setPromptText(att[teller]);
+       t.setPromptText(attributter[teller]);
         input[teller]=t;
        t.setId(""+teller);
         
@@ -100,7 +106,7 @@ private ToggleGroup radioGrp;
              }
       
        
-        ap.getChildren().add(t);
+        anchorPane.getChildren().add(t);
         teller++;
         
     }
@@ -110,7 +116,7 @@ private ToggleGroup radioGrp;
      btn.setLayoutY(input[teller-1].getLayoutY()+40);
     btn.setLayoutX(50);
       btn.addEventHandler(ActionEvent.ACTION, ev->registrer());
-      ap.getChildren().add(btn);
+      anchorPane.getChildren().add(btn);
  }
  
  
@@ -122,12 +128,31 @@ private ToggleGroup radioGrp;
          System.out.print(f.getId());
          data.add(f.getText());
      }
-     if (valgt.equals("Artist")){
-         Artist artist=new Artist(data);
-         System.out.print("Artist registert"+artist.toString());
-          utskriftRegistrert.setText(utskriftRegistrert.getText()+"\n"+artist.toString());
-
-     }
+     
+      switch(valgt){
+          case "Artist":
+              Artist artist=new Artist(data);
+              utskriftRegistrert.setText("\n"+artist.toString());
+               break;
+          case "Lokale":
+              Lokale lokale=new Lokale(data);
+              utskriftRegistrert.setText("\n"+lokale.toString());
+               break;
+          case "Arrangement":
+           Arrangement arrang=new Arrangement(new Artist("","","",""),new KontaktPerson("","","","","",""),data);
+           utskriftRegistrert.setText(arrang.toString());
+              break;
+          case "KontaktPerson":
+              KontaktPerson kontaktPerson=new KontaktPerson(data);
+              utskriftRegistrert.setText(kontaktPerson.toString());
+              break;
+          case "Billett":
+              
+              break;
+          
+      }
+    
+   
           //System.out.print("registrert"+artist.toString());
  
  }

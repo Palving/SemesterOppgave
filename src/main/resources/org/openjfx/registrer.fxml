@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="ap" fx:id="ap" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.RegistrerController">
+<AnchorPane id="ap" fx:id="ap" prefHeight="486.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.RegistrerController">
     <stylesheets>
         <URL value="@/styles/registrer.css" />
     </stylesheets>
@@ -23,5 +23,6 @@
       <RadioButton id="artistReg" fx:id="arrangRadio" layoutX="203.0" layoutY="93.0" mnemonicParsing="false" text="Arrangement" />
       <RadioButton id="artistReg" fx:id="kontaktPersonRadio" layoutX="310.0" layoutY="93.0" mnemonicParsing="false" text="Kontakt Person" />
       <RadioButton id="artistReg" fx:id="billettRadio" layoutX="433.0" layoutY="93.0" mnemonicParsing="false" text="Billett" />
+      <Label fx:id="utskriftRegistrert" layoutX="269.0" layoutY="128.0" prefHeight="206.0" prefWidth="311.0" />
    </children>
 </AnchorPane>

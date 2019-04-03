@@ -1,6 +1,8 @@
 package Model.Domene;
 
-class Lokale {
+import java.util.ArrayList;
+
+public class Lokale {
     private String lokaleNavn;
     private int antallPlasser;
 
@@ -8,6 +10,16 @@ class Lokale {
         this.lokaleNavn = lokaleNavn;
         this.antallPlasser = antallPlasser;
 
+    }
+    public Lokale(ArrayList<String> data){
+        this.lokaleNavn=data.get(0);
+        try{
+             this.antallPlasser=Integer.parseInt(data.get(1));
+        }
+        catch(Exception e){
+            
+        }
+       
     }
 
     public String getLokaleNavn(){

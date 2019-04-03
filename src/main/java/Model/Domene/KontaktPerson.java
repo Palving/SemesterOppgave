@@ -5,6 +5,8 @@
  */
 package Model.Domene;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author palvi
@@ -20,6 +22,12 @@ public class KontaktPerson extends Person {
         this.nettSide=nettside;
         this.firma=firma;
         this.info=info;
+    }
+     public KontaktPerson(ArrayList<String> data){
+        super(data.get(0),data.get(1),data.get(2));
+        this.nettSide=data.get(3);
+        this.firma=data.get(4);
+        this.info=data.get(5);
     }
 
     public String getNettSide() {

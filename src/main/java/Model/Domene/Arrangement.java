@@ -1,6 +1,7 @@
 
 package Model.Domene;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Arrangement {
@@ -23,6 +24,14 @@ public class Arrangement {
         this.billettPris=billettPris;
         this.kontaktPerson=kontaktPerson;
         this.artist=artist;
+    }
+    public Arrangement(Artist artist, KontaktPerson kontaktPerson, ArrayList<String> data){
+        this.artist=artist;
+        this.kontaktPerson=kontaktPerson;
+        this.navnPaaArrangement=data.get(0);
+        this.program=data.get(1);
+        this.sted=data.get(2);
+        //this.tidspunkt=(Date)data.get(3);
     }
 
     public KontaktPerson getKontaktPerson() {
