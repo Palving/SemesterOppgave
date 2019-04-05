@@ -124,8 +124,9 @@ private ToggleGroup radioGrp;
  Register register=new Register();
  @FXML
  private void registrer(){
-      
+      Register register=new Register();
      ArrayList<String> data=new ArrayList<>();
+     // Samler data fra textfieldene
      for (TextField f : input){
          System.out.print(f.getId());
          data.add(f.getText());

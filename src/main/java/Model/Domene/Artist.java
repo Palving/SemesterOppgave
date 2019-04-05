@@ -7,6 +7,7 @@ package Model.Domene;
 
 import java.util.ArrayList;
 
+
 /**
  *
  * @author palvi
