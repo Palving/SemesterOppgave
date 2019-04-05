@@ -1,28 +1,57 @@
 
 package Model.Registrering;
 
-import Model.Domene.Artist;
+import Model.Domene.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 
 public class Register implements Serializable {
-    private ArrayList<Artist> artister=new ArrayList<>();
+    private static Register instance=new Register();
     
-    public Register(){
-        test();
-        System.out.println(artister.get(0).toString());
+    private ArrayList<Artist> artister=new ArrayList<>();
+    private ArrayList<Lokale> lokale=new ArrayList<>();
+    private ArrayList<Arrangement> arrangement=new ArrayList<>();
+    private ArrayList<KontaktPerson> kontaktPerson=new ArrayList<>();
+    
+    private Register(){
+        
     }
     
+    public static Register getInstance(){
+        return instance;
+    }
     
+    private String typeKlasse;
     public String registrer(ArrayList<Object> objekter){
+       
         for (Object obj : objekter){
-            if (obj.getClass().equals("Model.Domene.Artist")){
-                System.out.println("registrer metode kalt");
-                artister.add((Artist) obj);
-            }
+                typeKlasse=obj.getClass().toString();
+                System.out.println(typeKlasse);
+      
+           switch(typeKlasse){
+               case "class Model.Domene.Artist":
+                   artister.add((Artist)obj);
+                   System.out.println(artister.get(0).toString()+" registret");
+                   break;
+                   
+               case "class Model.Domene.Lokale":
+               lokale.add((Lokale)obj);
+               System.out.println(obj.toString()+"registret");
+               break;
+               
+               case "class Model.Domene.Arrangement":
+                   arrangement.add((Arrangement)obj);
+                   break;
+                   
+               case "class Model.Domene.KontaktPerson":
+                   kontaktPerson.add((KontaktPerson)obj);
+                   break;
+                   
+               
+           } // end switch
         }
-        return "fullført";
+        return "fullført"+objekter.size()+" elementer registrert";
     }
     
     public ArrayList<Artist> getArtister(){

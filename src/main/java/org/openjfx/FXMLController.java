@@ -38,10 +38,7 @@ public class FXMLController {
    
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        Artist p=new Artist("Jon", "Rafoss", "","Sanger");
-        
-        label.setText(p.toString());
+       
     }
     
     public void initialize() {

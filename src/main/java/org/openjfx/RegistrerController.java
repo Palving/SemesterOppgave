@@ -121,10 +121,10 @@ private ToggleGroup radioGrp;
  }
  
  ArrayList<Object> objekter=new ArrayList<>();
- Register register=new Register();
+ Register register=Register.getInstance();
  @FXML
  private void registrer(){
-      Register register=new Register();
+     
      ArrayList<String> data=new ArrayList<>();
      // Samler data fra textfieldene
      for (TextField f : input){
@@ -141,6 +141,7 @@ private ToggleGroup radioGrp;
           case "Lokale":
               Lokale lokale=new Lokale(data);
               utskriftRegistrert.setText("\n"+lokale.toString());
+              objekter.add(lokale);
                break;
           case "Arrangement":
            Arrangement arrang=new Arrangement(new Artist("","","",""),new KontaktPerson("","","","","",""),data);
@@ -155,7 +156,7 @@ private ToggleGroup radioGrp;
               break;
           
       }
-    System.out.println("Registert"+register.registrer(objekter));
+    register.registrer(objekter);
    
           //System.out.print("registrert"+artist.toString());
  

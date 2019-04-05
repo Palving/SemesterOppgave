@@ -21,6 +21,10 @@ public class Lokale {
         }
        
     }
+    
+    public String toString(){
+        return "Navn: "+lokaleNavn+" Antall Plasser :"+antallPlasser;
+    }
 
     public String getLokaleNavn(){
         return lokaleNavn;
