@@ -1,6 +1,7 @@
 package org.openjfx;
 
 import Model.Domene.*;
+import Model.Registrering.Register;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -119,7 +120,8 @@ private ToggleGroup radioGrp;
       anchorPane.getChildren().add(btn);
  }
  
- 
+ ArrayList<Object> objekter=new ArrayList<>();
+ Register register=new Register();
  @FXML
  private void registrer(){
       
@@ -133,6 +135,7 @@ private ToggleGroup radioGrp;
           case "Artist":
               Artist artist=new Artist(data);
               utskriftRegistrert.setText("\n"+artist.toString());
+              objekter.add(artist);
                break;
           case "Lokale":
               Lokale lokale=new Lokale(data);
@@ -151,7 +154,7 @@ private ToggleGroup radioGrp;
               break;
           
       }
-    
+    System.out.println("Registert"+register.registrer(objekter));
    
           //System.out.print("registrert"+artist.toString());
  
