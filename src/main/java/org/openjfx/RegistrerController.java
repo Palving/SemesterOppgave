@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -54,6 +57,17 @@ private ToggleGroup radioGrp;
      
  }
  
+ private void formaterDropdown(){
+     ObservableList<Artist> obsArtister=FXCollections.observableArrayList(register.getArtister());
+      ObservableList<KontaktPerson> obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
+      
+      
+     ComboBox ddlArtister=new ComboBox(obsArtister);
+     ComboBox ddlKontaktPerson=new ComboBox(obsKontaktPerson);
+     
+     anchorPane.getChildren().add(ddlArtister);
+ }
+ 
  private void formaterTextFields(){
      
    refreshTextFields();
@@ -62,7 +76,7 @@ private ToggleGroup radioGrp;
       String[] lokaleAttributes={"Lokalenavn","Antall plasser"};
       String[] arrangAttributes={"Arrangementnavn","Program", "Sted", "Dato","Type arrangement"};
       String[] kontaktPersonAttributes={"Fornavn","Etternavn","Tlf","Firma","Info","Nettsted"};
-      String[] billettAttributes={"Lokalenavn","Antall plasser"};
+      String[] billettAttributes={"Plassnummer","Lokale Navn", "Dato", "Pris","Telefonnummer"};
       
       switch(valgt){
           case "Artist":
@@ -72,6 +86,8 @@ private ToggleGroup radioGrp;
                attributter=lokaleAttributes;
                break;
           case "Arrangement":
+              register.test();
+             
               attributter=arrangAttributes;
               break;
           case "KontaktPerson":
@@ -88,15 +104,15 @@ private ToggleGroup radioGrp;
      int teller=0;
      
      if (valgt.equals("Arrangement")){
-         teller=2;
+        formaterDropdown();
          // legg til ddl med alle artister og kontaktpersoner
      }
     for (TextField t : input){
         t=new TextField();
        t.setPromptText(attributter[teller]);
         input[teller]=t;
-       t.setId(""+teller);
-        
+       
+        // Gir første textfield startposisjon, og resten bygger på den
         try{
             t.setLayoutY(input[teller-1].getLayoutY()+40);
             t.setLayoutX(50);
@@ -126,7 +142,7 @@ private ToggleGroup radioGrp;
  private void registrer(){
      
      ArrayList<String> data=new ArrayList<>();
-     // Samler data fra textfieldene
+     // Samler data fra textfieldene i arraylist
      for (TextField f : input){
          System.out.print(f.getId());
          data.add(f.getText());
@@ -146,13 +162,16 @@ private ToggleGroup radioGrp;
           case "Arrangement":
            Arrangement arrang=new Arrangement(new Artist("","","",""),new KontaktPerson("","","","","",""),data);
            utskriftRegistrert.setText(arrang.toString());
+           objekter.add(arrang);
               break;
           case "KontaktPerson":
               KontaktPerson kontaktPerson=new KontaktPerson(data);
               utskriftRegistrert.setText(kontaktPerson.toString());
+              objekter.add(kontaktPerson);
               break;
           case "Billett":
-              
+              Billett billett=new Billett(data);
+              objekter.add(billett);
               break;
           
       }
@@ -188,8 +207,8 @@ private ToggleGroup radioGrp;
     
     radioGrp.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
       @Override
-      public void changed(ObservableValue<? extends Toggle> ov,
-          Toggle old_toggle, Toggle new_toggle) {
+      public void changed(ObservableValue<? extends Toggle> obsVal,
+          Toggle oldToggle, Toggle newToggle) {
         if (radioGrp.getSelectedToggle() != null) {
             // Valget i radio-gruppen
           valgt=radioGrp.getSelectedToggle().getUserData().toString();

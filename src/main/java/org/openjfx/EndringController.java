@@ -5,9 +5,7 @@ import Model.Domene.Artist;
 import Model.Registrering.Register;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -19,9 +17,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.TreeTableColumn.CellDataFeatures;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Callback;
 
 
 
@@ -59,34 +56,30 @@ public class EndringController implements Initializable {
    ArrayList <Artist> artistEndre=new ArrayList<>();
    
    public void hentData(ObservableList<Object> liste){
-       TableView tableview=new TableView();
+       TableView table=new TableView();
        
-       List<String> columns = new ArrayList<String>();
-       TableColumn[] rader=new TableColumn[columns.size()];
-    columns.add("Fornavn");
-    columns.add("Etternavn");
-    columns.add("Telefon");
-    columns.add("Type artist");
-    TableColumn [] tableColumns = new TableColumn[columns.size()];     
-    int columnIndex = 0;
-    for(int i=0 ; i<columns.size(); i++) {
-        final int j = i;
-        TableColumn col = new TableColumn(columns.get(i));
-                    
+      TableColumn fornavnCol = new TableColumn("Fornavn");
+        TableColumn etternavnCol = new TableColumn("Etternavn");
+        TableColumn tlfCol = new TableColumn("Tlf");
+        TableColumn typeCol=new TableColumn("Type artist");
         
-        tableview.getColumns().addAll(col);
-    }       
+       register.test();
+            ObservableList<Artist> data = FXCollections.observableArrayList(register.getArtister());
         
-    ObservableList<String> row = FXCollections.observableArrayList();
-    ObservableList<String> row1 = FXCollections.observableArrayList();
-    row.addAll("d1");
-    row.addAll("d11");
-    row1.addAll("d2");
-    row1.addAll("d22");
-    tableview.getItems().add(row);
-    tableview.getItems().add(row1);
-    
-       anchorPane.getChildren().add(tableview);
+           fornavnCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("fornavn"));
+           etternavnCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("etternavn"));
+           tlfCol.setCellValueFactory(new PropertyValueFactory<Artist,String>("tlf"));
+           typeCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("typeArtist"));
+           // layoutX="57.0" layoutY="120.0" prefHeight="200.0" prefWidth="459.0">
+          table.setItems(data);
+     table.getColumns().addAll(fornavnCol, etternavnCol, tlfCol, typeCol);
+     table.setLayoutX(57);
+     table.setLayoutY(120);
+     table.setPrefHeight(200);
+     table.setPrefWidth(459);
+     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+       anchorPane.getChildren().add(table);
        
    }
    

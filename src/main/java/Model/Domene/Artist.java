@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Artist extends Person {
     private String typeArtist;
     
-    public Artist(String typeArtist, String fornavn, String etternavn, String tlf){
+    public Artist(String fornavn, String etternavn, String tlf, String typeArtist){
         super(fornavn, etternavn, tlf);
         this.typeArtist=typeArtist;
         

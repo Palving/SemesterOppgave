@@ -13,6 +13,7 @@ public class Register implements Serializable {
     private ArrayList<Lokale> lokale=new ArrayList<>();
     private ArrayList<Arrangement> arrangement=new ArrayList<>();
     private ArrayList<KontaktPerson> kontaktPerson=new ArrayList<>();
+    private ArrayList<Billett> billett=new ArrayList<>();
     
     private Register(){
                                                                                                                                                                                                                                                                                                 
@@ -34,7 +35,6 @@ public class Register implements Serializable {
            switch(typeKlasse){
                case "class Model.Domene.Artist":
                    artister.add((Artist)obj);
-                   System.out.println(artister.get(0).toString()+" registret");
                    break;
                    
                case "class Model.Domene.Lokale":
@@ -48,6 +48,10 @@ public class Register implements Serializable {
                    
                case "class Model.Domene.KontaktPerson":
                    kontaktPerson.add((KontaktPerson)obj);
+                   break;
+                   
+               case "class Model.Domene.Bilett":
+                   billett.add((Billett)obj);
                    break;
                    
                
@@ -69,6 +73,10 @@ public class Register implements Serializable {
 
     public ArrayList<KontaktPerson> getKontaktPerson() {
         return kontaktPerson;
+    }
+    
+    public ArrayList<Billett> getBillett(){
+        return billett;
     }
     
     
