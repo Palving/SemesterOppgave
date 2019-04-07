@@ -12,10 +12,12 @@ public class Register implements Serializable {
     private ArrayList<Artist> artister=new ArrayList<>();
     private ArrayList<Lokale> lokale=new ArrayList<>();
     private ArrayList<Arrangement> arrangement=new ArrayList<>();
+
+   
     private ArrayList<KontaktPerson> kontaktPerson=new ArrayList<>();
     
     private Register(){
-        
+                                                                                                                                                                                                                                                                                                
     }
     
     public static Register getInstance(){
@@ -56,6 +58,17 @@ public class Register implements Serializable {
     
     public ArrayList<Artist> getArtister(){
         return artister;
+    }
+     public ArrayList<Lokale> getLokale() {
+        return lokale;
+    }
+
+    public ArrayList<Arrangement> getArrangement() {
+        return arrangement;
+    }
+
+    public ArrayList<KontaktPerson> getKontaktPerson() {
+        return kontaktPerson;
     }
     
     
