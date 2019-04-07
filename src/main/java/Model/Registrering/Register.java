@@ -12,8 +12,6 @@ public class Register implements Serializable {
     private ArrayList<Artist> artister=new ArrayList<>();
     private ArrayList<Lokale> lokale=new ArrayList<>();
     private ArrayList<Arrangement> arrangement=new ArrayList<>();
-
-   
     private ArrayList<KontaktPerson> kontaktPerson=new ArrayList<>();
     
     private Register(){
@@ -25,6 +23,8 @@ public class Register implements Serializable {
     }
     
     private String typeKlasse;
+    
+    // Tar inn arrayliste av type objekt og plasserer de i riktig arraylist
     public String registrer(ArrayList<Object> objekter){
        
         for (Object obj : objekter){

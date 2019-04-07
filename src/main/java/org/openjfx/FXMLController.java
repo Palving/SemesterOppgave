@@ -37,8 +37,14 @@ public class FXMLController {
     }
    
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-       
+    private void endringVindu(ActionEvent event) throws IOException {
+       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Endring.fxml"));
+    Parent root2 = (Parent) fxmlLoader.load();
+    Stage stage = new Stage();
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage.setTitle("Endre elementer");
+    stage.setScene(new Scene(root2));  
+    stage.show();
     }
     
     public void initialize() {
