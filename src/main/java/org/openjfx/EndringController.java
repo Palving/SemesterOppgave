@@ -17,7 +17,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TreeTableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 
 
@@ -33,6 +35,7 @@ public class EndringController implements Initializable {
    
    Register register=Register.getInstance();
    String valgt;
+   
    
   
    private void initRadioGroup(){
@@ -81,8 +84,13 @@ public class EndringController implements Initializable {
 
        anchorPane.getChildren().add(table);
        
+       table.setEditable(true);
+       fornavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
+       etternavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
+       tlfCol.setCellFactory(TextFieldTableCell.forTableColumn());
+       typeCol.setCellFactory(TextFieldTableCell.forTableColumn());
    }
-   
+    
    public void visData(String valgt){
      
    switch(valgt){
@@ -90,12 +98,9 @@ public class EndringController implements Initializable {
            ObservableList<Object> artister=FXCollections.observableArrayList(register.getArtister());
            hentData(artister);
            break;
-    
 }   
    
-   
    }
-   
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -116,6 +121,7 @@ public class EndringController implements Initializable {
         }
       }
       });
+        
             }
 }
            
