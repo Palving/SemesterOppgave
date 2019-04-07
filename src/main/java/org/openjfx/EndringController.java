@@ -13,11 +13,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.TreeTableColumn.CellEditEvent;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
@@ -35,6 +35,9 @@ public class EndringController implements Initializable {
    
    Register register=Register.getInstance();
    String valgt;
+   
+   @FXML
+   private TableView table;
    
    
   
@@ -59,7 +62,7 @@ public class EndringController implements Initializable {
    ArrayList <Artist> artistEndre=new ArrayList<>();
    
    public void hentData(ObservableList<Object> liste){
-       TableView table=new TableView();
+       table=new TableView();
        
       TableColumn fornavnCol = new TableColumn("Fornavn");
         TableColumn etternavnCol = new TableColumn("Etternavn");
@@ -89,6 +92,11 @@ public class EndringController implements Initializable {
        etternavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
        tlfCol.setCellFactory(TextFieldTableCell.forTableColumn());
        typeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+       
+       
+   }
+   public void velgFlere(){
+    table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
    }
     
    public void visData(String valgt){
@@ -101,6 +109,21 @@ public class EndringController implements Initializable {
 }   
    
    }
+   
+   public void deleteButtonPushed()
+    {
+        ObservableList<Artist> selectedRows, allPeople;
+        allPeople = table.getItems();
+        
+        //this gives us the rows that were selected
+        selectedRows = table.getSelectionModel().getSelectedItems();
+        
+        //loop over the selected rows and remove the Person objects from the table
+        for (Artist artist: selectedRows)
+        {
+            allPeople.remove(artist);
+        }
+    }
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
