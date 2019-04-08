@@ -22,8 +22,20 @@ public class Billett {
         this.kundeTlf=kundeTlf;
         
     }
+    
+    
     public Billett(ArrayList<String> data){
+    try {
+        plassNummer=Integer.parseInt(data.get(0));
+        lokaleNavn=data.get(1);
+        //dato=data.get(2);
+        pris=Integer.parseInt(data.get(3));
+        kundeTlf=data.get(4);
+    }    
+    catch(/*InvalidDataException*/Exception e){
         
+    }
+    
     }
     
 }

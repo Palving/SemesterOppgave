@@ -84,6 +84,8 @@ public class Register implements Serializable {
         artister.add(new Artist("Jon","Rafoss","123","Sanger"));
         artister.add(new Artist("Mats","Grøsvik","321","Danser"));
         artister.add(new Artist("Magnus","Palving","333","Musiker"));
+        
+        kontaktPerson.add(new KontaktPerson("Kåre","Kent","123","hehe","hoho","h"));
     }
     
     

@@ -40,12 +40,25 @@ private ToggleGroup radioGrp;
  @FXML
  private AnchorPane anchorPane;
  
+ 
  @FXML
  private Button btn;
  
- String[] attributter;
+ // textfields elementer
+ private String[] attributter;
+ 
+ // register elemeneter
+ private ArrayList<Object> objekter=new ArrayList<>();
+ private Register register=Register.getInstance();
+ 
+ // ddl elelementer
+ private ComboBox ddlArtister=null;
+ private ComboBox ddlKontaktPerson=null;
+ private ObservableList<Artist> obsArtister;
+ private ObservableList<KontaktPerson> obsKontaktPerson;
  
 
+ // Fjerner textfields på radiobutton-onchange()
  private void refreshTextFields(){
      if (input==null){
          return;
@@ -53,19 +66,55 @@ private ToggleGroup radioGrp;
      for (TextField f : input){
          anchorPane.getChildren().remove(f);
      }
+     
+     if (ddlArtister!=null){
+         anchorPane.getChildren().remove(ddlArtister);
+     anchorPane.getChildren().remove(ddlKontaktPerson);
+     }
+     
      anchorPane.getChildren().remove(btn);
      
  }
  
+  
+ // lager dropdownlist dersom registreringen tar inn et objekt framfor streng aka valget er Arrangement
  private void formaterDropdown(){
-     ObservableList<Artist> obsArtister=FXCollections.observableArrayList(register.getArtister());
-      ObservableList<KontaktPerson> obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
+     obsArtister=FXCollections.observableArrayList(register.getArtister());
+     obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
       
       
-     ComboBox ddlArtister=new ComboBox(obsArtister);
-     ComboBox ddlKontaktPerson=new ComboBox(obsKontaktPerson);
-     
+     ddlArtister=new ComboBox(obsArtister);
+     ddlKontaktPerson=new ComboBox(obsKontaktPerson);
+      
+    // anchorPane.getChildren().;
+    ddlArtister.setLayoutX(50);
+    ddlArtister.setLayoutY(130);
+    
+    ddlKontaktPerson.setLayoutX(50);
+    ddlKontaktPerson.setLayoutY(170);
      anchorPane.getChildren().add(ddlArtister);
+     anchorPane.getChildren().add(ddlKontaktPerson);
+     
+    
+ }
+
+ private Artist getDropdownArtist(){
+  
+    
+    formaterDropdown();
+   System.out.println("value"+(Artist)ddlArtister.getValue());
+  int index=ddlArtister.getSelectionModel().getSelectedIndex();
+  System.out.println("Value"+ddlArtister.getValue());
+  System.out.println("Index."+index);
+    //int i=Integer.parseInt(index);
+  
+//    System.out.print("Object lagret som "+obsArtister.get(index).getEtternavn());
+   //  return obsArtister.get(index);
+     return null;
+ }
+ 
+ private KontaktPerson getDropdownKontaktPerson(){
+   return null;
  }
  
  private void formaterTextFields(){
@@ -87,7 +136,7 @@ private ToggleGroup radioGrp;
                break;
           case "Arrangement":
               register.test();
-             
+            
               attributter=arrangAttributes;
               break;
           case "KontaktPerson":
@@ -103,41 +152,50 @@ private ToggleGroup radioGrp;
    
      int teller=0;
      
+      // legg til ddl med alle artister og kontaktpersoner
      if (valgt.equals("Arrangement")){
-        formaterDropdown();
-         // legg til ddl med alle artister og kontaktpersoner
+        formaterDropdown();  
      }
-    for (TextField t : input){
-        t=new TextField();
-       t.setPromptText(attributter[teller]);
-        input[teller]=t;
+     
+    for (TextField textfields : input){
+        textfields=new TextField();
+       textfields.setPromptText(attributter[teller]);
+        input[teller]=textfields;
        
-        // Gir første textfield startposisjon, og resten bygger på den
-        try{
-            t.setLayoutY(input[teller-1].getLayoutY()+40);
-            t.setLayoutX(50);
+        if (teller!=0){
+             textfields.setLayoutY(input[teller-1].getLayoutY()+40);
+            textfields.setLayoutX(50);
+        }
+          // Gir første textfield startposisjon, og resten bygger på den
+        else{
+            if (valgt.equals("Arrangement")){
+                 textfields.setLayoutY(210);
+            textfields.setLayoutX(50);
             }
-        catch(Exception e){
-            t.setLayoutY(130);
-            t.setLayoutX(50);
-             }
+            else{
+                 textfields.setLayoutY(130);
+            textfields.setLayoutX(50);
+            }
+        }
       
-       
-        anchorPane.getChildren().add(t);
+        anchorPane.getChildren().add(textfields);
         teller++;
         
     }
+    // end for
     
      btn=new Button("Bekreft");
    
      btn.setLayoutY(input[teller-1].getLayoutY()+40);
     btn.setLayoutX(50);
-      btn.addEventHandler(ActionEvent.ACTION, ev->registrer());
+      btn.addEventHandler(ActionEvent.ACTION, event->registrer());
       anchorPane.getChildren().add(btn);
  }
  
- ArrayList<Object> objekter=new ArrayList<>();
- Register register=Register.getInstance();
+ 
+ 
+ int artistIndex;
+ int kontaktPersonIndex;
  @FXML
  private void registrer(){
      
@@ -148,33 +206,58 @@ private ToggleGroup radioGrp;
          data.add(f.getText());
      }
      
+     if (ddlArtister!=null){
+         System.out.print("ddl not null");
+         
+           artistIndex=ddlArtister.getSelectionModel().getSelectedIndex();
+           kontaktPersonIndex= ddlKontaktPerson.getSelectionModel().getSelectedIndex(); 
+     }
+     else{
+         System.out.print("ddl null");
+     }
+     
       switch(valgt){
           case "Artist":
               Artist artist=new Artist(data);
               utskriftRegistrert.setText("\n"+artist.toString());
               objekter.add(artist);
                break;
+               
           case "Lokale":
               Lokale lokale=new Lokale(data);
               utskriftRegistrert.setText("\n"+lokale.toString());
               objekter.add(lokale);
                break;
+               
           case "Arrangement":
-           Arrangement arrang=new Arrangement(new Artist("","","",""),new KontaktPerson("","","","","",""),data);
+              //formaterDropdown();
+              
+              obsArtister=FXCollections.observableArrayList(register.getArtister());
+               obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
+               System.out.println(getDropdownArtist());
+           Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data);
+           
            utskriftRegistrert.setText(arrang.toString());
            objekter.add(arrang);
+            
+             System.out.println("Value"+ddlArtister.getValue());
+            
+  System.out.println("Index."+ddlArtister.getSelectionModel().getSelectedIndex());
               break;
+              
           case "KontaktPerson":
               KontaktPerson kontaktPerson=new KontaktPerson(data);
               utskriftRegistrert.setText(kontaktPerson.toString());
               objekter.add(kontaktPerson);
               break;
+              
           case "Billett":
               Billett billett=new Billett(data);
               objekter.add(billett);
               break;
           
       }
+      System.out.println(ddlArtister.getSelectionModel().getSelectedIndex());
     register.registrer(objekter);
    
           //System.out.print("registrert"+artist.toString());
@@ -201,7 +284,7 @@ private ToggleGroup radioGrp;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+     
         // Setter radio-knapper i gruppe og gir userdata
     initRadioGroup();
     
@@ -219,10 +302,10 @@ private ToggleGroup radioGrp;
           //System.out.println(Registrer.registrer(new Artist("Jon","Rafoss","123","Sanger")));
           
         }
-      }
-      });
             }
-}
+                });
+                         }
+}       
      
      
     
