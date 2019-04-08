@@ -34,10 +34,12 @@ public class EndringController implements Initializable {
    private AnchorPane anchorPane;
    
    Register register=Register.getInstance();
+   
    String valgt;
    
    @FXML
-   private TableView table;
+   //private TableView table;
+   private TableView table=null;
    
    
   
@@ -62,6 +64,8 @@ public class EndringController implements Initializable {
    ArrayList <Artist> artistEndre=new ArrayList<>();
    
    public void hentData(ObservableList<Object> liste){
+       
+       
        table=new TableView();
        
       TableColumn fornavnCol = new TableColumn("Fornavn");
@@ -69,7 +73,7 @@ public class EndringController implements Initializable {
         TableColumn tlfCol = new TableColumn("Tlf");
         TableColumn typeCol=new TableColumn("Type artist");
         
-       register.test();
+  
             ObservableList<Artist> data = FXCollections.observableArrayList(register.getArtister());
         
            fornavnCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("fornavn"));
@@ -127,6 +131,7 @@ public class EndringController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+             register.test();
         initRadioGroup();
         
         radioGrp.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
