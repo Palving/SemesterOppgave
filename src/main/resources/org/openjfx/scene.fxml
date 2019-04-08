@@ -14,7 +14,7 @@
         <Button id="registrer" fx:id="registrer" layoutX="205.0" layoutY="26.0" onAction="#registrer" text="Registrer element" />
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <TableView id="tabell" fx:id="tabell" layoutX="97.0" layoutY="257.0" prefHeight="200.0" prefWidth="341.0" />
-      <Button id="lagre" layoutX="90.0" layoutY="211.0" text="Lagre til fil" />
+      <Button id="lagre" layoutX="90.0" layoutY="211.0" text="Lagre til fil" onAction="#lagre" />
       <CheckBox layoutX="176.0" layoutY="231.0" mnemonicParsing="false" text="CSV" />
       <CheckBox layoutX="176.0" layoutY="206.0" mnemonicParsing="false" text="Java-Objekt" />
       <Button fx:id="endre" layoutX="205.0" layoutY="65.0" mnemonicParsing="false" prefHeight="25.0" onAction="#endringVindu" prefWidth="110.0" text="Endre elementer" />

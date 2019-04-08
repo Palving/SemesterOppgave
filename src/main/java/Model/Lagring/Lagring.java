@@ -8,6 +8,7 @@ package Model.Lagring;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 
 
 public class Lagring {
@@ -19,6 +20,7 @@ public class Lagring {
     }
     
     public void lesFil (){
+        ArrayList<Object> objekter=new ArrayList<>();
         try(RandomAccessFile reader = new RandomAccessFile(vei, "r")) {
         String[] array;
         String line = reader.readLine(); // skip meta data
@@ -28,29 +30,36 @@ public class Lagring {
             switch(array.length){
                 case 4:
                     System.out.println("Artist");
+                   /* Artist artist=new artist(liste);
+                    objekter.add(artist);
+                    reg.nyArtist();*/
                     break;
                 case 7:
                     System.out.println("Arrangement");
-                    
+                   /* Artist artist=new artist(liste);
+                    objekter.add(artist);
+                    reg.nyArtist();*/
                     break;
                 case 2:
                     System.out.println("Lokale");
-                    //break;
+                    /*Artist artist=new artist(liste);
+                    objekter.add(artist);
+                    reg.nyArtist();*/
+                    break;
                 case 3:
-                    for(String s : array){
-                        System.out.println(s);
-                    }
+                    System.out.println("Bilett");
+                    /*Artist artist=new artist(liste);
+                    objekter.add(artist);
+                    reg.nyArtist();*/
                     break;
                 case 6:
                     System.out.println("Kontakt person");
+                   /* Artist artist=new artist(liste);
+                    objekter.add(artist);
+                    reg.nyArtist();*/
                     break; 
             }
            
-            /*for( int i = 0 ; i< array.length ; i ++){
-                array[i] = null;
-            }*/
-            
-                    
             //register.registrer(objekter);
         }
         } catch (FileNotFoundException e) {
