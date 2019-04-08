@@ -15,6 +15,7 @@ public class Lagring {
     
     public Lagring (String vei){
         this.vei=vei;
+        
     }
     
     public void lesFil (){
