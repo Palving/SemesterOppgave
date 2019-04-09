@@ -1,7 +1,9 @@
-/*
- * Empty Stylesheet file.
- */
+.button.hover {
+    -fx-font-weight: bold;
+    -fx-color: red;
+}
 
-.mainFxmlClass {
-
+.label
+{
+    -fx-font-color: yellow;   
 }

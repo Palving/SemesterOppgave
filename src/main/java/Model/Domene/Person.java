@@ -45,6 +45,11 @@ public abstract class Person {
     public void setTlf(String tlf) {
         this.tlf = tlf;
     }
+
+    @Override
+    public String toString() {
+        return " "+fornavn +" "+ etternavn+" "+ tlf ;
+    }
     
    
     

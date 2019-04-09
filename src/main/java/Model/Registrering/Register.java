@@ -4,6 +4,7 @@ package Model.Registrering;
 import Model.Domene.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class Register implements Serializable {
@@ -39,7 +40,7 @@ public class Register implements Serializable {
                    
                case "class Model.Domene.Lokale":
                lokale.add((Lokale)obj);
-               System.out.println(obj.toString()+"registret");
+               
                break;
                
                case "class Model.Domene.Arrangement":
@@ -86,6 +87,8 @@ public class Register implements Serializable {
         artister.add(new Artist("Magnus","Palving","333","Musiker"));
         
         kontaktPerson.add(new KontaktPerson("Kåre","Kent","123","hehe","hoho","h"));
+        
+        arrangement.add(new Arrangement(artister.get(0), kontaktPerson.get(0), "Fest","Party","Sang også dans","Oslo","Klokken 10",new Date(),50));
     }
     
     

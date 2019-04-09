@@ -53,6 +53,11 @@ public class KontaktPerson extends Person {
     public void setInfo(String info) {
         this.info = info;
     }
+
+    @Override
+    public String toString() {
+        return super.toString()+" " + nettSide + " " + firma + " " + info;
+    }
     
     
     
