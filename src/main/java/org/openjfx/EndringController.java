@@ -16,6 +16,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -41,8 +42,6 @@ public class EndringController implements Initializable {
    //private TableView table;
    private TableView table=null;
    
-   
-  
    private void initRadioGroup(){
     radioGrp=new ToggleGroup();
     artistRadio.setToggleGroup(radioGrp);
@@ -99,9 +98,7 @@ public class EndringController implements Initializable {
        
        
    }
-   public void velgFlere(){
-    table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-   }
+   
     
    public void visData(String valgt){
      
@@ -110,22 +107,34 @@ public class EndringController implements Initializable {
            ObservableList<Object> artister=FXCollections.observableArrayList(register.getArtister());
            hentData(artister);
            break;
-}   
+       case "Lokale":
+           ObservableList<Object> lokale=FXCollections.observableArrayList(register.getLokale());
+           hentData(lokale);
+       case "Arrangement":
+           ObservableList<Object> arrangement=FXCollections.observableArrayList(register.getArrangement());
+           hentData(arrangement);
+       case "KontaktPerson":
+           ObservableList<Object> kontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
+           hentData(kontaktPerson);
+       case "Billett":
+           ObservableList<Object> billett=FXCollections.observableArrayList(register.getBillett());
+           hentData(billett);
+        }   
    
    }
    
-   public void deleteButtonPushed()
+   public void sletteKnapp()
     {
-        ObservableList<Artist> selectedRows, allPeople;
-        allPeople = table.getItems();
+        ObservableList<Artist> valgtRad, alleArtister;
+        alleArtister = table.getItems();
         
         //this gives us the rows that were selected
-        selectedRows = table.getSelectionModel().getSelectedItems();
+        valgtRad = table.getSelectionModel().getSelectedItems();
         
         //loop over the selected rows and remove the Person objects from the table
-        for (Artist artist: selectedRows)
+        for (Artist artist: valgtRad)
         {
-            allPeople.remove(artist);
+            alleArtister.remove(artist);
         }
     }
    
@@ -133,6 +142,7 @@ public class EndringController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
              register.test();
         initRadioGroup();
+        
         
         radioGrp.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
       @Override

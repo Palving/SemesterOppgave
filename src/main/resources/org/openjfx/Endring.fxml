@@ -18,6 +18,6 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <Button layoutX="73.0" layoutY="329.0" mnemonicParsing="false" onAction="#deleteButtonPushed" text="Slett rad" />
+      <Button layoutX="73.0" layoutY="329.0" mnemonicParsing="false" onAction="#sletteKnapp" text="Slett rad" />
    </children>
 </AnchorPane>
