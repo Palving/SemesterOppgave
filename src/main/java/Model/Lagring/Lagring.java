@@ -5,10 +5,14 @@
  */
 package Model.Lagring;
 
+import Model.Domene.Artist;
+import Model.Registrering.Register;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class Lagring {
@@ -18,21 +22,27 @@ public class Lagring {
         this.vei=vei;
         
     }
-    
+    private Register register=Register.getInstance();
     public void lesFil (){
-        ArrayList<Object> objekter=new ArrayList<>();
+        //ArrayList<Object> objekter=new ArrayList<>();
         try(RandomAccessFile reader = new RandomAccessFile(vei, "r")) {
-        String[] array;
+        //ArrayList<String> array = new ArrayList<>();
         String line = reader.readLine(); // skip meta data
         
         while((line = reader.readLine()) != null) {
-            array=line.split(";");
-            switch(array.length){
+            String[] array1 = line.split(";"); // convertere til en Arraylist
+            List<String> array2 = Arrays.asList(line.split(";"));
+            ArrayList<String> array3 = new ArrayList<>(Arrays.asList(line.split(";")));
+            
+            
+
+//array=line.split(";");
+            switch(array3.size()){
                 case 4:
                     System.out.println("Artist");
-                   /* Artist artist=new artist(liste);
-                    objekter.add(artist);
-                    reg.nyArtist();*/
+                    Artist artist=new Artist(array3);
+                    //objekter.add(artist);
+                    register.registrer(artist);
                     break;
                 case 7:
                     System.out.println("Arrangement");
