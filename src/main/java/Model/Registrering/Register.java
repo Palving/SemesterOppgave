@@ -27,12 +27,10 @@ public class Register implements Serializable {
     private String typeKlasse;
     
     // Tar inn arrayliste av type objekt og plasserer de i riktig arraylist
-    public String registrer(ArrayList<Object> objekter){
+    public String registrer(Object obj){
        
-        for (Object obj : objekter){
                 typeKlasse=obj.getClass().toString();
-                System.out.println(typeKlasse);
-      
+               
            switch(typeKlasse){
                case "class Model.Domene.Artist":
                    artister.add((Artist)obj);
@@ -57,8 +55,8 @@ public class Register implements Serializable {
                    
                
            } // end switch
-        }
-        return "fullført"+objekter.size()+" elementer registrert";
+     
+        return "fullført"+obj.toString()+" elementer registrert";
     }
     
     public ArrayList<Artist> getArtister(){

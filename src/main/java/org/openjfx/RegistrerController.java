@@ -61,7 +61,7 @@ private ToggleGroup radioGrp;
  
 
  // Fjerner textfields på radiobutton-onchange()
- private void refreshTextFields(){
+ private void refreshInputElementer(){
      if (input==null){
          return;
      }
@@ -116,13 +116,8 @@ private ToggleGroup radioGrp;
      
  }
 
-
-
- private void formaterTextFields(){
-     
-   refreshTextFields();
-     
-      String[] artistAttributes={"Fornavn","Etternavn","Tlf","Type artist"};
+ private String[] getAttributter(){
+     String[] artistAttributes={"Fornavn","Etternavn","Tlf","Type artist"};
       String[] lokaleAttributes={"Lokalenavn","Antall plasser"};
       String[] arrangAttributes={"Type arrangement", "Arrangementnavn","Program", "Sted", "Dato - dag/måned/år", "Tidspunkt"};
       String[] kontaktPersonAttributes={"Fornavn","Etternavn","Tlf","Firma","Info","Nettsted"};
@@ -146,6 +141,17 @@ private ToggleGroup radioGrp;
               break;
           
       }
+      return attributter;
+ }
+
+
+ private void formaterTextFields(){
+     
+     // Tømmer alt av elementer utenom radio-group
+     // når bruker bytter valg i radiogroup
+   refreshInputElementer();
+     
+      attributter=getAttributter();
     
      input=new TextField[attributter.length];
    
@@ -156,7 +162,6 @@ private ToggleGroup radioGrp;
         formaterDropdownArrangement();  
      }
      else if(valgt.equals("Billett")){
-         System.out.println("billettddl formatert");
          formaterDropdownBillett();
      }
      
@@ -199,18 +204,22 @@ private ToggleGroup radioGrp;
       anchorPane.getChildren().add(btn);
  }
  
- 
+ private ArrayList<String> getTextFieldData(){
+     ArrayList<String> data=new ArrayList<>();
+     // Samler data fra textfieldene i arraylist
+     for (TextField f : input){
+         data.add(f.getText());
+     }
+     return data;
+ }
  
  int artistIndex;
  int kontaktPersonIndex;
  @FXML
  private void registrer(){
      objekter=new ArrayList<>();
-     ArrayList<String> data=new ArrayList<>();
-     // Samler data fra textfieldene i arraylist
-     for (TextField f : input){
-         data.add(f.getText());
-     }
+     ArrayList<String> data=new ArrayList<>(getTextFieldData());
+     //data=getTextFieldData();
      
       switch(valgt){
           case "Artist":
@@ -255,16 +264,15 @@ private ToggleGroup radioGrp;
           
       }
      
-     
-    register.registrer(objekter);
+     // Sketchy
+     // TODO: Fiks dette
+    register.registrer(objekter.get(0));
    
-   
-          //System.out.print("registrert"+artist.toString());
- 
  }
 
  private void initRadioGroup(){
     radioGrp=new ToggleGroup();
+    
     artistRadio.setToggleGroup(radioGrp);
     artistRadio.setUserData("Artist");
     
@@ -292,6 +300,7 @@ private ToggleGroup radioGrp;
       public void changed(ObservableValue<? extends Toggle> obsVal,
           Toggle oldToggle, Toggle newToggle) {
         if (radioGrp.getSelectedToggle() != null) {
+            
             // Valget i radio-gruppen
           valgt=radioGrp.getSelectedToggle().getUserData().toString();
           System.out.println(valgt);
@@ -299,10 +308,10 @@ private ToggleGroup radioGrp;
           // Lager textfields basert på valgt
           formaterTextFields();
           
-        }
-            }
-                });
-                         }
+        } // end if
+            } // end changed
+                }); // end changeListenener
+                         } // end init
 }       
      
      

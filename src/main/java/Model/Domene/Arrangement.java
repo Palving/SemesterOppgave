@@ -22,7 +22,7 @@ public class Arrangement {
         this.navnPaaArrangement=navnPaaArrangement;
         this.program=program;
         this.sted=sted;
-    this.dato=new Date(1,1,2020);
+        this.dato=new Date(1,1,2020);
         this.tidspunkt=tidspunkt;
         this.billettPris=billettPris;
         this.kontaktPerson=kontaktPerson;
@@ -30,7 +30,7 @@ public class Arrangement {
     }
     public Arrangement(Artist artist, KontaktPerson kontaktPerson, ArrayList<String> data){
         try{
-             this.artist=artist;
+        this.artist=artist;
         this.kontaktPerson=kontaktPerson;
         this.type=data.get(0);
         this.navnPaaArrangement=data.get(1);
