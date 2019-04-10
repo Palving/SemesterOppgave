@@ -110,15 +110,19 @@ public class EndringController implements Initializable {
        case "Lokale":
            ObservableList<Object> lokale=FXCollections.observableArrayList(register.getLokale());
            hentData(lokale);
+           break;
        case "Arrangement":
            ObservableList<Object> arrangement=FXCollections.observableArrayList(register.getArrangement());
            hentData(arrangement);
+           break;
        case "KontaktPerson":
            ObservableList<Object> kontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
            hentData(kontaktPerson);
+           break;
        case "Billett":
            ObservableList<Object> billett=FXCollections.observableArrayList(register.getBillett());
            hentData(billett);
+           break;
         }   
    
    }
