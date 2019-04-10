@@ -33,6 +33,26 @@ public class Artist extends Person {
         this.typeArtist = typeArtist;
     }
     
+    
+    public boolean equals(Artist artist){
+        if (this==artist){
+            return true;
+        }
+        if (getClass() !=artist.getClass()){
+            return false;
+        }
+        Artist other=artist;
+        
+        if (other.getFornavn().equals(artist.getFornavn())){
+            // samme info -> returner objekt som det matchet med
+            System.out.println("samme info -> returner objekt det matchet med");
+            return true;
+        }
+        System.out.println("ingen match -> registrer objekt sammen med andre objekt");
+        return false;
+        
+    }
+    
     @Override
     public String toString(){
         return "Artist: "+super.getFornavn()+" "+super.getEtternavn()+" "+super.getTlf()+" "+getTypeArtist();
