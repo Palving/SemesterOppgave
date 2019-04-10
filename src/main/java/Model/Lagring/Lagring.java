@@ -5,7 +5,10 @@
  */
 package Model.Lagring;
 
+import Model.Domene.Arrangement;
 import Model.Domene.Artist;
+import Model.Domene.KontaktPerson;
+import Model.Domene.Lokale;
 import Model.Registrering.Register;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -22,6 +25,30 @@ public class Lagring {
         this.vei=vei;
         
     }
+    
+    public KontaktPerson finnKontaktPerson(ArrayList<String> array3){
+        ArrayList<String> array5 = new ArrayList<>();
+        for (int i = 4 ; i< 10 ; i++){
+            array5.add(array3.get(i));
+        }
+        KontaktPerson kntktPerson = new KontaktPerson(array5);
+        register.registrer(kntktPerson);
+        return kntktPerson;
+    }
+    
+    public Artist FinnArtist(ArrayList<String> array3){
+        //Artist NyArtist = new Artist();
+        ArrayList<String> array4 = new ArrayList<>();
+        for (int i = 0 ; i< 4 ; i++){
+            //array3.get(i) = array4.add(i);
+            array4.add(array3.get(i));
+        }
+        Artist NyArtist = new Artist(array4);
+        register.registrer(NyArtist);
+        
+        return NyArtist;
+    }
+    
     private Register register=Register.getInstance();
     public void lesFil (){
         //ArrayList<Object> objekter=new ArrayList<>();
@@ -43,28 +70,53 @@ public class Lagring {
                     Artist artist=new Artist(array3);
                     System.out.println(artist);
                     //objekter.add(artist);
+                    for (Artist a : register.getArtister()){
+                        if (a.equals(artist)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
                     register.registrer(artist);
                     break;
                 case 7:
                     System.out.println("Arrangement");
+                    Artist artisten=FinnArtist(array3);
+                    KontaktPerson kontaktPerson1 =finnKontaktPerson(array3);
+                    
+                    ArrayList<String> arrangement1 = new ArrayList<>();
+                    for (int i = 10 ; i< array3.size() ; i++ ){
+                        arrangement1.add(array3.get(i));
+                    }
+                        
+                    
+                    for (Artist a : register.getArtister()){
+                        if (a.equals(artisten)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
+                    
+                   Arrangement arrangement = new Arrangement(artisten, kontaktPerson1,arrangement1  );
+                   register.registrer(arrangement);
                    /* Artist artist=new artist(liste);
                     objekter.add(artist);
                     reg.nyArtist();*/
                     break;
                 case 2:
                     System.out.println("Lokale");
-                    /*Artist artist=new artist(liste);
-                    objekter.add(artist);
-                    reg.nyArtist();*/
+                    Lokale nyLokale = new Lokale(array3);
                     break;
                 case 3:
-                    System.out.println("Bilett");
+                    System.out.println("Billett");
+                    
                     /*Artist artist=new artist(liste);
                     objekter.add(artist);
                     reg.nyArtist();*/
                     break;
                 case 6:
                     System.out.println("Kontakt person");
+                    KontaktPerson kontaktPerson = new KontaktPerson(array3);
+                    register.registrer(kontaktPerson);
                    /* Artist artist=new artist(liste);
                     objekter.add(artist);
                     reg.nyArtist();*/
