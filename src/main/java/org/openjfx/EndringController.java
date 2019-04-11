@@ -144,7 +144,7 @@ public class EndringController implements Initializable {
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-             register.test();
+          
         initRadioGroup();
         
         

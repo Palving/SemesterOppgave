@@ -4,6 +4,7 @@ import Model.Domene.*;
 import Model.Registrering.Register;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -54,10 +56,20 @@ private ToggleGroup radioGrp;
  // ddl elelementer
  private ComboBox ddlArtister=null;
  private ComboBox ddlKontaktPerson=null;
+ private ComboBox ddlLokale=null;
  private ComboBox ddlArrangement=null;
+ 
  private ObservableList<Artist> obsArtister;
  private ObservableList<KontaktPerson> obsKontaktPerson;
+ private ObservableList<Lokale> obsLokale;
  private ObservableList<Arrangement> obsArrangement;
+ // peker på element i listen basert på valg i combobox
+ private int artistIndex;
+ private int kontaktPersonIndex;
+ private int lokaleIndex;
+ 
+ // date elementer
+ private DatePicker datePicker=null;
  
 
  // Fjerner textfields på radiobutton-onchange()
@@ -72,33 +84,54 @@ private ToggleGroup radioGrp;
      if (ddlArtister!=null){
          anchorPane.getChildren().remove(ddlArtister);
      anchorPane.getChildren().remove(ddlKontaktPerson);
+     anchorPane.getChildren().remove(ddlLokale);
+     anchorPane.getChildren().remove(datePicker);
      }
+     
      if (ddlArrangement!=null){
          System.out.println("ddl arrang removed");
          anchorPane.getChildren().remove(ddlArrangement);
      }
-     
-     anchorPane.getChildren().remove(btn);
+    
+   anchorPane.getChildren().remove(btn);
      
  }
  
   
  // lager dropdownlist dersom registreringen tar inn et objekt framfor streng aka valget er Arrangement
  private void formaterDropdownArrangement(){
+     
      obsArtister=FXCollections.observableArrayList(register.getArtister());
      obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
-          
+     obsLokale=FXCollections.observableArrayList(register.getLokale());
+     
      ddlArtister=new ComboBox(obsArtister);
      ddlKontaktPerson=new ComboBox(obsKontaktPerson);
+     ddlLokale=new ComboBox(obsLokale);
       
     ddlArtister.setLayoutX(50);
     ddlArtister.setLayoutY(130);
+    ddlArtister.setPromptText("Velg artist");
     
     ddlKontaktPerson.setLayoutX(50);
     ddlKontaktPerson.setLayoutY(170);
+    ddlKontaktPerson.setPromptText("Velg kontaktperson");
+    
+    ddlLokale.setLayoutX(50);
+    ddlLokale.setLayoutY(210);
+    ddlLokale.setPromptText("Velg sted");
+    
+    datePicker=new DatePicker();
+    
+    datePicker.setLayoutX(50);
+    datePicker.setLayoutY(250);
+    datePicker.setPromptText("Velg dato");
     
      anchorPane.getChildren().add(ddlArtister);
      anchorPane.getChildren().add(ddlKontaktPerson);
+     anchorPane.getChildren().add(ddlLokale);
+     
+     anchorPane.getChildren().add(datePicker);
      
  }
  
@@ -116,10 +149,11 @@ private ToggleGroup radioGrp;
      
  }
 
+ // Attributtene som avgjør antall textfields og textPrompt
  private String[] getAttributter(){
      String[] artistAttributes={"Fornavn","Etternavn","Tlf","Type artist"};
       String[] lokaleAttributes={"Lokalenavn","Antall plasser"};
-      String[] arrangAttributes={"Type arrangement", "Arrangementnavn","Program", "Sted", "Dato - dag/måned/år", "Tidspunkt"};
+      String[] arrangAttributes={"Type arrangement", "Arrangementnavn","Program", "Pris", "Tidspunkt - 00:00"};
       String[] kontaktPersonAttributes={"Fornavn","Etternavn","Tlf","Firma","Info","Nettsted"};
       String[] billettAttributes={"Plassnummer","Telefonnummer"};
       
@@ -162,7 +196,9 @@ private ToggleGroup radioGrp;
         formaterDropdownArrangement();  
      }
      else if(valgt.equals("Billett")){
+         
          formaterDropdownBillett();
+        
      }
      
     for (TextField textfields : input){
@@ -177,10 +213,11 @@ private ToggleGroup radioGrp;
           // Gir første textfield startposisjon, og resten bygger på den
         else{
             if (valgt.equals("Arrangement")){
-                 textfields.setLayoutY(210);
+                 textfields.setLayoutY(290);
             textfields.setLayoutX(50);
             }
             else if(valgt.equals("Billett")){
+                
                 textfields.setLayoutY(170);
                 textfields.setLayoutX(50);
             }
@@ -202,6 +239,7 @@ private ToggleGroup radioGrp;
     btn.setLayoutX(50);
       btn.addEventHandler(ActionEvent.ACTION, event->registrer());
       anchorPane.getChildren().add(btn);
+   
  }
  
  private ArrayList<String> getTextFieldData(){
@@ -213,8 +251,7 @@ private ToggleGroup radioGrp;
      return data;
  }
  
- int artistIndex;
- int kontaktPersonIndex;
+
  @FXML
  private void registrer(){
      objekter=new ArrayList<>();
@@ -235,12 +272,13 @@ private ToggleGroup radioGrp;
                break;
                
           case "Arrangement":
+              // hent valg fra combobox
               artistIndex=ddlArtister.getSelectionModel().getSelectedIndex();
               kontaktPersonIndex=ddlKontaktPerson.getSelectionModel().getSelectedIndex();
-           
-              obsArtister=FXCollections.observableArrayList(register.getArtister());
-               obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
-           Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data);
+              lokaleIndex=ddlLokale.getSelectionModel().getSelectedIndex();
+              //sted
+              data.add(obsLokale.get(lokaleIndex).getLokaleNavn());
+           Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
            
            utskriftRegistrert.setText(arrang.toString());
            objekter.add(arrang);
@@ -291,7 +329,7 @@ private ToggleGroup radioGrp;
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-      register.test();
+   
         // Setter radio-knapper i gruppe og gir userdata
     initRadioGroup();
     

@@ -1,6 +1,7 @@
 package org.openjfx;
 
 import Model.Lagring.Lagring;
+import Model.Registrering.Register;
 import java.io.File;
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -66,8 +67,11 @@ public class FXMLController {
         g.lesFil();
     }
     
+    Register register=Register.getInstance();
     public void initialize() {
         // TODO
+        
+           register.test();
     }  
     
 }

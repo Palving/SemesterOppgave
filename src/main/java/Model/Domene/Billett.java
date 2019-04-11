@@ -1,7 +1,8 @@
 
 package Model.Domene;
 
-import java.text.SimpleDateFormat;
+import Model.Registrering.DatoFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,19 +12,19 @@ public class Billett {
     
     private int plassNummer;
     private String lokaleNavn;
-    private Date dato;
+    private LocalDate dato;
     private int pris;
     private String kundeTlf;
     private String klokkeslett;
     
-    public Billett(Arrangement arrang, int plassNummer, String lokaleNavn, String dato, int pris, String kundeTlf, String klokkeslett){
+    public Billett(Arrangement arrang, int plassNummer, String lokaleNavn, LocalDate dato, int pris, String kundeTlf){
        
         
         try{
          arrang.plussBillettsalg();
         this.plassNummer=plassNummer;
         this.lokaleNavn=arrang.getSted();
-        this.pris=pris;
+        this.pris=arrang.getBillettPris();
         this.kundeTlf=kundeTlf;
         this.dato=arrang.getDato();
         this.klokkeslett=arrang.getTidspunkt();
@@ -41,14 +42,14 @@ public class Billett {
         this.plassNummer=Integer.parseInt(data.get(0));
         this.lokaleNavn=arrang.getSted();
         this.dato=arrang.getDato();
-        this.klokkeslett=arrang.getTidspunkt();
+       // this.klokkeslett=arrang.getTidspunkt();
         this.pris=arrang.getBillettPris();
         //this.lokaleNavn=data.get(1);
         //this.dato=new SimpleDateFormat("dd/MM/yyyy").parse(data.get(2));
         this.kundeTlf=data.get(1);
        
     }    
-    catch(/*InvalidDataException*/Exception e){
+    catch(Exception e){
         
     }
     
@@ -70,11 +71,11 @@ public class Billett {
         this.lokaleNavn = lokaleNavn;
     }
 
-    public Date getDato() {
+    public LocalDate getDato() {
         return dato;
     }
 
-    public void setDato(Date dato) {
+    public void setDato(LocalDate dato) {
         this.dato = dato;
     }
 
@@ -94,18 +95,12 @@ public class Billett {
         this.kundeTlf = kundeTlf;
     }
 
-    public String getKlokkeslett() {
-        return klokkeslett;
-    }
-
-    public void setKlokkeslett(String klokkeslett) {
-        this.klokkeslett = klokkeslett;
-    }
+   
     
     
-    
+    @Override
     public String toString(){
-        return "\n Plassnummer:"+this.plassNummer+"\n Lokalenavn: "+this.lokaleNavn+"\n Dato: "+this.dato+"\n Klokkeslett "+this.klokkeslett+"\n Pris "+this.pris+"+\n Tlf: "+this.kundeTlf;
+      return "\n Plassnummer:"+this.plassNummer+"\n Lokalenavn: "+this.lokaleNavn+DatoFormat.formaterDato(dato, klokkeslett)+"\n Pris "+this.pris+"+\n Tlf: "+this.kundeTlf;
     }
     
 }

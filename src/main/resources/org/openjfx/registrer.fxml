@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="anchorPane" fx:id="anchorPane" prefHeight="486.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.RegistrerController">
+<AnchorPane id="anchorPane" fx:id="anchorPane" prefHeight="581.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.RegistrerController">
     <stylesheets>
         <URL value="@/styles/registrer.css" />
     </stylesheets>
