@@ -47,7 +47,7 @@ public class Arrangement {
         }
        
     
-    public void plussBillettsalg(){
+    protected void plussBillettsalg(){
         this.billettSalg++;
     }
 

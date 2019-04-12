@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+
 
 
 public class Lagring {
@@ -31,7 +31,7 @@ public class Lagring {
         
         while((line = reader.readLine()) != null) {
             String[] array1 = line.split(";"); // convertere til en Arraylist
-            List<String> array2 = Arrays.asList(line.split(";"));
+            //List<String> array2 = Arrays.asList(line.split(";"));
             ArrayList<String> array3 = new ArrayList<>(Arrays.asList(line.split(";")));
             
             
@@ -41,6 +41,7 @@ public class Lagring {
                 case 4:
                     System.out.println("Artist");
                     Artist artist=new Artist(array3);
+                    System.out.println(artist);
                     //objekter.add(artist);
                     register.registrer(artist);
                     break;

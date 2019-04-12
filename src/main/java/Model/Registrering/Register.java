@@ -83,10 +83,13 @@ public class Register implements Serializable {
         artister.add(new Artist("Jon","Rafoss","123","Sanger"));
         artister.add(new Artist("Mats","Grøsvik","321","Danser"));
         artister.add(new Artist("Magnus","Palving","333","Musiker"));
-        
+        lokale.add(new Lokale("Garasejen",400));
+     
+      
         kontaktPerson.add(new KontaktPerson("Kåre","Kent","123","hehe","hoho","h"));
         LocalDate kødd=LocalDate.now();
         arrangement.add(new Arrangement(artister.get(0), kontaktPerson.get(0), "Fest","Party","Sang også dans","Oslo","23:00",kødd,50));
+        billett.add(new Billett(arrangement.get(0),500,"20"));
     }
     
     

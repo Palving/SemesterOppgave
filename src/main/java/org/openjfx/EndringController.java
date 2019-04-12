@@ -36,11 +36,42 @@ public class EndringController implements Initializable {
    
    Register register=Register.getInstance();
    
-   String valgt;
+   private String valgt;
+   private String[] attributter;
    
    @FXML
    //private TableView table;
    private TableView table=null;
+   
+   private String[] getAttributter(){
+     String[] artistAttributes={"Fornavn","Etternavn","Tlf","typeArtist"};
+      String[] lokaleAttributes={"lokaleNavn","antallPlasser"};
+      String[] arrangAttributes={"type", "navnPaaArrangement","program", "billettPris", "Tidspunkt"};
+      String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","firma","info","nettSide"};
+      String[] billettAttributes={"plassNummer","kundeTlf"};
+      
+      switch(valgt){
+          case "Artist":
+               attributter=artistAttributes;
+               break;
+          case "Lokale":
+               attributter=lokaleAttributes;
+               break;
+          case "Arrangement":
+              attributter=arrangAttributes;
+              break;
+          case "KontaktPerson":
+              attributter=kontaktPersonAttributes;
+              break;
+          case "Billett":
+              attributter=billettAttributes;
+              break;
+          
+      }
+      return attributter;
+ }
+
+
    
    private void initRadioGroup(){
     radioGrp=new ToggleGroup();
@@ -64,10 +95,20 @@ public class EndringController implements Initializable {
    
    public void hentData(ObservableList<Object> liste){
        
-       
+       attributter=getAttributter();
        table=new TableView();
        
-      TableColumn fornavnCol = new TableColumn("Fornavn");
+       TableColumn[] columns=new TableColumn[attributter.length];
+       System.out.println("columns length"+columns.length);
+       int teller=0;
+       for (String att : attributter){
+           columns[teller]=new TableColumn(att);
+           columns[teller].setCellValueFactory(new PropertyValueFactory<Object, Object>(attributter[teller]));
+          // columns[teller].setCellFactory(TextFieldTableCell.forTableColumn());
+           teller++;
+       }
+       
+     /* TableColumn fornavnCol = new TableColumn("Fornavn");
         TableColumn etternavnCol = new TableColumn("Etternavn");
         TableColumn tlfCol = new TableColumn("Tlf");
         TableColumn typeCol=new TableColumn("Type artist");
@@ -82,19 +123,25 @@ public class EndringController implements Initializable {
            // layoutX="57.0" layoutY="120.0" prefHeight="200.0" prefWidth="459.0">
           table.setItems(data);
      table.getColumns().addAll(fornavnCol, etternavnCol, tlfCol, typeCol);
+*/
+    // table.getColumns().addAll((Object) columns);
+    table.setItems(liste);
+    for (TableColumn t : columns){
+        table.getColumns().addAll(t);
+    }
      table.setLayoutX(57);
      table.setLayoutY(120);
      table.setPrefHeight(200);
-     table.setPrefWidth(459);
+     table.setPrefWidth(600);
      table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
        anchorPane.getChildren().add(table);
        
        table.setEditable(true);
-       fornavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
+       /*fornavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
        etternavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
        tlfCol.setCellFactory(TextFieldTableCell.forTableColumn());
-       typeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+       typeCol.setCellFactory(TextFieldTableCell.forTableColumn());*/
        
        
    }
@@ -105,7 +152,9 @@ public class EndringController implements Initializable {
    switch(valgt){
        case "Artist":
            ObservableList<Object> artister=FXCollections.observableArrayList(register.getArtister());
+           System.out.println("1");
            hentData(artister);
+           System.out.println("2");
            break;
        case "Lokale":
            ObservableList<Object> lokale=FXCollections.observableArrayList(register.getLokale());

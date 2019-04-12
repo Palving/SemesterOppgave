@@ -10,14 +10,14 @@ import java.util.Date;
 
 public class Billett {
     
-    private int plassNummer;
+    private Integer plassNummer;
     private String lokaleNavn;
     private LocalDate dato;
-    private int pris;
+    private Integer pris;
     private String kundeTlf;
     private String klokkeslett;
     
-    public Billett(Arrangement arrang, int plassNummer, String lokaleNavn, LocalDate dato, int pris, String kundeTlf){
+    public Billett(Arrangement arrang, Integer plassNummer, String kundeTlf){
        
         
         try{
