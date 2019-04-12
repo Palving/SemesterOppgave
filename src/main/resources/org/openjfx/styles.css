@@ -1,14 +1,8 @@
 .button:hover {
     -fx-font-weight: bold;
-    -fx-color: red;
+    -fx-color: yellow;
 }
 
-.label
-{
-    -fx-font-color: yellow;   
-}
 
-.anchorpane{
-    -fx-color:blue;
-    color:blue;
-}
+
+

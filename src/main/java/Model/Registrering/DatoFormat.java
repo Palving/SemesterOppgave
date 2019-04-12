@@ -13,9 +13,7 @@ import java.time.format.DateTimeFormatter;
  * @author Magnus
  */
 public class DatoFormat {
-    
-    // bug
-   
+       
 public static String formaterDato(LocalDate dato, String klokkeslett){
     
     try{
