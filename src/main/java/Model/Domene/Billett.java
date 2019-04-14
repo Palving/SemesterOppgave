@@ -4,20 +4,20 @@ package Model.Domene;
 import Model.Registrering.DatoFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 
 public class Billett {
     
-    private Integer plassNummer;
+    private int plassNummer;
     private String lokaleNavn;
     private LocalDate dato;
-    private Integer pris;
+    private int pris;
     private String kundeTlf;
     private String klokkeslett;
+    private String arrangementNavn;
     
-    public Billett(Arrangement arrang, Integer plassNummer, String kundeTlf){
+    public Billett(Arrangement arrang, int plassNummer, String kundeTlf){
        
         
         try{
@@ -28,6 +28,7 @@ public class Billett {
         this.kundeTlf=kundeTlf;
         this.dato=arrang.getDato();
         this.klokkeslett=arrang.getTidspunkt();
+        this.arrangementNavn=arrang.getNavnPaaArrangement();
         }
         catch(Exception e){
             
@@ -42,11 +43,9 @@ public class Billett {
         this.plassNummer=Integer.parseInt(data.get(0));
         this.lokaleNavn=arrang.getSted();
         this.dato=arrang.getDato();
-       // this.klokkeslett=arrang.getTidspunkt();
         this.pris=arrang.getBillettPris();
-        //this.lokaleNavn=data.get(1);
-        //this.dato=new SimpleDateFormat("dd/MM/yyyy").parse(data.get(2));
         this.kundeTlf=data.get(1);
+        this.arrangementNavn=arrang.getNavnPaaArrangement();
        
     }    
     catch(Exception e){
@@ -95,12 +94,20 @@ public class Billett {
         this.kundeTlf = kundeTlf;
     }
 
+    public String getArrangementNavn() {
+        return arrangementNavn;
+    }
+
+    public void setArrangementNavn(String arrangementNavn) {
+        this.arrangementNavn = arrangementNavn;
+    }
+
    
     
     
     @Override
     public String toString(){
-      return "\n Plassnummer:"+this.plassNummer+"\n Lokalenavn: "+this.lokaleNavn+DatoFormat.formaterDato(dato, klokkeslett)+"\n Pris "+this.pris+"+\n Tlf: "+this.kundeTlf;
+      return "\n Plassnummer:"+this.plassNummer+"\n Lokalenavn: "+this.lokaleNavn+DatoFormat.formaterDato(dato, klokkeslett)+"\n Pris "+this.pris+"+\n Tlf: "+this.kundeTlf+"\n Arrangementnavn: "+this.arrangementNavn;
     }
     
 }

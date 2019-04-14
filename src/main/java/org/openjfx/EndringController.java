@@ -42,13 +42,13 @@ public class EndringController implements Initializable {
    @FXML
    //private TableView table;
    private TableView table=null;
-   
+  
    private String[] getAttributter(){
      String[] artistAttributes={"Fornavn","Etternavn","Tlf","typeArtist"};
       String[] lokaleAttributes={"lokaleNavn","antallPlasser"};
       String[] arrangAttributes={"type", "navnPaaArrangement","program", "billettPris", "Tidspunkt"};
       String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","firma","info","nettSide"};
-      String[] billettAttributes={"plassNummer","kundeTlf"};
+      String[] billettAttributes={"plassNummer","lokaleNavn","dato", "kundeTlf","arrangementNavn"};
       
       switch(valgt){
           case "Artist":
