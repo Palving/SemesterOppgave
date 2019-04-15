@@ -13,10 +13,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -104,11 +102,12 @@ public class EndringController implements Initializable {
        for (String att : attributter){
            columns[teller]=new TableColumn(att);
            columns[teller].setCellValueFactory(new PropertyValueFactory<Object, Object>(attributter[teller]));
-          // columns[teller].setCellFactory(TextFieldTableCell.forTableColumn());
+          
+           //columns[teller].setCellFactory(TextFieldTableCell.forTableColumn());
            teller++;
        }
-       
-     /* TableColumn fornavnCol = new TableColumn("Fornavn");
+    /*   
+     TableColumn fornavnCol = new TableColumn("Fornavn");
         TableColumn etternavnCol = new TableColumn("Etternavn");
         TableColumn tlfCol = new TableColumn("Tlf");
         TableColumn typeCol=new TableColumn("Type artist");
@@ -137,14 +136,16 @@ public class EndringController implements Initializable {
 
        anchorPane.getChildren().add(table);
        
-       table.setEditable(true);
-       /*fornavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
+        table.setEditable(true);
+       
+     
+       /*
+       fornavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
        etternavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
        tlfCol.setCellFactory(TextFieldTableCell.forTableColumn());
        typeCol.setCellFactory(TextFieldTableCell.forTableColumn());*/
        
-       
-   }
+        }
    
     
    public void visData(String valgt){
@@ -178,16 +179,14 @@ public class EndringController implements Initializable {
    
    public void sletteKnapp()
     {
-        ObservableList<Artist> valgtRad, alleArtister;
-        alleArtister = table.getItems();
-        
-        //this gives us the rows that were selected
+        ObservableList<Object> valgtRad, getObject;
+        getObject = table.getItems();
+                
         valgtRad = table.getSelectionModel().getSelectedItems();
-        
-        //loop over the selected rows and remove the Person objects from the table
-        for (Artist artist: valgtRad)
+                
+        for (Object artist: valgtRad)
         {
-            alleArtister.remove(artist);
+            getObject.remove(artist);
         }
     }
    
@@ -195,8 +194,7 @@ public class EndringController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
           
         initRadioGroup();
-        
-        
+         
         radioGrp.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
       @Override
       public void changed(ObservableValue<? extends Toggle> ov,
