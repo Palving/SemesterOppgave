@@ -11,9 +11,10 @@ public class Lokale {
         this.antallPlasser = antallPlasser;
 
     }
-    public Lokale(ArrayList<String> data){
-        this.lokaleNavn=data.get(0);
+    public Lokale(ArrayList<String> data) {
+       
         try{
+             this.lokaleNavn=data.get(0);
              this.antallPlasser=Integer.parseInt(data.get(1));
         }
         catch(Exception e){

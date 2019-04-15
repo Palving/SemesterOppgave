@@ -1,10 +1,10 @@
 
 package Model.Domene;
 
+import Model.Avvik.InvalidIntValueException;
 import Model.Registrering.DatoFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Arrangement {
     private String type;
@@ -30,21 +30,21 @@ public class Arrangement {
         this.artist=artist;
     }
     public Arrangement(Artist artist, KontaktPerson kontaktPerson, ArrayList<String> data, LocalDate dato){
-        try{
+        
         this.artist=artist;
         this.kontaktPerson=kontaktPerson;                
         this.type=data.get(0);
         this.navnPaaArrangement=data.get(1);
         this.program=data.get(2);
-        this.billettPris=Integer.parseInt(data.get(3));
+       
         this.tidspunkt=data.get(4);
         this.sted=data.get(5);
         this.dato=dato;
+ 
+         this.billettPris=Integer.parseInt(data.get(3));
+         
+    // exception på int
     }
-        catch(Exception e){
-            
-        }
-        }
        
     
     protected void plussBillettsalg(){

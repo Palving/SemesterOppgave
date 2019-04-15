@@ -1,8 +1,11 @@
 package org.openjfx;
 
+import Model.Avvik.InvalidComboBoxValueException;
+import Model.Avvik.InvalidInputException;
 import Model.Avvik.InvalidTextFieldInputException;
 import Model.Domene.*;
 import Model.Registrering.Register;
+import Model.Registrering.ValideringSystem;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -252,7 +255,27 @@ private ToggleGroup radioGrp;
      }
      return data;
  }
- 
+ public int getArtistIndex() throws InvalidComboBoxValueException{
+     artistIndex=ddlArtister.getSelectionModel().getSelectedIndex();
+     if (artistIndex==-1){
+         throw new InvalidComboBoxValueException("Du må velge en artist");
+     }
+       return artistIndex;
+ }
+ public int getKontaktPersonIndex() throws InvalidComboBoxValueException{
+     kontaktPersonIndex=ddlKontaktPerson.getSelectionModel().getSelectedIndex();
+       if (kontaktPersonIndex==-1){
+         throw new InvalidComboBoxValueException("Du må velge en kontaktperson");
+     }
+    return kontaktPersonIndex;
+ }
+ public int getLokaleIndex() throws InvalidComboBoxValueException{
+     lokaleIndex=ddlLokale.getSelectionModel().getSelectedIndex();
+       if (lokaleIndex==-1){
+         throw new InvalidComboBoxValueException("Du må velge lokale");
+     }
+     return lokaleIndex;
+ }
 
  @FXML
  private void registrer(){
@@ -262,9 +285,18 @@ private ToggleGroup radioGrp;
           data=new ArrayList<>(getTextFieldData());
      }
      catch(InvalidTextFieldInputException e){
+         utskriftRegistrert.setText(e.getMessage());
          System.err.println(e.getMessage());
          return;
      }
+    /* try {
+         ValideringSystem.validerInputiTextFields(input);
+     }
+     catch(InvalidInputException e){
+         utskriftRegistrert.setText(e.getMessage());
+         System.err.println(e.getMessage());
+         return;
+     }*/
     
      //data=getTextFieldData();
      
@@ -283,10 +315,17 @@ private ToggleGroup radioGrp;
                
           case "Arrangement":
               // hent valg fra combobox
-              // exception her
-              artistIndex=ddlArtister.getSelectionModel().getSelectedIndex();
-              kontaktPersonIndex=ddlKontaktPerson.getSelectionModel().getSelectedIndex();
-              lokaleIndex=ddlLokale.getSelectionModel().getSelectedIndex();
+              try{
+                 artistIndex=getArtistIndex();
+                 kontaktPersonIndex=getKontaktPersonIndex();
+                 lokaleIndex=getLokaleIndex();
+              }
+              catch (InvalidComboBoxValueException e){
+                  utskriftRegistrert.setText((e.getMessage()));
+                  System.out.println(e.getMessage());
+                  return;
+              }
+             
               //sted
               data.add(obsLokale.get(lokaleIndex).getLokaleNavn());
            Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
@@ -304,8 +343,6 @@ private ToggleGroup radioGrp;
           case "Billett":
                Arrangement tilhørendeArrangement=obsArrangement.get(ddlArrangement.getSelectionModel().getSelectedIndex());
               Billett billett=new Billett(tilhørendeArrangement,data);
-              System.out.print("Arrang size"+obsArrangement.size());
-        
               utskriftRegistrert.setText(billett.toString());
               objekter.add(billett);
               break;
