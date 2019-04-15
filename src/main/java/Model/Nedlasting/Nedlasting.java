@@ -13,43 +13,30 @@ import java.util.ArrayList;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-/**
- *
- * @author jonny
- */
+
 public class Nedlasting {
     private Stage stage;
-    //private String fileName = "out.txt";
-    private String vei;
     private File file;
     private Register register=Register.getInstance();
+    
     
     public void NedTilFil(){
 
         PrintWriter printWriter = null;
         
-            /*String fileName = "out.txt";
-            ArrayList<String> list = new ArrayList<>();
-            list.add("Jon");
-            list.add("Jon2");
-            list.add("Jon3");
-            try {
-            PrintWriter outputStream = new PrintWriter(fileName);
-            for (int i = 0; i < list.size(); i++){
-            outputStream.print(list.get(i) +";" );
-            }
-            outputStream.close();
-            }
-            catch (FileNotFoundException e){
-            e.printStackTrace();
-            }*/
+            
         try {
-            //File file = new File (nedLastVei());
             printWriter = new PrintWriter (file);
-            //printWriter.println ("hello");
-            ArrayList a =register.getArtister();
-            for (int i = 0; i < a.size();i++){
-                printWriter.print(a.get(i) +";" );
+            
+            ArrayList artister =register.getArtister();
+            
+            for (int i = 0 ; i < artister.size(); i ++){
+            String artistString = artister.get(i) +"";
+            String[] artistStringArray = artistString.split(" ");
+            for(int j = 1; j < artistStringArray.length; j++){
+                printWriter.print(artistStringArray[j] + ";");
+            }
+            printWriter.print("\n");
             }
                     
             printWriter.close (); 
@@ -66,9 +53,6 @@ public class Nedlasting {
         fileChooser.setTitle("Åpne fil");
         
         file = fileChooser.showSaveDialog(stage);
-        
-        vei = ""+ file;
-        System.out.println(vei);
         
     }
     
