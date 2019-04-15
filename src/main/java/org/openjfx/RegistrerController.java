@@ -1,10 +1,10 @@
 package org.openjfx;
 
+import Model.Avvik.InvalidTextFieldInputException;
 import Model.Domene.*;
 import Model.Registrering.Register;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -63,6 +63,7 @@ private ToggleGroup radioGrp;
  private ObservableList<KontaktPerson> obsKontaktPerson;
  private ObservableList<Lokale> obsLokale;
  private ObservableList<Arrangement> obsArrangement;
+ 
  // peker på element i listen basert på valg i combobox
  private int artistIndex;
  private int kontaktPersonIndex;
@@ -242,10 +243,11 @@ private ToggleGroup radioGrp;
    
  }
  
- private ArrayList<String> getTextFieldData(){
+ private ArrayList<String> getTextFieldData()  throws InvalidTextFieldInputException{
      ArrayList<String> data=new ArrayList<>();
      // Samler data fra textfieldene i arraylist
      for (TextField f : input){
+         if (f.getText().isEmpty()) throw new InvalidTextFieldInputException("Feltene kan ikke være tomme");
          data.add(f.getText());
      }
      return data;
@@ -255,7 +257,15 @@ private ToggleGroup radioGrp;
  @FXML
  private void registrer(){
      objekter=new ArrayList<>();
-     ArrayList<String> data=new ArrayList<>(getTextFieldData());
+      ArrayList<String> data=null;
+     try{
+          data=new ArrayList<>(getTextFieldData());
+     }
+     catch(InvalidTextFieldInputException e){
+         System.err.println(e.getMessage());
+         return;
+     }
+    
      //data=getTextFieldData();
      
       switch(valgt){
@@ -273,6 +283,7 @@ private ToggleGroup radioGrp;
                
           case "Arrangement":
               // hent valg fra combobox
+              // exception her
               artistIndex=ddlArtister.getSelectionModel().getSelectedIndex();
               kontaktPersonIndex=ddlKontaktPerson.getSelectionModel().getSelectedIndex();
               lokaleIndex=ddlLokale.getSelectionModel().getSelectedIndex();
@@ -282,7 +293,7 @@ private ToggleGroup radioGrp;
            
            utskriftRegistrert.setText(arrang.toString());
            objekter.add(arrang);
-              break;
+             break;
               
           case "KontaktPerson":
               KontaktPerson kontaktPerson=new KontaktPerson(data);
@@ -291,7 +302,6 @@ private ToggleGroup radioGrp;
               break;
               
           case "Billett":
-               //obsArrangement=FXCollections.observableArrayList(register.getArrangement());
                Arrangement tilhørendeArrangement=obsArrangement.get(ddlArrangement.getSelectionModel().getSelectedIndex());
               Billett billett=new Billett(tilhørendeArrangement,data);
               System.out.print("Arrang size"+obsArrangement.size());

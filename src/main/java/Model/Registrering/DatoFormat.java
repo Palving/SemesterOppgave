@@ -23,8 +23,7 @@ public static String formaterDato(LocalDate dato, String klokkeslett){
     catch(Exception e){
         System.err.println(e.getMessage());
     }
-
-   
+    
       return "Feil";
     }
     

@@ -2,8 +2,11 @@ package org.openjfx;
 
 import Model.Lagring.Lagring;
 import Model.Registrering.Register;
+import Model.Tråder.ThreadSystem;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,7 +52,7 @@ public class FXMLController {
     stage.setScene(new Scene(root2));  
     stage.show();
     }
-    
+     private ExecutorService service = Executors.newSingleThreadExecutor();
     @FXML
     private void lagre(ActionEvent event) throws IOException{
         FileChooser fileChooser = new FileChooser();
@@ -61,10 +64,35 @@ public class FXMLController {
         );
         
         File file = fileChooser.showOpenDialog(stage);
-        String vei = ""+ file;
+       
+                 String vei = ""+ file;
         System.out.println(vei);
         Lagring g = new Lagring(vei);
-        g.lesFil();
+      
+      
+       
+      
+   Runnable runnable = () -> {
+    try {
+        
+          g.lesFil();
+      
+        System.out.println("Ferdig tråd da ferdig");
+       
+    }
+    catch (Exception e) {
+        e.printStackTrace();
+    }
+};
+
+ThreadSystem thread = new ThreadSystem(runnable);
+service.execute(runnable);
+thread.run();
+       
+    }
+    
+    private void threadDone(){
+        System.out.println("Tråd ferdig");
     }
     
     Register register=Register.getInstance();

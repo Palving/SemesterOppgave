@@ -91,7 +91,7 @@ public class EndringController implements Initializable {
     billettRadio.setUserData("Billett");
  }
    
-   ArrayList <Artist> artistEndre=new ArrayList<>();
+   
    
    public void hentData(ObservableList<Object> liste){
        
@@ -207,7 +207,7 @@ public class EndringController implements Initializable {
           System.out.println(valgt);
           
           visData(valgt);
-          //System.out.println(Registrer.registrer(new Artist("Jon","Rafoss","123","Sanger")));
+         
           
         }
       }

@@ -29,7 +29,7 @@ public class Register implements Serializable {
     // Tar inn arrayliste av type objekt og plasserer de i riktig arraylist
     public String registrer(Object obj){
        
-                typeKlasse=obj.getClass().toString();
+            typeKlasse=obj.getClass().toString();
                
            switch(typeKlasse){
                case "class Model.Domene.Artist":
