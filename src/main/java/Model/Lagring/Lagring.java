@@ -96,8 +96,8 @@ public class Lagring {
                         
                     }
                     
-                   Arrangement arrangement = new Arrangement(artisten, kontaktPerson1,arrangement1  );
-                   register.registrer(arrangement);
+                  // Arrangement arrangement = new Arrangement(artisten, kontaktPerson1,arrangement1  );
+                  // register.registrer(arrangement);
                    /* Artist artist=new artist(liste);
                     objekter.add(artist);
                     reg.nyArtist();*/
