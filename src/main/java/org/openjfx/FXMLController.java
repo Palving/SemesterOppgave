@@ -1,6 +1,7 @@
 package org.openjfx;
 
 import Model.Lagring.Lagring;
+import Model.Nedlasting.Nedlasting;
 import Model.Registrering.Register;
 import Model.Tråder.ThreadSystem;
 import java.io.File;
@@ -90,6 +91,13 @@ service.execute(runnable);
 thread.run();
        
     }
+    @FXML
+    private void lastNed(ActionEvent event){
+        Nedlasting nedlast = new Nedlasting();
+        nedlast.nedLastVei();
+        nedlast.NedTilFil();
+    }
+    
     
     private void threadDone(){
         System.out.println("Tråd ferdig");
