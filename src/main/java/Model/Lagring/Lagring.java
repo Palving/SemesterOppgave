@@ -98,9 +98,7 @@ public class Lagring {
                     
                   // Arrangement arrangement = new Arrangement(artisten, kontaktPerson1,arrangement1  );
                   // register.registrer(arrangement);
-                   /* Artist artist=new artist(liste);
-                    objekter.add(artist);
-                    reg.nyArtist();*/
+                   
                     break;
                 case 2:
                     System.out.println("Lokale");
@@ -109,17 +107,13 @@ public class Lagring {
                 case 3:
                     System.out.println("Billett");
                     
-                    /*Artist artist=new artist(liste);
-                    objekter.add(artist);
-                    reg.nyArtist();*/
+                    
                     break;
                 case 6:
                     System.out.println("Kontakt person");
                     KontaktPerson kontaktPerson = new KontaktPerson(array3);
                     register.registrer(kontaktPerson);
-                   /* Artist artist=new artist(liste);
-                    objekter.add(artist);
-                    reg.nyArtist();*/
+                   
                     break; 
             }
            
