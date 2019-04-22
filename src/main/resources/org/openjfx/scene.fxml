@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -8,37 +12,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="ap" fx:id="ap" prefHeight="690.0" prefWidth="977.0" style="-fx-background-color: lightgrey;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
+<AnchorPane id="ap" fx:id="ap" prefHeight="768.0" prefWidth="1136.0" style="-fx-background-color: lightgrey;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.FXMLController">
     <children>
-        <Button id="registrer" fx:id="registrer" layoutX="719.0" layoutY="120.0" onAction="#registrer" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Registrer elementer">
+        <Button id="registrer" fx:id="registrer" layoutX="727.0" layoutY="37.0" onAction="#registrer" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Registrer elementer">
          <font>
             <Font name="Arial" size="18.0" />
          </font></Button>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <Button id="lagre" layoutX="718.0" layoutY="224.0" onAction="#lagre" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Last inn fil">
+      <Button id="lagre" layoutX="39.0" layoutY="643.0" onAction="#lagre" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Last inn fil 🠭">
          <font>
             <Font name="Arial" size="18.0" />
          </font></Button>
-      <Button fx:id="endre" layoutX="718.0" layoutY="171.0" mnemonicParsing="false" onAction="#endringVindu" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Endre elementer">
+      <Button fx:id="endre" layoutX="727.0" layoutY="87.0" mnemonicParsing="false" onAction="#endringVindu" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Endre elementer">
          <font>
             <Font name="Arial" size="18.0" />
          </font></Button>
-      <Button id="lagre" layoutX="719.0" layoutY="274.0" onAction="#lastNed" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Last ned fil">
+      <Button id="lagre" layoutX="461.0" layoutY="643.0" onAction="#lastNed" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Last ned fil 🠭🠯">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
       </Button>
-      <TableView layoutX="25.0" layoutY="111.0" prefHeight="522.0" prefWidth="658.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
+      <TableView id="tabell" fx:id="tabell" layoutX="25.0" layoutY="111.0" prefHeight="522.0" prefWidth="658.0" />
       <Label layoutX="385.0" layoutY="37.0" prefHeight="53.0" prefWidth="208.0" text="KULTURHUS">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <ComboBox layoutX="25.0" layoutY="78.0" prefWidth="150.0" promptText="Velg tabell" />
+      <ComboBox id="dropdownliste" fx:id="dropdownliste" layoutX="25.0" layoutY="78.0" prefWidth="150.0" promptText="Velg tabell" />
     </children>
 </AnchorPane>

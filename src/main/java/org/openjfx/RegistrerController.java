@@ -327,6 +327,7 @@ private ToggleGroup radioGrp;
               }
              
               //sted
+              // burde heller kanskje lagre selve objektet i det og heller hente stedet et annet sted
               data.add(obsLokale.get(lokaleIndex).getLokaleNavn());
            Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
            
