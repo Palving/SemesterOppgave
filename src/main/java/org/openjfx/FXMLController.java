@@ -6,6 +6,8 @@ import Model.Registrering.Register;
 import Model.Tråder.ThreadSystem;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javafx.beans.value.ChangeListener;
@@ -17,6 +19,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -46,6 +50,10 @@ public class FXMLController {
    
   
    private String[] attributter;
+    @FXML
+    private Button registrer;
+    @FXML
+    private Button endre;
    
   
    
@@ -150,6 +158,7 @@ thread.run();
          System.out.println(valgt);
           
             visData(t1);
+            formaterCheckBoxes();
         }    
     });
        
@@ -221,15 +230,16 @@ thread.run();
        }
    }
  
+    private TableColumn[] columns;
+    
    // tar dataen ut fra listen gitt og viser det i tabell
    public void hentData(ObservableList<Object> liste){
        tabell.getColumns().clear();
        attributter=getAttributter();
-     //  tabell=new TableView();
-      // tabell.setLayoutY(100);
+    
      
      
-       TableColumn[] columns=new TableColumn[attributter.length];
+        columns=new TableColumn[attributter.length];
        System.out.println("columns length"+columns.length);
        int teller=0;
        for (String att : attributter){
@@ -262,6 +272,7 @@ thread.run();
         tabell.getColumns().addAll(t);
         System.out.println("tabeller laget");
     }
+      tabell.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
   
 
      
@@ -272,6 +283,104 @@ thread.run();
        typeCol.setCellFactory(TextFieldTableCell.forTableColumn());*/
        
         }
+   
+   // Filteringskode
+   
+   // TODO 
+   // Plasser Checkboxer med attributter til høyre for tabellen som tilsvarer valget i ddl
+   // Plasser Filtrer-knapp under de ijgen
+   // Last inn liste med objekt og ikke ta med columnsa som er merket i checkboxene
+   
+    private CheckBox[] cbArray=null;
+    private Button btn;
+   
+   private void formaterCheckBoxes(){
+       
+       deleteCheckBoxes();
+        cbArray=new CheckBox[attributter.length];
+       
+       int teller=0;
+       
+       for (String attributt : attributter){
+           cbArray[teller]=new CheckBox(attributt);
+           if (teller==0){
+                cbArray[teller].setLayoutX(700);
+                cbArray[teller].setLayoutY(200);
+           }
+           else{
+               cbArray[teller].setLayoutY( cbArray[teller-1].getLayoutY() + 50);
+                 cbArray[teller].setLayoutX(700);
+           }
+          
+           ap.getChildren().add(cbArray[teller]);
+           teller++;
+       }
+       
+       btn=new Button("Filtrer");
+   
+     btn.setLayoutY(cbArray[teller-1].getLayoutY()+40);
+    btn.setLayoutX(700);
+      btn.addEventHandler(ActionEvent.ACTION, event->filtrerData());
+      ap.getChildren().add(btn);
+       
+       
+   }
+   
+   private void deleteCheckBoxes(){
+       if (cbArray!=null){
+           for (CheckBox cb : cbArray){
+               ap.getChildren().remove(cb);
+               ap.getChildren().remove(btn);
+           }
+       }
+       
+   }
+   
+   private ArrayList<Boolean> getCheckBoxValues(){
+       
+        ArrayList<Boolean> checked=new ArrayList<>();
+       
+       for (CheckBox cb : cbArray){
+          checked.add(cb.selectedProperty().get());
+         System.out.println(cb.selectedProperty().get());  
+       }
+       
+       return checked;
+   }
+   
+   
+   private void filtrerData(){
+     
+      ArrayList<Boolean> check=getCheckBoxValues();
+      
+      visData(valgt);
+      ObservableList columns=FXCollections.observableArrayList(tabell.getColumns());
+      
+ 
+    
+     // fjerner fra collections trygt
+       int teller=0;
+       
+      Iterator<Object> i=columns.iterator();
+      while(i.hasNext()){
+          Object col=i.next();
+      
+         if(check.get(teller)){
+          i.remove();
+            }
+          teller++;
+      }
+      
+      // slette columns før de nye(de som ikke er avhuket) legges til
+       tabell.getColumns().clear();
+       
+       for (int z=0;z<columns.size();z++){
+           tabell.getColumns().add(columns.get(z));
+       }
+   
+       
+   }
+   
    
    
     
