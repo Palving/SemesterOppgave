@@ -14,6 +14,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -82,7 +83,7 @@ public class FXMLController {
     stage.show();
     }
     
-     private ExecutorService service = Executors.newSingleThreadExecutor();
+    // private ExecutorService service = Executors.newSingleThreadExecutor();
    
      @FXML
     private void lagre(ActionEvent event) throws IOException{
@@ -101,9 +102,15 @@ public class FXMLController {
         Lagring g = new Lagring(vei);
       
       
-       
+       ExecutorService service = Executors.newSingleThreadExecutor();
+       registrer.setDisable(true);
+       endre.setDisable(true);
+Task<Void> task = new ThreadSystem(this::threadDone);
+service.execute(task);
+
+
       
-   Runnable runnable = () -> {
+  /* Runnable runnable = () -> {
     try {
         
           g.lesFil();
@@ -114,11 +121,13 @@ public class FXMLController {
     catch (Exception e) {
         e.printStackTrace();
     }
-};
+};*/
 
-ThreadSystem thread = new ThreadSystem(runnable);
-service.execute(runnable);
+/*ThreadSystem thread = new ThreadSystem(runnable);
+//service.execute(runnable);
 thread.run();
+
+runnable.run();*/
        
     }
     @FXML
@@ -128,9 +137,13 @@ thread.run();
         nedlast.NedTilFil();
     }
     
-    
+    @FXML
+    Label trådResult;
     private void threadDone(){
         System.out.println("Tråd ferdig");
+        trådResult.setText("Innlesing av fil vellykket");
+        registrer.setDisable(false);
+        endre.setDisable(false);
     }
     
     
@@ -377,6 +390,7 @@ thread.run();
        for (int z=0;z<columns.size();z++){
            tabell.getColumns().add(columns.get(z));
        }
+       
    
        
    }

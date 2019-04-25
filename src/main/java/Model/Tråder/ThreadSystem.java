@@ -15,6 +15,7 @@ public class ThreadSystem extends Task<Void> {
   protected Void call() throws Exception{
       try {
           Thread.sleep(15000);
+         
       }
       catch(InterruptedException e){
           
@@ -26,6 +27,8 @@ public class ThreadSystem extends Task<Void> {
     @Override
     protected void succeeded() {
         runMeWhenDone.run();
+        System.out.println("succeeded");
+        
     }
     
 }

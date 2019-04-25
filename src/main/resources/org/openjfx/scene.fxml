@@ -18,7 +18,6 @@
          <font>
             <Font name="Arial" size="18.0" />
          </font></Button>
-        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <Button id="lagre" layoutX="39.0" layoutY="643.0" onAction="#lagre" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Last inn fil 🠭">
          <font>
             <Font name="Arial" size="18.0" />
@@ -27,7 +26,7 @@
          <font>
             <Font name="Arial" size="18.0" />
          </font></Button>
-      <Button id="lagre" layoutX="461.0" layoutY="643.0" onAction="#lastNed" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Last ned fil 🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠯">
+      <Button id="lagre" layoutX="461.0" layoutY="643.0" onAction="#lastNed" prefHeight="33.0" prefWidth="194.0" style="-fx-background-color: white;" text="Last ned fil 🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠭🠯">
          <font>
             <Font name="Arial" size="18.0" />
          </font>
@@ -44,5 +43,9 @@
             <Font size="28.0" />
          </font>
       </Label>
+        <Label fx:id="trådResult" layoutX="86.0" layoutY="694.0" minHeight="16" minWidth="69">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
     </children>
 </AnchorPane>
