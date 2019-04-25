@@ -130,7 +130,7 @@ public class Arrangement {
 
     @Override
     public String toString() {
-        return  "Type: " + type + "\n Navn: " + navnPaaArrangement + "\n Program " + program + "\n Sted; " + sted + "\n Dato: "+DatoFormat.formaterDato(dato, tidspunkt)+ "\n Pris: " + billettPris + "\n Billetter Solgt: " + billettSalg + "\n Kontaktperson: " + kontaktPerson.getEtternavn() + "\n Artist: " + artist.getEtternavn();
+        return  type + "\n " + navnPaaArrangement + "\n " + program + "\n " + sted + "\n "+DatoFormat.formaterDato(dato, tidspunkt)+ "\n " + billettPris + "\n " + billettSalg + "\n " + kontaktPerson.getEtternavn() + "\n " + artist.getEtternavn();
     }
     
     public String visData(){

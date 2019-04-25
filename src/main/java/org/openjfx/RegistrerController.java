@@ -93,7 +93,7 @@ private ToggleGroup radioGrp;
      }
      
      if (ddlArrangement!=null){
-         System.out.println("ddl arrang removed");
+       
          anchorPane.getChildren().remove(ddlArrangement);
      }
     

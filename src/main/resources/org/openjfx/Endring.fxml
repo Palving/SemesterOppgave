@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="400.0" prefWidth="661.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.EndringController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="489.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.EndringController">
    <children>
       <RadioButton fx:id="artistRadio" layoutX="57.0" layoutY="57.0" mnemonicParsing="false" text="Artist" />
       <RadioButton fx:id="lokaleRadio" layoutX="125.0" layoutY="57.0" mnemonicParsing="false" text="Lokale" />
@@ -23,5 +23,6 @@
          </font>
       </Label>
       <Button layoutX="73.0" layoutY="329.0" mnemonicParsing="false" onAction="#sletteKnapp" text="Slett rad" />
+      <Button fx:id="endre" layoutX="160.0" layoutY="329.0" mnemonicParsing="false" onAction="#endre" text="Endre " />
    </children>
 </AnchorPane>

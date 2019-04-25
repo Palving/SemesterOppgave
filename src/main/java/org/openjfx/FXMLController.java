@@ -108,27 +108,7 @@ public class FXMLController {
 Task<Void> task = new ThreadSystem(this::threadDone);
 service.execute(task);
 
-
-      
-  /* Runnable runnable = () -> {
-    try {
-        
-          g.lesFil();
-      
-        System.out.println("Ferdig tråd da ferdig");
-       
-    }
-    catch (Exception e) {
-        e.printStackTrace();
-    }
-};*/
-
-/*ThreadSystem thread = new ThreadSystem(runnable);
-//service.execute(runnable);
-thread.run();
-
-runnable.run();*/
-       
+   
     }
     @FXML
     private void lastNed(ActionEvent event){
@@ -158,7 +138,6 @@ runnable.run();*/
   
     public String valgt;
     public void initialize() {
-        // TODO
       
            register.test();
            this.populerDropdown();
@@ -166,7 +145,7 @@ runnable.run();*/
         dropdownliste.valueProperty().addListener(new ChangeListener<String>() {
         @Override public void changed(ObservableValue obsVal, String t, String t1) {
           System.out.println(obsVal);
-          //  System.out.println(t);
+      
          valgt=t1;
          System.out.println(valgt);
           
@@ -212,7 +191,7 @@ runnable.run();*/
    private String[] getAttributter(){
      String[] artistAttributes={"Fornavn","Etternavn","Tlf","typeArtist"};
       String[] lokaleAttributes={"lokaleNavn","antallPlasser"};
-      String[] arrangAttributes={"type", "navnPaaArrangement","program", "billettPris", "Tidspunkt"};
+      String[] arrangAttributes={"Artist","KontaktPerson","sted","type", "navnPaaArrangement","program", "billettPris", "Tidspunkt"};
       String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","firma","info","nettSide"};
       String[] billettAttributes={"plassNummer","lokaleNavn","dato", "kundeTlf","arrangementNavn"};
       
@@ -250,59 +229,28 @@ runnable.run();*/
        tabell.getColumns().clear();
        attributter=getAttributter();
     
-     
-     
-        columns=new TableColumn[attributter.length];
-       System.out.println("columns length"+columns.length);
        int teller=0;
-       for (String att : attributter){
-           columns[teller]=new TableColumn(att);
-           columns[teller].setCellValueFactory(new PropertyValueFactory<Object, Object>(attributter[teller]));
+  
+       columns=new TableColumn[attributter.length];
+     
+            for (String att : attributter){
+                 columns[teller]=new TableColumn(att);
+                  columns[teller].setCellValueFactory(new PropertyValueFactory<Object, Object>(attributter[teller]));
           
            //columns[teller].setCellFactory(TextFieldTableCell.forTableColumn());
            teller++;
-       }
-    /*   
-     TableColumn fornavnCol = new TableColumn("Fornavn");
-        TableColumn etternavnCol = new TableColumn("Etternavn");
-        TableColumn tlfCol = new TableColumn("Tlf");
-        TableColumn typeCol=new TableColumn("Type artist");
-        
+              }
   
-            ObservableList<Artist> data = FXCollections.observableArrayList(register.getArtister());
-        
-           fornavnCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("fornavn"));
-           etternavnCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("etternavn"));
-           tlfCol.setCellValueFactory(new PropertyValueFactory<Artist,String>("tlf"));
-           typeCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("typeArtist"));
-           // layoutX="57.0" layoutY="120.0" prefHeight="200.0" prefWidth="459.0">
-          table.setItems(data);
-     table.getColumns().addAll(fornavnCol, etternavnCol, tlfCol, typeCol);
-*/
-    // table.getColumns().addAll((Object) columns);
     tabell.setItems(liste);
     for (TableColumn t : columns){
         tabell.getColumns().addAll(t);
-        System.out.println("tabeller laget");
+      
     }
       tabell.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
   
-
-     
-       /*
-       fornavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
-       etternavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
-       tlfCol.setCellFactory(TextFieldTableCell.forTableColumn());
-       typeCol.setCellFactory(TextFieldTableCell.forTableColumn());*/
-       
         }
    
-   // Filteringskode
-   
-   // TODO 
-   // Plasser Checkboxer med attributter til høyre for tabellen som tilsvarer valget i ddl
-   // Plasser Filtrer-knapp under de ijgen
-   // Last inn liste med objekt og ikke ta med columnsa som er merket i checkboxene
+  
    
     private CheckBox[] cbArray=null;
     private Button btn;
@@ -349,6 +297,7 @@ runnable.run();*/
        
    }
    
+   // looper gjennom hver checkbox og ser hvem som er trykket på
    private ArrayList<Boolean> getCheckBoxValues(){
        
         ArrayList<Boolean> checked=new ArrayList<>();

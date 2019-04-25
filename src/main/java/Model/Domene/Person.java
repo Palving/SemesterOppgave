@@ -51,7 +51,6 @@ public abstract class Person {
         return " "+fornavn +" "+ etternavn+" "+ tlf ;
     }
     
-   
     
     
 }
