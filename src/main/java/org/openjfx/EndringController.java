@@ -8,6 +8,7 @@ import Model.Domene.Artist;
 import Model.Domene.Billett;
 import Model.Domene.KontaktPerson;
 import Model.Domene.Lokale;
+import Model.Endring.EndringSystem;
 import Model.Endring.SletteSystem;
 import Model.Registrering.Register;
 import java.io.IOException;
@@ -77,18 +78,22 @@ public class EndringController implements Initializable {
      }*/
     
      //data=getTextFieldData();
+     EndringSystem endreSystem=new EndringSystem();
       switch(valgt){
           case "Artist":
-              Artist artist=new Artist(data);
+              Artist artist=(Artist)objToChange;
              // utskriftRegistrert.setText("\n"+artist.toString());
-              objekter.add(artist);
-             
+             endreSystem.endreObject(artist, "Artist");
+             artist=new Artist(data);
+             register.registrer(artist);
                break;
                
           case "Lokale":
-              Lokale lokale=new Lokale(data);
-             // utskriftRegistrert.setText("\n"+lokale.toString());
-              objekter.add(lokale);
+              Lokale lokale=(Lokale)objToChange;
+             // utskriftRegistrert.setText("\n"+artist.toString());
+             endreSystem.endreObject(lokale, "Lokale");
+             lokale=new Lokale(data);
+             register.registrer(lokale);
                break;
                
           case "Arrangement":
@@ -103,20 +108,26 @@ public class EndringController implements Initializable {
                   System.out.println(e.getMessage());
                   return;
               }
-             
+              Arrangement arrang=(Arrangement)objToChange;
+             // utskriftRegistrert.setText("\n"+artist.toString());
+             endreSystem.endreObject(arrang, "Arrangement");
+            
+            
               //sted
               // burde heller kanskje lagre selve objektet i det og heller hente stedet et annet sted
               data.add(obsLokale.get(lokaleIndex).getLokaleNavn());
-           Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
+           arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
            
            //utskriftRegistrert.setText(arrang.toString());
-           objekter.add(arrang);
+          register.registrer(arrang);
              break;
               
           case "KontaktPerson":
-              KontaktPerson kontaktPerson=new KontaktPerson(data);
-              //utskriftRegistrert.setText(kontaktPerson.toString());
-              objekter.add(kontaktPerson);
+              KontaktPerson kontaktPerson=(KontaktPerson)objToChange;
+             // utskriftRegistrert.setText("\n"+artist.toString());
+             endreSystem.endreObject(kontaktPerson, "KontaktPerson");
+             kontaktPerson=new KontaktPerson(data);
+             register.registrer(kontaktPerson);
               break;
               
           case "Billett":
@@ -127,10 +138,10 @@ public class EndringController implements Initializable {
               break;
           
       }
-     
-     
-     objToChange=(Artist)objekter.get(0);
-   register.registrer(objToChange);
+    
+     refreshInputElementer();
+    visData(valgt);
+    
        
    }
   
@@ -190,33 +201,15 @@ public class EndringController implements Initializable {
        table=new TableView();
        
        TableColumn[] columns=new TableColumn[attributter.length];
-       System.out.println("columns length"+columns.length);
+     
        int teller=0;
        for (String att : attributter){
            columns[teller]=new TableColumn(att);
            columns[teller].setCellValueFactory(new PropertyValueFactory<Object, Object>(attributter[teller]));
           
-           //columns[teller].setCellFactory(TextFieldTableCell.forTableColumn());
            teller++;
        }
-    /*   
-     TableColumn fornavnCol = new TableColumn("Fornavn");
-        TableColumn etternavnCol = new TableColumn("Etternavn");
-        TableColumn tlfCol = new TableColumn("Tlf");
-        TableColumn typeCol=new TableColumn("Type artist");
-        
-  
-            ObservableList<Artist> data = FXCollections.observableArrayList(register.getArtister());
-        
-           fornavnCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("fornavn"));
-           etternavnCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("etternavn"));
-           tlfCol.setCellValueFactory(new PropertyValueFactory<Artist,String>("tlf"));
-           typeCol.setCellValueFactory(new PropertyValueFactory<Artist, String>("typeArtist"));
-           // layoutX="57.0" layoutY="120.0" prefHeight="200.0" prefWidth="459.0">
-          table.setItems(data);
-     table.getColumns().addAll(fornavnCol, etternavnCol, tlfCol, typeCol);
-*/
-    // table.getColumns().addAll((Object) columns);
+    
     table.setItems(liste);
     for (TableColumn t : columns){
         table.getColumns().addAll(t);
@@ -230,13 +223,6 @@ public class EndringController implements Initializable {
        anchorPane.getChildren().add(table);
        
         table.setEditable(true);
-       
-     
-       /*
-       fornavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
-       etternavnCol.setCellFactory(TextFieldTableCell.forTableColumn());
-       tlfCol.setCellFactory(TextFieldTableCell.forTableColumn());
-       typeCol.setCellFactory(TextFieldTableCell.forTableColumn());*/
        
         }
    
@@ -286,12 +272,12 @@ public class EndringController implements Initializable {
              sletteSystem.remove(obj);
           
         }
+          refreshInputElementer();
     }
    
    // TODO
    // Endre metoder
-   // Send bruker til nytt vindu og pass objektet som er valgt til det vinduet sammen med et textfield for hver attributt
-   // og lagre det 
+   
    
    
 
@@ -313,9 +299,7 @@ public class EndringController implements Initializable {
        if (table.getSelectionModel().getSelectedItem()!=null){
           System.out.print(table.getSelectionModel().getSelectedItem());
            obj=table.getSelectionModel().getSelectedItem();
-           System.out.println("if kjørt");
-           
-           
+      
        }
        return obj;
        
@@ -388,6 +372,7 @@ private TextField[] input=null;
      ddlArtister=new ComboBox(obsArtister);
      ddlKontaktPerson=new ComboBox(obsKontaktPerson);
      ddlLokale=new ComboBox(obsLokale);
+     
       
     ddlArtister.setLayoutX(700);
     ddlArtister.setLayoutY(130);
@@ -448,11 +433,10 @@ private TextField[] input=null;
       // legg til ddl med alle artister og kontaktpersoner
      if (valgt.equals("Arrangement")){
         formaterDropdownArrangement();  
+        
      }
      else if(valgt.equals("Billett")){
-         
          formaterDropdownBillett();
-        
      }
     
     for (TextField textfields : input){

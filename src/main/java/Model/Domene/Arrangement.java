@@ -133,10 +133,30 @@ public class Arrangement {
         return  type + "\n " + navnPaaArrangement + "\n " + program + "\n " + sted + "\n "+DatoFormat.formaterDato(dato, tidspunkt)+ "\n " + billettPris + "\n " + billettSalg + "\n " + kontaktPerson.getEtternavn() + "\n " + artist.getEtternavn();
     }
     
-    public String visData(){
-        return "Navn: "+navnPaaArrangement+"\n Sted: "+sted+"\n Dato"+dato+"\n Tidspunkt"+tidspunkt;
+  public boolean equals(Arrangement arrang){
+        if (this==arrang){
+            return true;
+        }
+        if (getClass() !=arrang.getClass()){
+            return false;
+        }
+        Arrangement other=arrang;
+        
+        if (other.getArtist().equals(arrang.getArtist()) 
+                && other.getKontaktPerson().equals(arrang.getKontaktPerson()) 
+                && other.getBillettPris()==arrang.getBillettPris()
+                && other.getProgram().equals(arrang.getProgram())
+                && other.getSted().equals(arrang.getSted())
+                && other.getType().equals(arrang.getType())
+                && other.getNavnPaaArrangement().equals(arrang.getNavnPaaArrangement())){
+            // samme info -> returner objekt som det matchet med
+           // System.out.println("samme info -> returner objekt det matchet med");
+            return true;
+        }
+        //System.out.println("ingen match -> registrer objekt sammen med andre objekt");
+        return false;
+        
     }
-    
     
     
 }

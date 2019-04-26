@@ -56,7 +56,31 @@ public class KontaktPerson extends Person {
 
     @Override
     public String toString() {
-        return super.toString()+" " + nettSide + " " + firma + " " + info;
+        return super.toString()+"\n " + nettSide + "\n " + firma + "\n " + info;
+    }
+    
+    public boolean equals(KontaktPerson kontaktPerson){
+        if (this==kontaktPerson){
+            System.out.print("samme type");
+            return true;
+        }
+        if (getClass() !=kontaktPerson.getClass()){
+            return false;
+        }
+        KontaktPerson other=kontaktPerson;
+        
+        if (other.getFornavn().equals(kontaktPerson.getFornavn())
+          && other.getEtternavn().equals(kontaktPerson.getEtternavn()) 
+          && other.getTlf().equals(kontaktPerson.getTlf()) 
+          && other.getFirma().equals(kontaktPerson.getFirma())
+          && other.getInfo().equals(kontaktPerson.getInfo()) 
+          && other.getNettSide().equals(kontaktPerson.getNettSide())){
+           
+                     return true;
+                 }
+        //System.out.println("ingen match -> registrer objekt sammen med andre objekt");
+        return false;
+        
     }
     
     

@@ -55,7 +55,7 @@ public class Artist extends Person {
     
     @Override
     public String toString(){
-        return super.getFornavn()+" "+super.getEtternavn()+" "+super.getTlf()+" "+getTypeArtist();
+        return super.getFornavn()+"\n "+super.getEtternavn()+"\n "+super.getTlf()+"\n "+getTypeArtist();
     }
     
 }

@@ -107,7 +107,31 @@ public class Billett {
     
     @Override
     public String toString(){
-      return "\n Plassnummer:"+this.plassNummer+"\n Lokalenavn: "+this.lokaleNavn+DatoFormat.formaterDato(dato, klokkeslett)+"\n Pris "+this.pris+"+\n Tlf: "+this.kundeTlf+"\n Arrangementnavn: "+this.arrangementNavn;
+      return this.plassNummer+"\n "+this.lokaleNavn+"\n "+DatoFormat.formaterDato(dato, klokkeslett)+"\n "+this.pris+"+\n "+this.kundeTlf+"\n "+this.arrangementNavn;
+    }
+  
+    public boolean equals(Billett billett){
+        if (this==billett){
+            return true;
+        }
+        if (getClass() != billett.getClass()){
+            return false;
+        }
+        Billett other=billett;
+        
+        if (other.getArrangementNavn().equals(billett.getArrangementNavn()) 
+                && other.getKundeTlf().equals(billett.getKundeTlf()) 
+                && other.getLokaleNavn().equals(billett.getLokaleNavn()) 
+                && other.getPris()==billett.getPris()
+                && other.getPlassNummer()==billett.getPlassNummer()
+                && other.getDato().equals(billett.getDato())){
+            // samme info -> returner objekt som det matchet med
+           // System.out.println("samme info -> returner objekt det matchet med");
+            return true;
+        }
+        //System.out.println("ingen match -> registrer objekt sammen med andre objekt");
+        return false;
+        
     }
     
 }

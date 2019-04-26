@@ -191,7 +191,7 @@ service.execute(task);
    private String[] getAttributter(){
      String[] artistAttributes={"Fornavn","Etternavn","Tlf","typeArtist"};
       String[] lokaleAttributes={"lokaleNavn","antallPlasser"};
-      String[] arrangAttributes={"Artist","KontaktPerson","sted","type", "navnPaaArrangement","program", "billettPris", "Tidspunkt"};
+      String[] arrangAttributes={"Artist","KontaktPerson","sted","type", "navnPaaArrangement","program", "billettPris", "Tidspunkt","billettSalg"};
       String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","firma","info","nettSide"};
       String[] billettAttributes={"plassNummer","lokaleNavn","dato", "kundeTlf","arrangementNavn"};
       

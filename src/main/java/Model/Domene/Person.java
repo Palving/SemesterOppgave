@@ -48,7 +48,7 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return " "+fornavn +" "+ etternavn+" "+ tlf ;
+        return fornavn +"\n "+ etternavn+"\n "+ tlf ;
     }
     
     
