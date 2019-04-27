@@ -47,7 +47,8 @@ public class FXMLController {
     private AnchorPane ap;
     
     
-   Register register=Register.getInstance();
+  private Register register=Register.getInstance();
+  private TableViewFormatter tableViewFormatter=new TableViewFormatter();
    
   
    private String[] attributter;
@@ -56,10 +57,6 @@ public class FXMLController {
     @FXML
     private Button endre;
    
-  
-   
-    
-    
     @FXML
     private void registrer(ActionEvent event) throws IOException{
        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("registrer.fxml"));
@@ -101,12 +98,13 @@ public class FXMLController {
         System.out.println(vei);
         Lagring g = new Lagring(vei);
       
-      
+      // Tråder
        ExecutorService service = Executors.newSingleThreadExecutor();
        registrer.setDisable(true);
        endre.setDisable(true);
-Task<Void> task = new ThreadSystem(this::threadDone);
-service.execute(task);
+       
+        Task<Void> task = new ThreadSystem(this::threadDone);
+        service.execute(task);
 
    
     }
@@ -156,108 +154,34 @@ service.execute(task);
        
           
         } 
-           
+       public void visData(String valgt){
+       tabell.getColumns().clear();
+       tabell=tableViewFormatter.visData(valgt);
+       tabell.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+       tabell.setLayoutX(25);
+       tabell.setLayoutY(111);
+       tabell.setPrefHeight(522);
+       tabell.setPrefWidth(658);
+       
+       ap.getChildren().add(tabell);
+       //layoutX="25.0" layoutY="111.0" prefHeight="522.0" prefWidth="658.0" />
+   }    
+        // private TableColumn[] columns;
     
-    
- public void visData(String valgt){
-     
-   switch(valgt){
-       case "Artist":
-           ObservableList<Object> artister=FXCollections.observableArrayList(register.getArtister());
-           System.out.println("1");
-           hentData(artister);
-           System.out.println("2");
-           break;
-       case "Lokale":
-           ObservableList<Object> lokale=FXCollections.observableArrayList(register.getLokale());
-           hentData(lokale);
-           break;
-       case "Arrangement":
-           ObservableList<Object> arrangement=FXCollections.observableArrayList(register.getArrangement());
-           hentData(arrangement);
-           break;
-       case "KontaktPerson":
-           ObservableList<Object> kontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
-           hentData(kontaktPerson);
-           break;
-       case "Billett":
-           ObservableList<Object> billett=FXCollections.observableArrayList(register.getBillett());
-           hentData(billett);
-           break;
-        }   
    
-   }
- 
-   private String[] getAttributter(){
-     String[] artistAttributes={"Fornavn","Etternavn","Tlf","typeArtist"};
-      String[] lokaleAttributes={"lokaleNavn","antallPlasser"};
-      String[] arrangAttributes={"Artist","KontaktPerson","sted","type", "navnPaaArrangement","program", "billettPris", "Tidspunkt","billettSalg"};
-      String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","firma","info","nettSide"};
-      String[] billettAttributes={"plassNummer","lokaleNavn","dato", "kundeTlf","arrangementNavn"};
-      
-      switch(valgt){
-          case "Artist":
-               attributter=artistAttributes;
-               break;
-          case "Lokale":
-               attributter=lokaleAttributes;
-               break;
-          case "Arrangement":
-              attributter=arrangAttributes;
-              break;
-          case "KontaktPerson":
-              attributter=kontaktPersonAttributes;
-              break;
-          case "Billett":
-              attributter=billettAttributes;
-              break;
-          
-      }
-      return attributter;
- }
-
    public void refreshTableView(){
        for (Object column : tabell.getColumns()){
            tabell.getColumns().remove(column);
        }
    }
  
-    private TableColumn[] columns;
-    
-   // tar dataen ut fra listen gitt og viser det i tabell
-   public void hentData(ObservableList<Object> liste){
-       tabell.getColumns().clear();
-       attributter=getAttributter();
-    
-       int teller=0;
-  
-       columns=new TableColumn[attributter.length];
-     
-            for (String att : attributter){
-                 columns[teller]=new TableColumn(att);
-                  columns[teller].setCellValueFactory(new PropertyValueFactory<Object, Object>(attributter[teller]));
-          
-           //columns[teller].setCellFactory(TextFieldTableCell.forTableColumn());
-           teller++;
-              }
-  
-    tabell.setItems(liste);
-    for (TableColumn t : columns){
-        tabell.getColumns().addAll(t);
-      
-    }
-      tabell.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-  
-        }
-   
-  
-   
     private CheckBox[] cbArray=null;
     private Button btn;
    
    private void formaterCheckBoxes(){
        
        deleteCheckBoxes();
+       attributter=tableViewFormatter.getTableViewAttributter(valgt);
         cbArray=new CheckBox[attributter.length];
        
        int teller=0;
@@ -287,12 +211,14 @@ service.execute(task);
        
    }
    
+   // Kalles på hver gang valg i radiogroup byttes
    private void deleteCheckBoxes(){
        if (cbArray!=null){
            for (CheckBox cb : cbArray){
                ap.getChildren().remove(cb);
-               ap.getChildren().remove(btn);
+             
            }
+             ap.getChildren().remove(btn);
        }
        
    }
@@ -339,12 +265,7 @@ service.execute(task);
        for (int z=0;z<columns.size();z++){
            tabell.getColumns().add(columns.get(z));
        }
-       
-   
-       
-   }
-   
-   
-   
     
+   }
+ 
 }

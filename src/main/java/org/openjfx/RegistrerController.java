@@ -55,6 +55,7 @@ private ToggleGroup radioGrp;
  // register elemeneter
  private ArrayList<Object> objekter;
  private Register register=Register.getInstance();
+ private InputFormatter inputFormatter=new InputFormatter();
  
  // ddl elelementer
  private ComboBox ddlArtister=null;
@@ -101,114 +102,26 @@ private ToggleGroup radioGrp;
      
  }
  
-  
- // lager dropdownlist dersom registreringen tar inn et objekt framfor streng aka valget er Arrangement
- private void formaterDropdownArrangement(){
-     
-     obsArtister=FXCollections.observableArrayList(register.getArtister());
-     obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
-     obsLokale=FXCollections.observableArrayList(register.getLokale());
-     
-     ddlArtister=new ComboBox(obsArtister);
-     ddlKontaktPerson=new ComboBox(obsKontaktPerson);
-     ddlLokale=new ComboBox(obsLokale);
-      
-    ddlArtister.setLayoutX(50);
-    ddlArtister.setLayoutY(130);
-    ddlArtister.setPromptText("Velg artist");
-    
-    ddlKontaktPerson.setLayoutX(50);
-    ddlKontaktPerson.setLayoutY(170);
-    ddlKontaktPerson.setPromptText("Velg kontaktperson");
-    
-    ddlLokale.setLayoutX(50);
-    ddlLokale.setLayoutY(210);
-    ddlLokale.setPromptText("Velg sted");
-    
-    datePicker=new DatePicker();
-    
-    datePicker.setLayoutX(50);
-    datePicker.setLayoutY(250);
-    datePicker.setPromptText("Velg dato");
-    
-     anchorPane.getChildren().add(ddlArtister);
-     anchorPane.getChildren().add(ddlKontaktPerson);
-     anchorPane.getChildren().add(ddlLokale);
-     
-     anchorPane.getChildren().add(datePicker);
-     
- }
- 
- private void formaterDropdownBillett(){
-     obsArrangement=FXCollections.observableArrayList(register.getArrangement());
-   
-   ddlArrangement=new ComboBox(obsArrangement);
-  
-    ddlArrangement.setLayoutX(50);
-    ddlArrangement.setLayoutY(130);
-    ddlArrangement.setMaxSize(50, 20);
-    
-    
-     anchorPane.getChildren().add(ddlArrangement);
-     
- }
-
- // Attributtene som avgjør antall textfields og textPrompt
- private String[] getAttributter(){
-     String[] artistAttributes={"Fornavn","Etternavn","Tlf","Type artist"};
-      String[] lokaleAttributes={"Lokalenavn","Antall plasser"};
-      String[] arrangAttributes={"Type arrangement", "Arrangementnavn","Program", "Pris", "Tidspunkt - 00:00"};
-      String[] kontaktPersonAttributes={"Fornavn","Etternavn","Tlf","Firma","Info","Nettsted"};
-      String[] billettAttributes={"Plassnummer","Telefonnummer"};
-      
-      switch(valgt){
-          case "Artist":
-               attributter=artistAttributes;
-               break;
-          case "Lokale":
-               attributter=lokaleAttributes;
-               break;
-          case "Arrangement":
-              attributter=arrangAttributes;
-              break;
-          case "KontaktPerson":
-              attributter=kontaktPersonAttributes;
-              break;
-          case "Billett":
-              attributter=billettAttributes;
-              break;
-          
-      }
-      return attributter;
- }
-
 
  private void formaterTextFields(){
-     
-     // Tømmer alt av elementer utenom radio-group
-     // når bruker bytter valg i radiogroup
-   refreshInputElementer();
-     
-      attributter=getAttributter();
-    
-     input=new TextField[attributter.length];
-   
+     refreshInputElementer();
+     input=inputFormatter.lagTextFields(valgt);
      int teller=0;
+     attributter=inputFormatter.getTextFieldAttributter(valgt);
      
+    
       // legg til ddl med alle artister og kontaktpersoner
      if (valgt.equals("Arrangement")){
         formaterDropdownArrangement();  
+        formaterDatePicker();
      }
      else if(valgt.equals("Billett")){
-         
-         formaterDropdownBillett();
-        
+        formaterDropdownBillett();
      }
      
     for (TextField textfields : input){
-        textfields=new TextField();
        textfields.setPromptText(attributter[teller]);
-        input[teller]=textfields;
+        //input[teller]=textfields; // -> jævlig rart
        
         if (teller!=0){
              textfields.setLayoutY(input[teller-1].getLayoutY()+40);
@@ -235,46 +148,64 @@ private ToggleGroup radioGrp;
         teller++;
         
     }
-    // end for
-    
-     btn=new Button("Bekreft");
+      btn=new Button("Bekreft");
    
      btn.setLayoutY(input[teller-1].getLayoutY()+40);
     btn.setLayoutX(50);
       btn.addEventHandler(ActionEvent.ACTION, event->registrer());
       anchorPane.getChildren().add(btn);
-   
  }
  
- private ArrayList<String> getTextFieldData()  throws InvalidTextFieldInputException{
-     ArrayList<String> data=new ArrayList<>();
-     // Samler data fra textfieldene i arraylist
-     for (TextField f : input){
-         if (f.getText().isEmpty()) throw new InvalidTextFieldInputException("Feltene kan ikke være tomme");
-         data.add(f.getText());
-     }
-     return data;
+ private void formaterDropdownArrangement(){
+    ddlArtister=inputFormatter.formaterDropdownArtist();
+    ddlArtister.setLayoutX(50);
+    ddlArtister.setLayoutY(130);
+    ddlArtister.setMaxSize(50, 20);
+    
+    ddlKontaktPerson=inputFormatter.formaterDropdownKontaktPerson();
+   ddlKontaktPerson.setLayoutX(50);
+    ddlKontaktPerson.setLayoutY(170);
+    ddlKontaktPerson.setMaxSize(50, 20);
+    
+    ddlLokale=inputFormatter.formaterDropdownLokale();
+    ddlLokale.setLayoutX(50);
+    ddlLokale.setLayoutY(210);
+    ddlLokale.setMaxSize(50, 20);
+    
+     anchorPane.getChildren().add(ddlArtister);
+     anchorPane.getChildren().add(ddlKontaktPerson);
+     anchorPane.getChildren().add(ddlLokale);
+     
+    
+}
+
+private void formaterDropdownBillett(){
+    ddlArrangement=inputFormatter.formaterDropdownBillett();
+     ddlArrangement.setLayoutX(50);
+    ddlArrangement.setLayoutY(130);
+    ddlArrangement.setMaxSize(50, 20);
+    
+    anchorPane.getChildren().add(ddlArrangement);
+}
+
+private void formaterDatePicker(){
+    datePicker=inputFormatter.formaterDatePicker();
+    datePicker.setLayoutX(50);
+    datePicker.setLayoutY(250);
+    
+    anchorPane.getChildren().add(datePicker);
+}
+
+  private int getArtistIndex() throws InvalidComboBoxValueException{
+     return inputFormatter.getArtistIndex(ddlArtister);
  }
- public int getArtistIndex() throws InvalidComboBoxValueException{
-     artistIndex=ddlArtister.getSelectionModel().getSelectedIndex();
-     if (artistIndex==-1){
-         throw new InvalidComboBoxValueException("Du må velge en artist");
-     }
-       return artistIndex;
+ 
+ private int getKontaktPersonIndex() throws InvalidComboBoxValueException{
+    return inputFormatter.getKontaktPersonIndex(ddlKontaktPerson);
  }
- public int getKontaktPersonIndex() throws InvalidComboBoxValueException{
-     kontaktPersonIndex=ddlKontaktPerson.getSelectionModel().getSelectedIndex();
-       if (kontaktPersonIndex==-1){
-         throw new InvalidComboBoxValueException("Du må velge en kontaktperson");
-     }
-    return kontaktPersonIndex;
- }
- public int getLokaleIndex() throws InvalidComboBoxValueException{
-     lokaleIndex=ddlLokale.getSelectionModel().getSelectedIndex();
-       if (lokaleIndex==-1){
-         throw new InvalidComboBoxValueException("Du må velge lokale");
-     }
-     return lokaleIndex;
+ 
+ private int getLokaleIndex() throws InvalidComboBoxValueException{
+    return inputFormatter.getLokaleIndex(ddlLokale);
  }
 
  @FXML
@@ -282,7 +213,7 @@ private ToggleGroup radioGrp;
      objekter=new ArrayList<>();
       ArrayList<String> data=null;
      try{
-          data=new ArrayList<>(getTextFieldData());
+          data=new ArrayList<>(inputFormatter.getTextFieldData());
      }
      catch(InvalidTextFieldInputException e){
          utskriftRegistrert.setText(e.getMessage());
@@ -298,8 +229,6 @@ private ToggleGroup radioGrp;
          return;
      }*/
     
-     //data=getTextFieldData();
-     
       switch(valgt){
           case "Artist":
               Artist artist=new Artist(data);
@@ -326,9 +255,15 @@ private ToggleGroup radioGrp;
                   return;
               }
              
+                    // burde heller kanskje lagre selve objektet i det og heller hente stedet et annet sted
+                 ObservableList<Artist> obsArtister=FXCollections.observableArrayList(register.getArtister());
+        ObservableList<Lokale> obsLokale=FXCollections.observableArrayList(register.getLokale());
+          
+              ObservableList<KontaktPerson> obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
               //sted
               // burde heller kanskje lagre selve objektet i det og heller hente stedet et annet sted
               data.add(obsLokale.get(lokaleIndex).getLokaleNavn());
+             // data.add("hh");
            Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
            
            utskriftRegistrert.setText(arrang.toString());
@@ -342,6 +277,7 @@ private ToggleGroup radioGrp;
               break;
               
           case "Billett":
+                  ObservableList<Arrangement> obsArrangement=FXCollections.observableArrayList(register.getArrangement());
                Arrangement tilhørendeArrangement=obsArrangement.get(ddlArrangement.getSelectionModel().getSelectedIndex());
               Billett billett=new Billett(tilhørendeArrangement,data);
               utskriftRegistrert.setText(billett.toString());

@@ -26,12 +26,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 
@@ -45,269 +43,18 @@ public class EndringController implements Initializable {
    @FXML
    private AnchorPane anchorPane;
    
-   Register register=Register.getInstance();
-   SletteSystem sletteSystem=new SletteSystem();
+   
    
    private String valgt;
    private String[] attributter;
    
-  
+   private InputFormatter inputFormatter=new InputFormatter();
+   private TableViewFormatter tableViewFormatter=new TableViewFormatter();
+   private EndringSystem endreSystem=new EndringSystem();
+   private Register register=Register.getInstance();
+   private SletteSystem sletteSystem=new SletteSystem();
    
-   
-   @FXML
-   private TableView table=null;
-   
-   private void endreObjekt(){
-         objekter=new ArrayList<>();
-      ArrayList<String> data=null;
-     try{
-          data=new ArrayList<>(getTextFieldData());
-     }
-     catch(InvalidTextFieldInputException e){
-        // utskriftRegistrert.setText(e.getMessage());
-         System.err.println(e.getMessage());
-         return;
-     }
-    /* try {
-         ValideringSystem.validerInputiTextFields(input);
-     }
-     catch(InvalidInputException e){
-         utskriftRegistrert.setText(e.getMessage());
-         System.err.println(e.getMessage());
-         return;
-     }*/
-    
-     //data=getTextFieldData();
-     EndringSystem endreSystem=new EndringSystem();
-      switch(valgt){
-          case "Artist":
-              Artist artist=(Artist)objToChange;
-             // utskriftRegistrert.setText("\n"+artist.toString());
-             endreSystem.endreObject(artist, "Artist");
-             artist=new Artist(data);
-             register.registrer(artist);
-               break;
-               
-          case "Lokale":
-              Lokale lokale=(Lokale)objToChange;
-             // utskriftRegistrert.setText("\n"+artist.toString());
-             endreSystem.endreObject(lokale, "Lokale");
-             lokale=new Lokale(data);
-             register.registrer(lokale);
-               break;
-               
-          case "Arrangement":
-              // hent valg fra combobox
-              try{
-                 artistIndex=getArtistIndex();
-                 kontaktPersonIndex=getKontaktPersonIndex();
-                 lokaleIndex=getLokaleIndex();
-              }
-              catch (InvalidComboBoxValueException e){
-                //  utskriftRegistrert.setText((e.getMessage()));
-                  System.out.println(e.getMessage());
-                  return;
-              }
-              Arrangement arrang=(Arrangement)objToChange;
-             // utskriftRegistrert.setText("\n"+artist.toString());
-             endreSystem.endreObject(arrang, "Arrangement");
-            
-            
-              //sted
-              // burde heller kanskje lagre selve objektet i det og heller hente stedet et annet sted
-              data.add(obsLokale.get(lokaleIndex).getLokaleNavn());
-           arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
-           
-           //utskriftRegistrert.setText(arrang.toString());
-          register.registrer(arrang);
-             break;
-              
-          case "KontaktPerson":
-              KontaktPerson kontaktPerson=(KontaktPerson)objToChange;
-             // utskriftRegistrert.setText("\n"+artist.toString());
-             endreSystem.endreObject(kontaktPerson, "KontaktPerson");
-             kontaktPerson=new KontaktPerson(data);
-             register.registrer(kontaktPerson);
-              break;
-              
-          case "Billett":
-               Arrangement tilhørendeArrangement=obsArrangement.get(ddlArrangement.getSelectionModel().getSelectedIndex());
-              Billett billett=new Billett(tilhørendeArrangement,data);
-             // utskriftRegistrert.setText(billett.toString());
-              objekter.add(billett);
-              break;
-          
-      }
-    
-     refreshInputElementer();
-    visData(valgt);
-    
-       
-   }
-  
-   private String[] getAttributter(){
-     String[] artistAttributes={"Fornavn","Etternavn","Tlf","typeArtist"};
-      String[] lokaleAttributes={"lokaleNavn","antallPlasser"};
-      String[] arrangAttributes={"type", "navnPaaArrangement","program", "billettPris", "Tidspunkt"};
-      String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","firma","info","nettSide"};
-      String[] billettAttributes={"plassNummer","lokaleNavn","dato", "kundeTlf","arrangementNavn"};
-      
-      switch(valgt){
-          case "Artist":
-               attributter=artistAttributes;
-               break;
-          case "Lokale":
-               attributter=lokaleAttributes;
-               break;
-          case "Arrangement":
-              attributter=arrangAttributes;
-              break;
-          case "KontaktPerson":
-              attributter=kontaktPersonAttributes;
-              break;
-          case "Billett":
-              attributter=billettAttributes;
-              break;
-          
-      }
-      return attributter;
- }
-
-
-   
-   private void initRadioGroup(){
-    radioGrp=new ToggleGroup();
-    artistRadio.setToggleGroup(radioGrp);
-    artistRadio.setUserData("Artist");
-    
-    lokaleRadio.setToggleGroup(radioGrp);
-    lokaleRadio.setUserData("Lokale");
-
-    kontaktPersonRadio.setToggleGroup(radioGrp);
-    kontaktPersonRadio.setUserData("KontaktPerson");
-    
-    arrangRadio.setToggleGroup(radioGrp);
-    arrangRadio.setUserData("Arrangement");
-    
-    billettRadio.setToggleGroup(radioGrp);
-    billettRadio.setUserData("Billett");
- }
-   
-   
-   
-   public void hentData(ObservableList<Object> liste){
-       
-       attributter=getAttributter();
-       table=new TableView();
-       
-       TableColumn[] columns=new TableColumn[attributter.length];
-     
-       int teller=0;
-       for (String att : attributter){
-           columns[teller]=new TableColumn(att);
-           columns[teller].setCellValueFactory(new PropertyValueFactory<Object, Object>(attributter[teller]));
-          
-           teller++;
-       }
-    
-    table.setItems(liste);
-    for (TableColumn t : columns){
-        table.getColumns().addAll(t);
-    }
-     table.setLayoutX(57);
-     table.setLayoutY(120);
-     table.setPrefHeight(200);
-     table.setPrefWidth(600);
-     table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-       anchorPane.getChildren().add(table);
-       
-        table.setEditable(true);
-       
-        }
-   
-    
-   public void visData(String valgt){
-     
-   switch(valgt){
-       case "Artist":
-           ObservableList<Object> artister=FXCollections.observableArrayList(register.getArtister());
-           System.out.println("1");
-           hentData(artister);
-           System.out.println("2");
-           break;
-       case "Lokale":
-           ObservableList<Object> lokale=FXCollections.observableArrayList(register.getLokale());
-           hentData(lokale);
-           break;
-       case "Arrangement":
-           ObservableList<Object> arrangement=FXCollections.observableArrayList(register.getArrangement());
-           hentData(arrangement);
-           break;
-       case "KontaktPerson":
-           ObservableList<Object> kontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
-           hentData(kontaktPerson);
-           break;
-       case "Billett":
-           ObservableList<Object> billett=FXCollections.observableArrayList(register.getBillett());
-           hentData(billett);
-           break;
-        }   
-   
-   }
-   
-   // TODO
-   // Slette fra alt
-   public void sletteKnapp()
-    {
-      
-        ObservableList<Object> valgtRad, getObject;
-        getObject = table.getItems();
-                
-        valgtRad = table.getSelectionModel().getSelectedItems();
-                
-        for (Object obj: valgtRad)
-        {
-             getObject.remove(obj);
-             sletteSystem.remove(obj);
-          
-        }
-          refreshInputElementer();
-    }
-   
-   // TODO
-   // Endre metoder
-   
-   
-   
-
-   public Object objToChange;
-   
-   @FXML
-   public void endre(ActionEvent event) throws IOException{
-       
-       
-       objToChange=getDataFromTable();
-      formaterTextFields();
-       
-       
-   }
-   
-   public Object getDataFromTable(){
-      Object obj=null;
-       
-       if (table.getSelectionModel().getSelectedItem()!=null){
-          System.out.print(table.getSelectionModel().getSelectedItem());
-           obj=table.getSelectionModel().getSelectedItem();
-      
-       }
-       return obj;
-       
-   }
-   
-   // endre kode
-   
-    // textfields elementer
+   // textfields elementer
  
  
  // register elemeneter
@@ -335,9 +82,202 @@ private TextField[] input=null;
  // date elementer
  private DatePicker datePicker=null;
  
+ 
+   @FXML
+   private TableView table=null;
+   
+   
+  
+   public int getArtistIndex() throws InvalidComboBoxValueException{
+   return inputFormatter.getArtistIndex(ddlArtister);
+ }
+ 
+ public int getKontaktPersonIndex() throws InvalidComboBoxValueException{
+   return inputFormatter.getArtistIndex(ddlKontaktPerson);
+ }
+ 
+ public int getLokaleIndex() throws InvalidComboBoxValueException{
+    return inputFormatter.getArtistIndex(ddlLokale);
+ }
+  
+   
+   
+   private void endreObjekt(){
+         objekter=new ArrayList<>();
+      ArrayList<String> data=null;
+     try{
+          data=new ArrayList<>(inputFormatter.getTextFieldData());
+     }
+     catch(InvalidTextFieldInputException e){
+        // utskriftRegistrert.setText(e.getMessage());
+         System.err.println(e.getMessage());
+         return;
+     }
+    /* try {
+         ValideringSystem.validerInputiTextFields(input);
+     }
+     catch(InvalidInputException e){
+         utskriftRegistrert.setText(e.getMessage());
+         System.err.println(e.getMessage());
+         return;
+     }*/
+    
+    
+   
+      switch(valgt){
+          case "Artist":
+              Artist artist=(Artist)objToChange;
+          
+             endreSystem.endreObject(artist, "Artist");
+             artist=new Artist(data);
+             register.registrer(artist);
+               break;
+               
+          case "Lokale":
+              Lokale lokale=(Lokale)objToChange;
+          
+             endreSystem.endreObject(lokale, "Lokale");
+             lokale=new Lokale(data);
+             register.registrer(lokale);
+               break;
+               
+          case "Arrangement":
+              // hent valg fra combobox
+              try{
+                 artistIndex=getArtistIndex();
+                 kontaktPersonIndex=getKontaktPersonIndex();
+                 lokaleIndex=getLokaleIndex();
+              }
+              catch (InvalidComboBoxValueException e){
+              //  utskriftRegistrert.setText((e.getMessage()));
+                  System.out.println(e.getMessage());
+                  return;
+              }
+              Arrangement arrang=(Arrangement)objToChange;
+             // utskriftRegistrert.setText("\n"+artist.toString());
+             endreSystem.endreObject(arrang, "Arrangement");
+            
+            
+              //sted
+              // burde heller kanskje lagre selve objektet i det og heller hente stedet et annet sted
+        ObservableList<Artist> obsArtister=FXCollections.observableArrayList(register.getArtister());
+        ObservableList<Lokale> obsLokale=FXCollections.observableArrayList(register.getLokale());         
+        ObservableList<KontaktPerson> obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
+        
+         data.add(obsLokale.get(lokaleIndex).getLokaleNavn());
+             
+           arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
+           
+           //utskriftRegistrert.setText(arrang.toString());
+          register.registrer(arrang);
+             break;
+              
+          case "KontaktPerson":
+              KontaktPerson kontaktPerson=(KontaktPerson)objToChange;
+             // utskriftRegistrert.setText("\n"+artist.toString());
+             endreSystem.endreObject(kontaktPerson, "KontaktPerson");
+             kontaktPerson=new KontaktPerson(data);
+             register.registrer(kontaktPerson);
+              break;
+              
+          case "Billett":
+               ObservableList<Arrangement> obsArrangement=FXCollections.observableArrayList(register.getArrangement());
+               Arrangement tilhørendeArrangement=obsArrangement.get(ddlArrangement.getSelectionModel().getSelectedIndex());
+              Billett billett=new Billett(tilhørendeArrangement,data);
+             // utskriftRegistrert.setText(billett.toString());
+              objekter.add(billett);
+              break;
+          
+      }
+    
+     refreshInputElementer();
+     visData(valgt);
+ 
+   }
+  
+   private void initRadioGroup(){
+    radioGrp=new ToggleGroup();
+    artistRadio.setToggleGroup(radioGrp);
+    artistRadio.setUserData("Artist");
+    
+    lokaleRadio.setToggleGroup(radioGrp);
+    lokaleRadio.setUserData("Lokale");
+
+    kontaktPersonRadio.setToggleGroup(radioGrp);
+    kontaktPersonRadio.setUserData("KontaktPerson");
+    
+    arrangRadio.setToggleGroup(radioGrp);
+    arrangRadio.setUserData("Arrangement");
+    
+    billettRadio.setToggleGroup(radioGrp);
+    billettRadio.setUserData("Billett");
+ }
+   
+   public void visData(String valgt){
+       table=tableViewFormatter.visData(valgt);
+      table.setLayoutX(57);
+     table.setLayoutY(120);
+     table.setPrefHeight(200);
+     table.setPrefWidth(600);
+       anchorPane.getChildren().add(table);
+   }
+   
+ 
+   
+   // TODO
+   // Slette fra alt
+   public void sletteKnapp()
+    {
+      
+        ObservableList<Object> valgtRad, getObject;
+        getObject = table.getItems();
+                
+        valgtRad = table.getSelectionModel().getSelectedItems();
+                
+        for (Object obj: valgtRad)
+        {
+             getObject.remove(obj);
+             sletteSystem.remove(obj);
+          
+        }
+       refreshInputElementer();
+    }
+   
+// Endre metoder
+   public Object objToChange;
+   
+   @FXML
+   public void endre(ActionEvent event) throws IOException{
+       
+       refreshInputElementer();
+       objToChange=getDataFromTable();
+       formaterTextFields();
+      
+    btn=new Button("Bekreft");
+    btn.setLayoutY(input[input.length-1].getLayoutY()+40);
+    btn.setLayoutX(700);
+    btn.addEventHandler(ActionEvent.ACTION, even->endreObjekt());
+    
+    anchorPane.getChildren().add(btn);
+    
+   }
+   
+   private Object getDataFromTable(){
+      Object obj=null;
+       
+       if (table.getSelectionModel().getSelectedItem()!=null){
+          System.out.print(table.getSelectionModel().getSelectedItem());
+           obj=table.getSelectionModel().getSelectedItem();
+      
+       }
+       return obj;
+       
+   }
+   
+ 
 
  // Fjerner textfields på radiobutton-onchange()
- private void refreshInputElementer(){
+private void refreshInputElementer(){
      if (input==null){
          return;
      }
@@ -360,165 +300,65 @@ private TextField[] input=null;
    anchorPane.getChildren().remove(btn);
      
  }
- 
-  
- // lager dropdownlist dersom registreringen tar inn et objekt framfor streng aka valget er Arrangement
- private void formaterDropdownArrangement(){
-     
-     obsArtister=FXCollections.observableArrayList(register.getArtister());
-     obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
-     obsLokale=FXCollections.observableArrayList(register.getLokale());
-     
-     ddlArtister=new ComboBox(obsArtister);
-     ddlKontaktPerson=new ComboBox(obsKontaktPerson);
-     ddlLokale=new ComboBox(obsLokale);
-     
-      
+private void formaterDropdownArrangement(){
+    ddlArtister=inputFormatter.formaterDropdownArtist();
     ddlArtister.setLayoutX(700);
     ddlArtister.setLayoutY(130);
-    ddlArtister.setPromptText("Velg artist");
-    //ddlArtister.setValue();
     
+    ddlKontaktPerson=inputFormatter.formaterDropdownKontaktPerson();
     ddlKontaktPerson.setLayoutX(700);
     ddlKontaktPerson.setLayoutY(170);
-    ddlKontaktPerson.setPromptText("Velg kontaktperson");
     
+    ddlLokale=inputFormatter.formaterDropdownLokale();
     ddlLokale.setLayoutX(700);
     ddlLokale.setLayoutY(210);
-    ddlLokale.setPromptText("Velg sted");
-    
-    datePicker=new DatePicker();
-    
-    datePicker.setLayoutX(700);
-    datePicker.setLayoutY(250);
-    datePicker.setPromptText("Velg dato");
     
      anchorPane.getChildren().add(ddlArtister);
      anchorPane.getChildren().add(ddlKontaktPerson);
      anchorPane.getChildren().add(ddlLokale);
      
-     anchorPane.getChildren().add(datePicker);
-     
- }
- 
- private void formaterDropdownBillett(){
-     obsArrangement=FXCollections.observableArrayList(register.getArrangement());
-   
-   ddlArrangement=new ComboBox(obsArrangement);
-  
-    ddlArrangement.setLayoutX(700);
-    ddlArrangement.setLayoutY(130);
-    ddlArrangement.setMaxSize(50, 20);
     
-    
-     anchorPane.getChildren().add(ddlArrangement);
-     
- }
+}
 
- // Attributtene som avgjør antall textfields og textPrompt
- 
+private void formaterDropdownBillett(){
+    ddlArrangement=inputFormatter.formaterDropdownBillett();
+     ddlArrangement.setLayoutX(700);
+    ddlArrangement.setLayoutY(130);
+    
+    anchorPane.getChildren().add(ddlArrangement);
+}
+
+private void formaterDatePicker(){
+    datePicker=inputFormatter.formaterDatePicker();
+    datePicker.setLayoutX(700);
+    datePicker.setLayoutY(250);
+    
+    anchorPane.getChildren().add(datePicker);
+}
+
  private void formaterTextFields(){
-     
-     // Tømmer alt av elementer utenom radio-group
-     // når bruker bytter valg i radiogroup
-   refreshInputElementer();
-     
-      attributter=getAttributter();
-    String text=objToChange.toString();
-    String[] felter=text.split("\n ");
-     input=new TextField[attributter.length];
-   
+     input=inputFormatter.lagTextFields(valgt);
      int teller=0;
-     
-      // legg til ddl med alle artister og kontaktpersoner
-     if (valgt.equals("Arrangement")){
+         String text=objToChange.toString();
+    String[] felter=text.split("\n ");
+    
+      if (valgt.equals("Arrangement")){
         formaterDropdownArrangement();  
+        formaterDatePicker();
         
      }
      else if(valgt.equals("Billett")){
          formaterDropdownBillett();
      }
     
-    for (TextField textfields : input){
-        textfields=new TextField();
-      
-      textfields.setText(felter[teller]);
-        input[teller]=textfields;
-       
-        if (teller!=0){
-             textfields.setLayoutY(input[teller-1].getLayoutY()+40);
-            textfields.setLayoutX(700);
-        }
-          // Gir første textfield startposisjon, og resten bygger på den
-        else{
-            if (valgt.equals("Arrangement")){
-                 textfields.setLayoutY(290);
-            textfields.setLayoutX(700);
-            }
-            else if(valgt.equals("Billett")){
-                
-                textfields.setLayoutY(170);
-                textfields.setLayoutX(700);
-            }
-            else{
-                 textfields.setLayoutY(130);
-            textfields.setLayoutX(700);
-            }
-        }
-      
-        anchorPane.getChildren().add(textfields);
-        teller++;
-        
-    }
-    // end for
-    
-     btn=new Button("Bekreft");
-   
-     btn.setLayoutY(input[teller-1].getLayoutY()+40);
-    btn.setLayoutX(700);
-      btn.addEventHandler(ActionEvent.ACTION, event->endreObjekt());
-      anchorPane.getChildren().add(btn);
-   
- }
- // Formatering ferdig
- 
-  private ArrayList<String> getTextFieldData()  throws InvalidTextFieldInputException{
-     ArrayList<String> data=new ArrayList<>();
-     // Samler data fra textfieldene i arraylist
      for (TextField f : input){
-         if (f.getText().isEmpty()) throw new InvalidTextFieldInputException("Feltene kan ikke være tomme");
-         data.add(f.getText());
+         anchorPane.getChildren().add(f);
+         f.setText(felter[teller]);
+         teller++;
      }
-     return data;
- }
-  
- public int getArtistIndex() throws InvalidComboBoxValueException{
-     artistIndex=ddlArtister.getSelectionModel().getSelectedIndex();
-     if (artistIndex==-1){
-         throw new InvalidComboBoxValueException("Du må velge en artist");
-     }
-       return artistIndex;
  }
  
- public int getKontaktPersonIndex() throws InvalidComboBoxValueException{
-     kontaktPersonIndex=ddlKontaktPerson.getSelectionModel().getSelectedIndex();
-       if (kontaktPersonIndex==-1){
-         throw new InvalidComboBoxValueException("Du må velge en kontaktperson");
-     }
-    return kontaktPersonIndex;
- }
  
- public int getLokaleIndex() throws InvalidComboBoxValueException{
-     lokaleIndex=ddlLokale.getSelectionModel().getSelectedIndex();
-       if (lokaleIndex==-1){
-         throw new InvalidComboBoxValueException("Du må velge lokale");
-     }
-     return lokaleIndex;
- }
-  
-   
-   
-   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
           
