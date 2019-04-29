@@ -49,7 +49,7 @@ public class Register implements Serializable {
                    kontaktPerson.add((KontaktPerson)obj);
                    break;
                    
-               case "class Model.Domene.Bilett":
+               case "class Model.Domene.Billett":
                    billett.add((Billett)obj);
                    break;
                    

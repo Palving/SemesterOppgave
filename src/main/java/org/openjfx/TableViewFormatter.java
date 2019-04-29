@@ -35,14 +35,9 @@ public class TableViewFormatter {
     for (TableColumn t : columns){
         table.getColumns().addAll(t);
     }
-     /*table.setLayoutX(57);
-     table.setLayoutY(120);
-     table.setPrefHeight(200);
-     table.setPrefWidth(600);*/
+  
      table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-       //anchorPane.getChildren().add(table);
-       
         table.setEditable(true);
         return table;
         
@@ -59,9 +54,9 @@ public class TableViewFormatter {
       String[] billettAttributes={"plassNummer","lokaleNavn","dato", "kundeTlf","arrangementNavn"};*/
     String[] artistAttributes={"Fornavn","Etternavn","Tlf","typeArtist"};
       String[] lokaleAttributes={"lokaleNavn","antallPlasser"};
-      String[] arrangAttributes={"Artist","KontaktPerson","sted","type", "navnPaaArrangement","program", "billettPris", "Tidspunkt","billettSalg"};
-      String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","firma","info","nettSide"};
-      String[] billettAttributes={"plassNummer","lokaleNavn","dato", "kundeTlf","arrangementNavn"};
+      String[] arrangAttributes={"Artist","KontaktPerson","sted","dato","tidspunkt", "type", "navnPaaArrangement","program", "billettPris","billettSalg"};
+      String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","nettSide","firma","info"};
+      String[] billettAttributes={"plassNummer","kundeTlf","lokaleNavn","dato","arrangementNavn"};
       
       switch(valgt){
           case "Artist":

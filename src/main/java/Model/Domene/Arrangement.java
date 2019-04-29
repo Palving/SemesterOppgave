@@ -7,16 +7,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Arrangement {
+    
+    private KontaktPerson kontaktPerson;
+    private Artist artist;
+    private String sted;
+    
     private String type;
     private String navnPaaArrangement;
     private String program;
-    private String sted;
+     private int billettPris;
     private LocalDate dato;
-    private String tidspunkt;
-    private int billettPris;
     private int billettSalg=0;
-    private KontaktPerson kontaktPerson;
-    private Artist artist;
+    private String tidspunkt;
+    private DatoFormat tid;
+    
+  
     
     public Arrangement(Artist artist, KontaktPerson kontaktPerson, String type, String navnPaaArrangement, String program, String sted, String tidspunkt,LocalDate dato, int billettPris){
         this.type=type;
@@ -28,23 +33,34 @@ public class Arrangement {
         this.billettPris=billettPris;
         this.kontaktPerson=kontaktPerson;
         this.artist=artist;
+        this.tid=new DatoFormat(this.dato, this.tidspunkt);
     }
-    public Arrangement(Artist artist, KontaktPerson kontaktPerson, ArrayList<String> data, LocalDate dato){
+    public Arrangement(Artist artist, KontaktPerson kontaktPerson, ArrayList<String> data, LocalDate dato) throws NumberFormatException{
         
-        this.artist=artist;
+        try{
+             this.artist=artist;
         this.kontaktPerson=kontaktPerson;                
-        this.type=data.get(0);
+       this.tidspunkt=data.get(0);
         this.navnPaaArrangement=data.get(1);
         this.program=data.get(2);
+         this.type=data.get(3);
+        this.billettPris=Integer.parseInt(data.get(4));
        
-        this.tidspunkt=data.get(4);
+         
         this.sted=data.get(5);
         this.dato=dato;
+    
  
-         this.billettPris=Integer.parseInt(data.get(3));
+     
+        }
+        catch(NumberFormatException e){
+            System.err.println(e.getMessage());
+        }
+       
          
     // exception på int
     }
+  
        
     
     protected void plussBillettsalg(){
@@ -128,10 +144,14 @@ public class Arrangement {
     }
     
 
-    @Override
+    /*@Override
     public String toString() {
         return  type + "\n " + navnPaaArrangement + "\n " + program + "\n " + sted + "\n "+DatoFormat.formaterDato(dato, tidspunkt)+ "\n " + billettPris + "\n " + billettSalg + "\n " + kontaktPerson.getEtternavn() + "\n " + artist.getEtternavn();
-    }
+    }*/
+    @Override
+     public String toString() {
+        return  tidspunkt+"\n "+ type + "\n " + navnPaaArrangement + "\n " + program + "\n " + billettPris+"\n "+ tidspunkt;
+     }
     
   public boolean equals(Arrangement arrang){
         if (this==arrang){

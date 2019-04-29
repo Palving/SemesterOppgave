@@ -3,6 +3,7 @@ package org.openjfx;
 import Model.Avvik.InvalidComboBoxValueException;
 import Model.Avvik.InvalidInputException;
 import Model.Avvik.InvalidTextFieldInputException;
+import Model.Avvik.InvalidTimeFormatException;
 import Model.Domene.*;
 import Model.Registrering.Register;
 import Model.Registrering.ValideringSystem;
@@ -220,14 +221,14 @@ private void formaterDatePicker(){
          System.err.println(e.getMessage());
          return;
      }
-    /* try {
+    try {
          ValideringSystem.validerInputiTextFields(input);
      }
      catch(InvalidInputException e){
          utskriftRegistrert.setText(e.getMessage());
          System.err.println(e.getMessage());
          return;
-     }*/
+     }
     
       switch(valgt){
           case "Artist":
@@ -252,6 +253,14 @@ private void formaterDatePicker(){
               catch (InvalidComboBoxValueException e){
                   utskriftRegistrert.setText((e.getMessage()));
                   System.out.println(e.getMessage());
+                  return;
+              }
+              
+              try{
+                  ValideringSystem.validerTimeFormat(data.get(0));
+              }
+              catch(InvalidTimeFormatException e){
+                  System.err.println(e.getMessage());
                   return;
               }
              

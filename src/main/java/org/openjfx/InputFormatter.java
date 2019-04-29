@@ -52,18 +52,18 @@ private TextField[] input=null;
 
 private String[] attributter; 
  @FXML
- AnchorPane anchorPane;
+ private AnchorPane anchorPane;
  
  @FXML
- Button btn;
+ private Button btn;
  
- Register register=Register.getInstance();
+ private Register register=Register.getInstance();
  
  
   protected String[] getTextFieldAttributter(String valgt){
      String[] artistAttributes={"Fornavn","Etternavn","Tlf","Type artist"};
       String[] lokaleAttributes={"Lokalenavn","Antall plasser"};
-      String[] arrangAttributes={"Type arrangement", "Arrangementnavn","Program", "Pris", "Tidspunkt - 00:00"};
+      String[] arrangAttributes={"Klokkeslett 00:00","Arrangementnavn","Program","Type","Pris",};
       String[] kontaktPersonAttributes={"Fornavn","Etternavn","Tlf","Firma","Info","Nettsted"};
       String[] billettAttributes={"Plassnummer","Telefonnummer"};
       
@@ -92,17 +92,10 @@ private String[] attributter;
  // lager dropdownlist dersom registreringen tar inn et objekt framfor streng aka valget er Arrangement
  protected ComboBox formaterDropdownArtist(){
      
-     obsArtister=FXCollections.observableArrayList(register.getArtister());
-    
-     
-     ddlArtister=new ComboBox(obsArtister);
-   
-      
-   
+    obsArtister=FXCollections.observableArrayList(register.getArtister());
+    ddlArtister=new ComboBox(obsArtister);
     ddlArtister.setPromptText("Velg artist");
-    //ddlArtister.setValue();
-    
- 
+   
     return ddlArtister;
    
  }
@@ -110,7 +103,6 @@ private String[] attributter;
  protected ComboBox formaterDropdownKontaktPerson(){
     
      obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
-    
      ddlKontaktPerson=new ComboBox(obsKontaktPerson);
      ddlKontaktPerson.setPromptText("Velg kontaktperson");
     
@@ -120,7 +112,6 @@ private String[] attributter;
  protected ComboBox formaterDropdownLokale(){
       
      obsLokale=FXCollections.observableArrayList(register.getLokale());
-     
      ddlLokale=new ComboBox(obsLokale);
      ddlLokale.setPromptText("Velg sted");
     
@@ -139,7 +130,6 @@ private String[] attributter;
  protected ComboBox formaterDropdownBillett(){
      
    obsArrangement=FXCollections.observableArrayList(register.getArrangement());
-   
    ddlArrangement=new ComboBox(obsArrangement);
    ddlArrangement.setMaxSize(50, 20);
     

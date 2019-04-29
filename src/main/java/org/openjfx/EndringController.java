@@ -183,9 +183,12 @@ private TextField[] input=null;
           case "Billett":
                ObservableList<Arrangement> obsArrangement=FXCollections.observableArrayList(register.getArrangement());
                Arrangement tilhørendeArrangement=obsArrangement.get(ddlArrangement.getSelectionModel().getSelectedIndex());
-              Billett billett=new Billett(tilhørendeArrangement,data);
+               
+               Billett billett=(Billett) objToChange;
+               endreSystem.endreObject(objToChange, "Billett");
+           billett=new Billett(tilhørendeArrangement,data);
              // utskriftRegistrert.setText(billett.toString());
-              objekter.add(billett);
+           register.registrer(billett);
               break;
           
       }
@@ -332,7 +335,6 @@ private void formaterDatePicker(){
     datePicker=inputFormatter.formaterDatePicker();
     datePicker.setLayoutX(700);
     datePicker.setLayoutY(250);
-    
     anchorPane.getChildren().add(datePicker);
 }
 
@@ -345,10 +347,16 @@ private void formaterDatePicker(){
       if (valgt.equals("Arrangement")){
         formaterDropdownArrangement();  
         formaterDatePicker();
+        Arrangement a=(Arrangement)objToChange;
+        datePicker.setValue(a.getDato());
+        
         
      }
      else if(valgt.equals("Billett")){
          formaterDropdownBillett();
+        // Billett b=(Billett)objToChange;
+        // datePicker.setValue(b.getDato());
+        
      }
     
      for (TextField f : input){

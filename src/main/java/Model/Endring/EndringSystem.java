@@ -12,10 +12,8 @@ public class EndringSystem {
     
     private Register register=Register.getInstance();
     
-    public static ArrayList<Object> fjernObject(Object o){
-        return null;
-    }
-    
+    // Finner objektet i registeret som er det som er valgt i tabellen
+    // Deretter slettes det, slik at det endrete objektet kan lagres
     public void endreObject(Object objToChange, String type){
        
           ObservableList list;
@@ -85,33 +83,6 @@ public class EndringSystem {
         
     }
     
-    // returnerer typen
-    // ser penere ut
-    public static String typeClass(Object o){
-        String classType=o.getClass().toString();
-        String type=null;
-           switch(classType){
-          case "class Model.Domene.Artist":
-             type="Artist";
-               break;
-          case "class Model.Domene.Lokale":
-             type="Lokale";
-               break;
-          case "class Model.Domene.Arrangement":
-             type="Arrangement";
-              break;
-          case "class Model.Domene.KontaktPerson":
-              type="KontaktPerson";
-              break;
-          case "class Model.Domene.Billett":
-            type="Billett";
-              break;
-         
-      }
-      return type;
-        
-        
-    }
-    
+
     
 }

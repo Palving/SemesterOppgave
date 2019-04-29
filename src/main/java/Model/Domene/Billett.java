@@ -41,15 +41,15 @@ public class Billett {
     try {
          arrang.plussBillettsalg();
         this.plassNummer=Integer.parseInt(data.get(0));
+         this.kundeTlf=data.get(1);
         this.lokaleNavn=arrang.getSted();
         this.dato=arrang.getDato();
         this.pris=arrang.getBillettPris();
-        this.kundeTlf=data.get(1);
         this.arrangementNavn=arrang.getNavnPaaArrangement();
        
     }    
     catch(Exception e){
-        
+        System.out.println(e.getMessage());
     }
     
     }
@@ -107,7 +107,7 @@ public class Billett {
     
     @Override
     public String toString(){
-      return this.plassNummer+"\n "+this.lokaleNavn+"\n "+DatoFormat.formaterDato(dato, klokkeslett)+"\n "+this.pris+"+\n "+this.kundeTlf+"\n "+this.arrangementNavn;
+      return this.plassNummer+"\n "+this.kundeTlf+"\n "+this.lokaleNavn+"\n "+DatoFormat.formaterDato(dato, klokkeslett)+"\n "+this.pris+"\n "+this.arrangementNavn;
     }
   
     public boolean equals(Billett billett){
