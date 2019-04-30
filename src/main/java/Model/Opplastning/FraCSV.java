@@ -8,9 +8,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 
-public class TilCSVfil extends Nedlasting {
+public class FraCSV extends OpplastingSystem {
     
-    public TilCSVfil(File file, Register register){
+    public FraCSV(File file, Register register){
         super(file, register);
     }
     

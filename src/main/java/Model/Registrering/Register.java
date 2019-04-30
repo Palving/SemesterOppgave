@@ -20,6 +20,18 @@ public class Register implements Serializable {
                                                                                                                                                                                                                                                                                                 
     }
     
+    // hvis plass og arrangement er like så skal ikke billetten kunnes registrerers
+    public boolean sjekkLedigPlass(Billett billettÅsjekke){
+        for (Billett b : billett){
+            if (billettÅsjekke.getPlassNummer()==b.getPlassNummer() 
+                 && billettÅsjekke.getArrangementNavn().equals(b.getArrangementNavn())){
+                return true;
+            }
+        }
+        
+      return false;
+    }
+    
     public static Register getInstance(){
         return instance;
     }

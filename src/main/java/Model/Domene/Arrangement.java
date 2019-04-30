@@ -41,9 +41,9 @@ public class Arrangement {
              this.artist=artist;
         this.kontaktPerson=kontaktPerson;                
        this.tidspunkt=data.get(0);
-        this.navnPaaArrangement=data.get(1);
-        this.program=data.get(2);
-         this.type=data.get(3);
+        this.navnPaaArrangement=data.get(2);
+        this.program=data.get(3);
+         this.type=data.get(1);
         this.billettPris=Integer.parseInt(data.get(4));
        
          

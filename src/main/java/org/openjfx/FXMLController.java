@@ -1,8 +1,7 @@
 package org.openjfx;
 
-import Model.Lagring.Lagring;
-import Model.Nedlasting.Nedlasting;
-import Model.Nedlasting.TilJOBJfil;
+import Model.Lagring.TilJOBJ;
+import Model.Opplastning.FraJOBJ;
 import Model.Registrering.Register;
 import Model.Tråder.ThreadSystem;
 import java.io.File;
@@ -25,9 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -84,7 +81,7 @@ public class FXMLController {
     // private ExecutorService service = Executors.newSingleThreadExecutor();
    
      @FXML
-    private void lagre(ActionEvent event) throws IOException{
+    private void lastOpp(ActionEvent event) throws IOException{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Åpne fil");
         //fileChooser.setInitialDirectory(new File);
@@ -97,7 +94,9 @@ public class FXMLController {
        
                  String vei = ""+ file;
         System.out.println(vei);
-        Lagring g = new Lagring(vei);
+        Register register = Register.getInstance();
+        FraJOBJ g = new FraJOBJ(file,register);
+       
       
       // Tråder
        ExecutorService service = Executors.newSingleThreadExecutor();
@@ -113,9 +112,14 @@ public class FXMLController {
     private void lastNed(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Skriv filnavn");
-        File file = fileChooser.showSaveDialog(stage);
+        File path = fileChooser.showSaveDialog(stage);
+        String file=""+path;
         Register register = Register.getInstance();
-        Nedlasting r = new TilJOBJfil (file , register);
+        //Nedlasting r = new TilJOBJfil (file , register);
+       
+         TilJOBJ test=new TilJOBJ(file);
+           test.lagreTilFil();
+           
     }
     
     @FXML
@@ -142,7 +146,7 @@ public class FXMLController {
       
            register.test();
            this.populerDropdown();
-           
+          
         dropdownliste.valueProperty().addListener(new ChangeListener<String>() {
         @Override public void changed(ObservableValue obsVal, String t, String t1) {
           System.out.println(obsVal);

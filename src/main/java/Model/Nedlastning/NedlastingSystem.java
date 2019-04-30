@@ -18,10 +18,11 @@ import java.util.Arrays;
 
 
 
-public class Lagring {
+public class NedlastingSystem {
     private String vei;    
     
-    public Lagring (String vei){
+    
+    public NedlastingSystem (String vei){
         this.vei=vei;
         
     }

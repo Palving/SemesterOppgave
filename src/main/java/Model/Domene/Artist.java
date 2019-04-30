@@ -5,6 +5,7 @@
  */
 package Model.Domene;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author palvi
  */
-public class Artist extends Person {
+public class Artist extends Person implements Serializable  {
     private String typeArtist;
     
     public Artist(String fornavn, String etternavn, String tlf, String typeArtist){

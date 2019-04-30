@@ -9,15 +9,14 @@ import java.util.ArrayList;
 //import javafx.stage.FileChooser;
 //import javafx.stage.Stage;
 
-public abstract class Nedlasting {
+public abstract class OpplastingSystem {
     public File file;
     public Register register;
     
-    public Nedlasting ( File file, Register register){
+    public OpplastingSystem ( File file, Register register){
         this.file = file;
         this.register = register;
     }
-   
     
     /*public void nedLastVei(){
         FileChooser fileChooser = new FileChooser();

@@ -211,13 +211,15 @@ private void formaterDatePicker(){
 
  @FXML
  private void registrer(){
-     objekter=new ArrayList<>();
+    //objekter=new ArrayList<>();
+    Object objToReg=null;
       ArrayList<String> data=null;
      try{
           data=new ArrayList<>(inputFormatter.getTextFieldData());
      }
      catch(InvalidTextFieldInputException e){
          utskriftRegistrert.setText(e.getMessage());
+         
          System.err.println(e.getMessage());
          return;
      }
@@ -234,13 +236,14 @@ private void formaterDatePicker(){
           case "Artist":
               Artist artist=new Artist(data);
               utskriftRegistrert.setText("\n"+artist.toString());
-              objekter.add(artist);
+             // objekter.add(artist);
+              objToReg=artist;
                break;
                
           case "Lokale":
               Lokale lokale=new Lokale(data);
               utskriftRegistrert.setText("\n"+lokale.toString());
-              objekter.add(lokale);
+              objToReg=lokale;
                break;
                
           case "Arrangement":
@@ -276,28 +279,33 @@ private void formaterDatePicker(){
            Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
            
            utskriftRegistrert.setText(arrang.toString());
-           objekter.add(arrang);
+          objToReg=arrang;
              break;
               
           case "KontaktPerson":
               KontaktPerson kontaktPerson=new KontaktPerson(data);
               utskriftRegistrert.setText(kontaktPerson.toString());
-              objekter.add(kontaktPerson);
+              objToReg=kontaktPerson;
               break;
               
           case "Billett":
-                  ObservableList<Arrangement> obsArrangement=FXCollections.observableArrayList(register.getArrangement());
-               Arrangement tilhørendeArrangement=obsArrangement.get(ddlArrangement.getSelectionModel().getSelectedIndex());
+              
+              ObservableList<Arrangement> obsArrangement=FXCollections.observableArrayList(register.getArrangement());
+              Arrangement tilhørendeArrangement=obsArrangement.get(ddlArrangement.getSelectionModel().getSelectedIndex());
               Billett billett=new Billett(tilhørendeArrangement,data);
+              
+              if (register.sjekkLedigPlass(billett)){
+                  utskriftRegistrert.setText("Plassen er opptatt, vennligst velg annet plassnummer");
+                  return;
+              }
               utskriftRegistrert.setText(billett.toString());
-              objekter.add(billett);
+              objToReg=billett;
               break;
           
       }
      
-     // Sketchy
-     // TODO: Fiks dette
-    register.registrer(objekter.get(0));
+     
+    register.registrer(objToReg);
    
  }
 
@@ -334,7 +342,7 @@ private void formaterDatePicker(){
             
             // Valget i radio-gruppen
           valgt=radioGrp.getSelectedToggle().getUserData().toString();
-          System.out.println(valgt);
+         
           
           // Lager textfields basert på valgt
           formaterTextFields();

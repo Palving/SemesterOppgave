@@ -2,6 +2,7 @@ package org.openjfx;
 
 
 import Model.Avvik.InvalidComboBoxValueException;
+import Model.Avvik.InvalidInputException;
 import Model.Avvik.InvalidTextFieldInputException;
 import Model.Domene.Arrangement;
 import Model.Domene.Artist;
@@ -11,6 +12,7 @@ import Model.Domene.Lokale;
 import Model.Endring.EndringSystem;
 import Model.Endring.SletteSystem;
 import Model.Registrering.Register;
+import Model.Registrering.ValideringSystem;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -113,11 +115,11 @@ private TextField[] input=null;
          System.err.println(e.getMessage());
          return;
      }
-    /* try {
+   /* try {
          ValideringSystem.validerInputiTextFields(input);
      }
      catch(InvalidInputException e){
-         utskriftRegistrert.setText(e.getMessage());
+         //utskriftRegistrert.setText(e.getMessage());
          System.err.println(e.getMessage());
          return;
      }*/
@@ -154,6 +156,8 @@ private TextField[] input=null;
                   return;
               }
               Arrangement arrang=(Arrangement)objToChange;
+              // må ta vare på antall solgte billetter, siden den settes 0 i konstruktøren
+              int billettSalg=arrang.getBillettSalg();
              // utskriftRegistrert.setText("\n"+artist.toString());
              endreSystem.endreObject(arrang, "Arrangement");
             
@@ -167,7 +171,7 @@ private TextField[] input=null;
          data.add(obsLokale.get(lokaleIndex).getLokaleNavn());
              
            arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
-           
+           arrang.setBillettSalg(billettSalg);
            //utskriftRegistrert.setText(arrang.toString());
           register.registrer(arrang);
              break;
@@ -307,14 +311,17 @@ private void formaterDropdownArrangement(){
     ddlArtister=inputFormatter.formaterDropdownArtist();
     ddlArtister.setLayoutX(700);
     ddlArtister.setLayoutY(130);
+     ddlArtister.setMaxSize(50, 20);
     
     ddlKontaktPerson=inputFormatter.formaterDropdownKontaktPerson();
     ddlKontaktPerson.setLayoutX(700);
     ddlKontaktPerson.setLayoutY(170);
+     ddlKontaktPerson.setMaxSize(50, 20);
     
     ddlLokale=inputFormatter.formaterDropdownLokale();
     ddlLokale.setLayoutX(700);
     ddlLokale.setLayoutY(210);
+     ddlLokale.setMaxSize(50, 20);
     
      anchorPane.getChildren().add(ddlArtister);
      anchorPane.getChildren().add(ddlKontaktPerson);
@@ -327,6 +334,8 @@ private void formaterDropdownBillett(){
     ddlArrangement=inputFormatter.formaterDropdownBillett();
      ddlArrangement.setLayoutX(700);
     ddlArrangement.setLayoutY(130);
+     ddlArrangement.setMaxSize(300, 20);
+     
     
     anchorPane.getChildren().add(ddlArrangement);
 }
