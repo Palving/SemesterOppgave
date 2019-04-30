@@ -5,28 +5,23 @@
  */
 package Model.Nedlastning;
 
-import Model.Domene.Arrangement;
-import Model.Domene.Artist;
-import Model.Domene.KontaktPerson;
-import Model.Domene.Lokale;
 import Model.Registrering.Register;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 
 public abstract class NedlastingSystem {
-    private String vei;
-    private Register register = Register.getInstance();
+    private String path;
+
     
     
-    public NedlastingSystem (String vei, Register register){
-        this.vei=vei;
-        this.register=register;
+    public NedlastingSystem (String path){
+        this.path=path;
+      
         
+    }
+    
+    public String getPath(){
+        return this.path;
     }
     
     /*public KontaktPerson finnKontaktPerson(ArrayList<String> array3){

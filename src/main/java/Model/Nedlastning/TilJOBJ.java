@@ -12,29 +12,31 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import javafx.collections.ObservableList;
 
 
 public class TilJOBJ extends NedlastingSystem{
-    public String file;
-    private Register register;
+   
+    private Register register=Register.getInstance();
     
-    public TilJOBJ(String vei , Register register){
-        super(vei, register);
+    public TilJOBJ(String path){
+        super(path);
     }
     
-    public void lagreTilFil(){
+    public void lagreTilFil(ObservableList<Object> data){
        
         
         try{
-             ArrayList<Artist> artister=register.getArtister();
-             FileOutputStream fos = new FileOutputStream(file+".jobj");
+           //  ArrayList<Artist> artister=register.getArtister();
+             FileOutputStream fos = new FileOutputStream(super.getPath()+".jobj");
             ObjectOutputStream out = new ObjectOutputStream(fos);
-            
-            for (Object a : artister){
+           
+            for (Object a : data){
                 out.writeObject(a);
-                System.out.println(a.toString() +" lagret");
-      
             }
+          
+            out.close();
+         
           
         }
         catch(IOException e){

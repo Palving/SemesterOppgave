@@ -14,7 +14,7 @@ public class ThreadSystem extends Task<Void> {
   @Override
   protected Void call() throws Exception{
       try {
-          Thread.sleep(15000);
+          Thread.sleep(5000);
          
       }
       catch(InterruptedException e){

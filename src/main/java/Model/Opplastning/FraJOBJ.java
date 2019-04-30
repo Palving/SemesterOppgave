@@ -3,15 +3,11 @@ package Model.Opplastning;
 
 import Model.Domene.Artist;
 //import Model.Lagring.TilJOBJ;
-import Model.Opplastning.OpplastingSystem;
 import Model.Registrering.Register;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
+import javafx.collections.ObservableList;
 
 
 
@@ -28,30 +24,51 @@ public class FraJOBJ extends OpplastingSystem {
         super(file, register);
     }
     
-    public void lesFil(String filepath){
-          FraJOBJ objectIO = new FraJOBJ(file, register);
+    public void registrerFraFil(ObservableList<Object> data){
+         // FraJOBJ objectIO = new FraJOBJ(file, register);
  
           //Read object from file
-          Artist st = (Artist) objectIO.ReadObjectFromFile(filepath);
-          System.out.println(st);
+          //Artist st = (Artist) objectIO.ReadObjectsFromFile(filepath);
+        /*  for (Object obj : data){
+              if (obj!=null){
+                    register.registrer(obj);
+              }
+            
+          }
+         */
     }
-    public Object ReadObjectFromFile(String filepath) {
- 
+    public ObservableList<Object> ReadObjectsFromFile(String filepath) {
+ ObservableList<Object> objekter=null;
         try {
- 
+            
             FileInputStream fileIn = new FileInputStream(filepath);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+ boolean cont = true;
  
-            Object obj = objectIn.readObject();
- 
-            System.out.println("The Object has been read from the file");
-            objectIn.close();
-            return obj;
+   while(cont){
+      Object obj = objectIn.readObject();
+      if(obj != null){
+            System.out.println("objekt=="+obj.toString());
+         objekter.add(obj);
+         register.registrer(obj);
+         return objekter;
+      }
+        
+         else{
+                 cont = false;
+                  objectIn.close();
+            return objekter;
+                 }
+         
+   }
+
+           
  
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
+        return null;
     }
     
     public void fil (){

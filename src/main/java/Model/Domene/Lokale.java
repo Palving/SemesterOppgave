@@ -1,8 +1,9 @@
 package Model.Domene;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Lokale {
+public class Lokale implements Serializable {
     private String lokaleNavn;
     private int antallPlasser;
 

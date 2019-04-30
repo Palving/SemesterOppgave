@@ -22,8 +22,8 @@ import java.util.Arrays;
 public class TilCSV extends NedlastingSystem {
     private String vei;
     private Register register;
-    public TilCSV (String vei, Register register){
-        super(vei, register);
+    public TilCSV (String vei){
+        super(vei);
     }
     
     

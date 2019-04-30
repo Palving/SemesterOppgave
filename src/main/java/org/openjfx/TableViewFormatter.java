@@ -52,7 +52,7 @@ public class TableViewFormatter {
       String[] arrangAttributes={"type", "navnPaaArrangement","program", "billettPris", "Tidspunkt"};
       String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","firma","info","nettSide"};
       String[] billettAttributes={"plassNummer","lokaleNavn","dato", "kundeTlf","arrangementNavn"};*/
-    String[] artistAttributes={"Fornavn","Etternavn","Tlf","typeArtist"};
+      String[] artistAttributes={"Fornavn","Etternavn","Tlf","typeArtist"};
       String[] lokaleAttributes={"lokaleNavn","antallPlasser"};
       String[] arrangAttributes={"Artist","KontaktPerson","sted","dato","tidspunkt", "type", "navnPaaArrangement","program", "billettPris","billettSalg"};
       String[] kontaktPersonAttributes={"fornavn","etternavn","tlf","nettSide","firma","info"};

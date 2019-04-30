@@ -96,7 +96,11 @@ public class FXMLController {
                  String vei = ""+ file;
         System.out.println(vei);
         Register register = Register.getInstance();
-        FraJOBJ g = new FraJOBJ(file,register);
+        FraJOBJ innlesing = new FraJOBJ(file,register);
+        System.out.println(vei);
+       ObservableList<Object> objekter= innlesing.ReadObjectsFromFile(vei);
+        innlesing.registrerFraFil(objekter);
+       // g.ReadObjectFromFile(vei);
        
       
       // Tråder
@@ -113,15 +117,23 @@ public class FXMLController {
     @FXML
     private void lastNed(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
+       // fileChooser.setInitialDirectory(file);
         fileChooser.setTitle("Skriv filnavn");
+    
         File path = fileChooser.showSaveDialog(stage);
-        String file=""+path;
+        String file=path.toString();
+        System.out.println("file:"+file);
         Register register = Register.getInstance();
         //Nedlasting r = new TilJOBJfil (file , register);
        
-         TilJOBJ test=new TilJOBJ(file,register);
-           test.lagreTilFil();
+         TilJOBJ test=new TilJOBJ(file);
+           test.lagreTilFil(getObjects());
            
+    }
+    
+    private ObservableList<Object> getObjects(){
+        
+        return tabell.getItems();
     }
     
     @FXML
