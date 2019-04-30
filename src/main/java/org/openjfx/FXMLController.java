@@ -202,7 +202,7 @@ public class FXMLController {
                 cbArray[teller].setLayoutY(200);
            }
            else{
-               cbArray[teller].setLayoutY( cbArray[teller-1].getLayoutY() + 50);
+               cbArray[teller].setLayoutY( cbArray[teller-1].getLayoutY() + 30);
                  cbArray[teller].setLayoutX(700);
            }
           
@@ -253,8 +253,6 @@ public class FXMLController {
       visData(valgt);
       ObservableList columns=FXCollections.observableArrayList(tabell.getColumns());
       
- 
-    
      // fjerner fra collections trygt
        int teller=0;
        

@@ -41,9 +41,9 @@ public class Arrangement {
              this.artist=artist;
         this.kontaktPerson=kontaktPerson;                
        this.tidspunkt=data.get(0);
+        this.type=data.get(1);
         this.navnPaaArrangement=data.get(2);
-        this.program=data.get(3);
-         this.type=data.get(1);
+        this.program=data.get(3);  
         this.billettPris=Integer.parseInt(data.get(4));
        
          
@@ -150,7 +150,7 @@ public class Arrangement {
     }*/
     @Override
      public String toString() {
-        return  tidspunkt+"\n "+ type + "\n " + navnPaaArrangement + "\n " + program + "\n " + billettPris+"\n "+ tidspunkt;
+        return  tidspunkt+"\n "+ type + "\n " + navnPaaArrangement + "\n " + program + "\n " + billettPris+"kr"+"\n "+ tidspunkt;
      }
     
   public boolean equals(Arrangement arrang){

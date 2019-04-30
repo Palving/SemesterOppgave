@@ -44,6 +44,7 @@ public class Billett {
          this.kundeTlf=data.get(1);
         this.lokaleNavn=arrang.getSted();
         this.dato=arrang.getDato();
+        this.klokkeslett=arrang.getTidspunkt();
         this.pris=arrang.getBillettPris();
         this.arrangementNavn=arrang.getNavnPaaArrangement();
        
@@ -107,7 +108,7 @@ public class Billett {
     
     @Override
     public String toString(){
-      return this.plassNummer+"\n "+this.kundeTlf+"\n "+this.lokaleNavn+"\n "+DatoFormat.formaterDato(dato, klokkeslett)+"\n "+this.pris+"\n "+this.arrangementNavn;
+      return this.plassNummer+"\n "+this.kundeTlf+"\n "+this.lokaleNavn+"\n "+DatoFormat.formaterDato(dato, klokkeslett)+"\n "+this.pris+"kr"+"\n "+this.arrangementNavn;
     }
   
     public boolean equals(Billett billett){
