@@ -2,8 +2,8 @@
 package Model.Opplastning;
 
 import Model.Domene.Artist;
-import Model.Lagring.TilJOBJ;
-import Model.Nedlasting.OpplastingSystem;
+//import Model.Lagring.TilJOBJ;
+import Model.Opplastning.OpplastingSystem;
 import Model.Registrering.Register;
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,11 +29,11 @@ public class FraJOBJ extends OpplastingSystem {
     }
     
     public void lesFil(String filepath){
-       // TilJOBJ objectIO = new TilJOBJ();
+          FraJOBJ objectIO = new FraJOBJ(file, register);
  
-        //Read object from file
-      //  Artist st = (Artist) objectIO.ReadObjectFromFile(filepath);
-       // System.out.println(st);
+          //Read object from file
+          Artist st = (Artist) objectIO.ReadObjectFromFile(filepath);
+          System.out.println(st);
     }
     public Object ReadObjectFromFile(String filepath) {
  
@@ -56,7 +56,7 @@ public class FraJOBJ extends OpplastingSystem {
     
     public void fil (){
         //  Person kari = new Person("Kari", 20, 1);
-        ArrayList artister =register.getArtister();
+        /*ArrayList artister =register.getArtister();
         String filepath = "" + file;
         int i = 0;
         try (
@@ -74,7 +74,7 @@ public class FraJOBJ extends OpplastingSystem {
         e.printStackTrace(); // This should not happen, so we print debug information here.
         }
         
-        }
+        }*/}
         }
     
 

@@ -1,5 +1,5 @@
 
-package Model.Nedlasting;
+package Model.Opplastning;
 
 import Model.Registrering.Register;
 import java.io.File;

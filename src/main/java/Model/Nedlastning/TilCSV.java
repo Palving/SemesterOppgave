@@ -5,7 +5,6 @@
  */
 package Model.Nedlastning;
 
-import Model.Domene.Arrangement;
 import Model.Domene.Artist;
 import Model.Domene.KontaktPerson;
 import Model.Domene.Lokale;
@@ -16,20 +15,19 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
-
-public abstract class NedlastingSystem {
+/**
+ *
+ * @author jonny
+ */
+public class TilCSV extends NedlastingSystem {
     private String vei;
-    private Register register = Register.getInstance();
-    
-    
-    public NedlastingSystem (String vei, Register register){
-        this.vei=vei;
-        this.register=register;
-        
+    private Register register;
+    public TilCSV (String vei, Register register){
+        super(vei, register);
     }
     
-    /*public KontaktPerson finnKontaktPerson(ArrayList<String> array3){
+    
+     public KontaktPerson finnKontaktPerson(ArrayList<String> array3){
         ArrayList<String> array5 = new ArrayList<>();
         for (int i = 4 ; i< 10 ; i++){
             array5.add(array3.get(i));
@@ -52,7 +50,7 @@ public abstract class NedlastingSystem {
         return NyArtist;
     }
     
-    private Register register=Register.getInstance();
+    //private Register register=Register.getInstance();
     public void lesFil (){
         //ArrayList<Object> objekter=new ArrayList<>();
         try(RandomAccessFile reader = new RandomAccessFile(vei, "r")) {
@@ -128,5 +126,5 @@ public abstract class NedlastingSystem {
                 System.err.println("Could not read the specified file. Cause: " + e.getCause());
             }
 
-    } */
+    } 
 }

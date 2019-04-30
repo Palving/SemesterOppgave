@@ -1,5 +1,5 @@
 
-package Model.Nedlasting;
+package Model.Opplastning;
 
 import Model.Registrering.Register;
 import java.io.File;
@@ -17,16 +17,6 @@ public abstract class OpplastingSystem {
         this.file = file;
         this.register = register;
     }
-    
-    /*public void nedLastVei(){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Åpne fil");
-        
-        file = fileChooser.showSaveDialog(stage);
-        
-    }*/
-    
-
 }
 
 

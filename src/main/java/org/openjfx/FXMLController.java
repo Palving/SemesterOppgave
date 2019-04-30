@@ -1,6 +1,7 @@
 package org.openjfx;
 
-import Model.Lagring.TilJOBJ;
+
+import Model.Nedlastning.TilJOBJ;
 import Model.Opplastning.FraJOBJ;
 import Model.Registrering.Register;
 import Model.Tråder.ThreadSystem;
@@ -81,7 +82,7 @@ public class FXMLController {
     // private ExecutorService service = Executors.newSingleThreadExecutor();
    
      @FXML
-    private void lastOpp(ActionEvent event) throws IOException{
+    private void lastInn(ActionEvent event) throws IOException{
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Åpne fil");
         //fileChooser.setInitialDirectory(new File);
@@ -108,6 +109,7 @@ public class FXMLController {
 
    
     }
+    
     @FXML
     private void lastNed(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
@@ -117,7 +119,7 @@ public class FXMLController {
         Register register = Register.getInstance();
         //Nedlasting r = new TilJOBJfil (file , register);
        
-         TilJOBJ test=new TilJOBJ(file);
+         TilJOBJ test=new TilJOBJ(file,register);
            test.lagreTilFil();
            
     }
