@@ -2,6 +2,7 @@ package org.openjfx;
 
 import Model.Lagring.Lagring;
 import Model.Nedlasting.Nedlasting;
+import Model.Nedlasting.TilJOBJfil;
 import Model.Registrering.Register;
 import Model.Tråder.ThreadSystem;
 import java.io.File;
@@ -89,7 +90,7 @@ public class FXMLController {
         //fileChooser.setInitialDirectory(new File);
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("csv fil", "*.csv"),
-                new FileChooser.ExtensionFilter("jobj fil", "*.")
+                new FileChooser.ExtensionFilter("jobj fil", "*.jobj")
         );
         
         File file = fileChooser.showOpenDialog(stage);
@@ -110,9 +111,11 @@ public class FXMLController {
     }
     @FXML
     private void lastNed(ActionEvent event){
-        Nedlasting nedlast = new Nedlasting();
-        nedlast.nedLastVei();
-        nedlast.NedTilFil();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Skriv filnavn");
+        File file = fileChooser.showSaveDialog(stage);
+        Register register = Register.getInstance();
+        Nedlasting r = new TilJOBJfil (file , register);
     }
     
     @FXML
