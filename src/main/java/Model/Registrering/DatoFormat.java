@@ -5,6 +5,7 @@
  */
 package Model.Registrering;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -12,7 +13,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Magnus
  */
-public class DatoFormat {
+public class DatoFormat implements Serializable {
 
 private LocalDate dato;
 private String klokkeslett;

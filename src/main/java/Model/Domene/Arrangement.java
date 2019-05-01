@@ -1,12 +1,12 @@
 
 package Model.Domene;
 
-import Model.Avvik.InvalidIntValueException;
 import Model.Registrering.DatoFormat;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Arrangement {
+public class Arrangement implements Serializable {
     
     private KontaktPerson kontaktPerson;
     private Artist artist;
@@ -45,8 +45,6 @@ public class Arrangement {
         this.navnPaaArrangement=data.get(2);
         this.program=data.get(3);  
         this.billettPris=Integer.parseInt(data.get(4));
-       
-         
         this.sted=data.get(5);
         this.dato=dato;
     

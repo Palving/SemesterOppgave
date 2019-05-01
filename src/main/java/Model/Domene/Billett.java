@@ -2,12 +2,13 @@
 package Model.Domene;
 
 import Model.Registrering.DatoFormat;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 
 
-public class Billett {
+public class Billett implements Serializable  {
     
     private int plassNummer;
     private String lokaleNavn;

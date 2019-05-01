@@ -1,6 +1,7 @@
 package org.openjfx;
 
 
+import Model.Domene.Lokale;
 import Model.Nedlastning.TilJOBJ;
 import Model.Opplastning.FraJOBJ;
 import Model.Registrering.Register;
@@ -93,13 +94,30 @@ public class FXMLController {
         
         File file = fileChooser.showOpenDialog(stage);
        
-                 String vei = ""+ file;
+        String vei = ""+ file;
         System.out.println(vei);
         Register register = Register.getInstance();
         FraJOBJ innlesing = new FraJOBJ(file,register);
-        System.out.println(vei);
-       ObservableList<Object> objekter= innlesing.ReadObjectsFromFile(vei);
-        innlesing.registrerFraFil(objekter);
+      
+        
+      try{
+            // ObservableList<Object> objekter=FXCollections.observableArrayList(innlesing.ReadObjectsFromFile(vei));
+          //  innlesing.registrerFraFil(objekter);
+          register.test();
+          ObservableList<Object> liste=innlesing.ReadObjectsFromFile(vei);
+          for (Object o : liste){
+              if (!innlesing.sjekkDuplikat(o, valgt)){
+                    register.registrer(o);
+                    System.out.println("duplikat funnet");
+              }
+         
+          }
+       // innlesing.registrerFraFil(liste);
+        }
+        catch(ClassNotFoundException e){
+            System.err.println(e.getMessage());
+        }
+      
        // g.ReadObjectFromFile(vei);
        
       
@@ -113,7 +131,7 @@ public class FXMLController {
 
    
     }
-    
+     public String valgt;
     @FXML
     private void lastNed(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
@@ -127,7 +145,8 @@ public class FXMLController {
         //Nedlasting r = new TilJOBJfil (file , register);
        
          TilJOBJ test=new TilJOBJ(file);
-           test.lagreTilFil(getObjects());
+         System.out.println(valgt+"valgt");
+           test.lagreTilFil(getObjects(), valgt);
            
     }
     
@@ -143,6 +162,7 @@ public class FXMLController {
         trådResult.setText("Innlesing av fil vellykket");
         registrer.setDisable(false);
         endre.setDisable(false);
+        visData(valgt);
     }
     
     
@@ -155,7 +175,7 @@ public class FXMLController {
       }
     }
   
-    public String valgt;
+   
     public void initialize() {
       
            register.test();

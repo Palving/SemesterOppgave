@@ -5,13 +5,14 @@
  */
 package Model.Domene;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author palvi
  */
-public class KontaktPerson extends Person {
+public class KontaktPerson extends Person implements Serializable  {
     
     private String nettSide;
     private String firma;

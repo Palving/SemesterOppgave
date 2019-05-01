@@ -1,9 +1,10 @@
 
 package Model.Domene;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Person {
+public abstract class Person implements Serializable {
     
     private String fornavn;
     private String etternavn;

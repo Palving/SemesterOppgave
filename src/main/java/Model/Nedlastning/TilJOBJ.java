@@ -6,7 +6,7 @@ package Model.Nedlastning;
  */
 
 
-import Model.Domene.Artist;
+import Model.Domene.*;
 import Model.Registrering.Register;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,20 +22,69 @@ public class TilJOBJ extends NedlastingSystem{
     public TilJOBJ(String path){
         super(path);
     }
-    
-    public void lagreTilFil(ObservableList<Object> data){
+  
+    public void lagreTilFil(ObservableList<Object> data, String valgt){
        
         
         try{
            //  ArrayList<Artist> artister=register.getArtister();
              FileOutputStream fos = new FileOutputStream(super.getPath()+".jobj");
-            ObjectOutputStream out = new ObjectOutputStream(fos);
-           
+              ObjectOutputStream out= new ObjectOutputStream(fos);
+           // ObjectOutputStream out=null;
+          // ObservableList<Lokale> liste=FXCollections.observableArrayList();
+           ArrayList<Object> liste=new ArrayList<>();
             for (Object a : data){
-                out.writeObject(a);
+                //out.
+               liste.add(a);
+               // out.writeObject(a);
+               // out.close();
             }
+            switch(valgt){
+                case "Artist":
+                   ArrayList<Artist> artistListe=new ArrayList<>();
+                    for (Object a : liste){
+                        artistListe.add((Artist)a);
+                        System.out.print(a.toString());
+                    }
+                     //out.writeObject(artistListe);
+                    out.writeObject(new ArrayList<Artist>(artistListe));
+                     break;
+                  
+                case "Lokale":
+                    ArrayList<Lokale> lokaleListe=new ArrayList<>();
+                    for (Object a : liste){
+                        lokaleListe.add((Lokale)a);
+                    }
+                      out.writeObject(lokaleListe);
+                      break;
+            
+            case "Arrangement":
+            ArrayList<Arrangement> arrangListe=new ArrayList<>();
+            for(Object a : liste){
+            arrangListe.add((Arrangement)a);
+        }
+            out.writeObject(arrangListe);
+            break;
+            
+            case "KontaktPerson":
+                ArrayList<KontaktPerson> kontaktPersonListe=new ArrayList<>();
+            for(Object a : liste){
+            kontaktPersonListe.add((KontaktPerson)a);
+        }
+            out.writeObject(kontaktPersonListe);
+            break;
+            
+            case "Billett":
+                ArrayList<Billett> billettListe=new ArrayList<>();
+                for(Object obj : liste){
+                    billettListe.add((Billett)obj);
+                }
+                out.writeObject(billettListe);
+                break;
+            }
+           // out.writeObject(liste);
           
-            out.close();
+             out.close();
          
           
         }
