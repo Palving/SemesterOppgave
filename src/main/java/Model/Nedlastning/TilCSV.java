@@ -120,7 +120,7 @@ public class TilCSV extends NedlastingSystem {
                     System.out.println("Billett");
                     //Billett billett = new Billett(array3);
                     for (Billett a : register.getBillett()){
-                        if (a.equals(null)){
+                        if (a.equals(billett)){
                             System.out.println("samme fornavn!!!");
                         }
                         
