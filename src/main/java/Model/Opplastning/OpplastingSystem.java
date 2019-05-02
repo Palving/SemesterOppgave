@@ -13,9 +13,9 @@ public abstract class OpplastingSystem {
     public File file;
     public Register register;
     
-    public OpplastingSystem ( File file, Register register){
+    public OpplastingSystem ( File file){
         this.file = file;
-        this.register = register;
+       
     }
 }
 

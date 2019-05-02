@@ -213,7 +213,7 @@ private void formaterDatePicker(){
  private void registrer(){
     //objekter=new ArrayList<>();
     Object objToReg=null;
-      ArrayList<String> data=null;
+   ArrayList<String> data=null;
      try{
           data=new ArrayList<>(inputFormatter.getTextFieldData());
      }
@@ -267,19 +267,17 @@ private void formaterDatePicker(){
                   return;
               }
              
-                    // burde heller kanskje lagre selve objektet i det og heller hente stedet et annet sted
-                 ObservableList<Artist> obsArtister=FXCollections.observableArrayList(register.getArtister());
-        ObservableList<Lokale> obsLokale=FXCollections.observableArrayList(register.getLokale());
-          
+                  
+              // Objektene som skal lagres sammen med Arrangement
+              ObservableList<Artist> obsArtister=FXCollections.observableArrayList(register.getArtister());
+              ObservableList<Lokale> obsLokale=FXCollections.observableArrayList(register.getLokale());
               ObservableList<KontaktPerson> obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
-              //sted
-              // burde heller kanskje lagre selve objektet i det og heller hente stedet et annet sted
+             
               data.add(obsLokale.get(lokaleIndex).getLokaleNavn());
-             // data.add("hh");
-           Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
+               Arrangement arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
            
-           utskriftRegistrert.setText(arrang.toString());
-          objToReg=arrang;
+                utskriftRegistrert.setText(arrang.toString());
+                objToReg=arrang;
              break;
               
           case "KontaktPerson":
@@ -342,8 +340,7 @@ private void formaterDatePicker(){
             
             // Valget i radio-gruppen
           valgt=radioGrp.getSelectedToggle().getUserData().toString();
-         
-          
+        
           // Lager textfields basert på valgt
           formaterTextFields();
           

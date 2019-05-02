@@ -1,271 +1,157 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Model.Opplastning;
 
-import Model.Domene.Arrangement;
+import Model.Domene.Artist;
+import Model.Domene.Billett;
 import Model.Domene.KontaktPerson;
+import Model.Domene.Lokale;
 import Model.Registrering.Register;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Arrays;
 
-class FinnObjekter{
-    public String finnKontaktPerson(ArrayList artistStringArray){
-        Register register = Register.getInstance();
-        ArrayList KP =register.getKontaktPerson();
-        register.registrer(artistStringArray.get(0));
-        
-        String ut = "";
-        String s = artistStringArray.get(1)+ "";
-        String[] test = s.split("\n ");
-        for(int j = 0; j < test.length; j++){
-                    ut+= test[j]+";";
-                
-                }
-        /*
-        String ut = "1";
-        for (int i = 0 ; i<KP.size(); i++){
-            if(KP.get(i).equals(artistStringArray.get(0))){
-                String s = KP.get(i) +"";
-                System.out.print(KP.get(i) +"");
-                String[] splittet =s.split("\n ");
-                for(int j = 0; j < splittet.length; j++){
-                    ut+= splittet[i]+";";
-                
-                }
-                
-                
-            }
-        }*/
-        System.out.print(ut);
-        
-       // KontaktPerson kntktPerson = new KontaktPerson(arrayFinnKontaktPerson);
-        //register.registrer(kntktPerson);
-        return ut;
-    }
-    
-    public String finnArtist(ArrayList artistStringArray){
-        Register register = Register.getInstance();
-        ArrayList Artist =register.getArtister();
-        register.registrer(artistStringArray.get(1));
-        
-        String ut = "";
-        String s = artistStringArray.get(1)+ "";
-        String[] test = s.split("\n ");
-        for(int j = 0; j < test.length; j++){
-                    ut+= test[j]+";";
-                
-                }
-        /*for (int i = 0 ; i<Artist.size(); i++){
-            if(Artist.get(i).equals(artistStringArray.get(1))){
-                String s = Artist.get(i) +"";
-                String[] splittet =s.split("\n ");
-                for(int j = 0; j < splittet.length; j++){
-                    ut+= splittet[i]+";";
-                
-                }
-                
-            }
-        }*/
-        return ut;
-    }
-    
-    public String ArrangementTilBillet (ArrayList arrangement){
-        String ut = "";
-        for (int i = 2; i <arrangement.size(); i++){
-            ut +=arrangement.get(i) + ";";
-        }
-        return ut;
-        
-    }
-}
-
+/**
+ *
+ * @author jonny
+ */
 public class FraCSV extends OpplastingSystem {
-    
-    public FraCSV(File file, Register register){
-        super(file, register);
+    private String vei;
+    private Register register;
+    public FraCSV (File file){
+        super(file);
     }
     
-    public void NedTilFil(int valgt){
-        switch (valgt){
-            case 1:
-                ArrangementTilCSV();
-                break;
-            case 2:
-                kontaktPersonTilCSV();
-                break;
-            case 3:
-                LokaleTilCSV();
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-                    
-            
-                    
-                    }
-    }
     
-    public void Billet(){
-        PrintWriter printWriter = null;
-        FinnObjekter f = new FinnObjekter();
-            
-        try {
-            printWriter = new PrintWriter (file);
-            
-            ArrayList lokale =register.getLokale();
-            
-            for (int i = 0 ; i < lokale.size(); i ++){
-            String lokaleString = lokale.get(i) +"";
-            String[] lokaleStringArray = lokaleString.split("\n ");
-            for(int j = 0; j < lokaleStringArray.length; j++){
-                if (j==6){
-                    printWriter.print(f.finnKontaktPerson(lokale));
-                    printWriter.print(f.finnArtist(lokale));
-                    printWriter.print(f.ArrangementTilBillet(lokale));
-                    
-                    //printWriter.print()
-                }
-                printWriter.print(lokaleStringArray[j] + ";");
-            }
-            printWriter.print("\n");
-            }
-                    
-            printWriter.close (); 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            printWriter.close();
+     public KontaktPerson finnKontaktPerson(ArrayList<String> array3){
+        ArrayList<String> arrayFinnKontaktPerson = new ArrayList<>();
+        for (int i = 4 ; i< 10 ; i++){
+            arrayFinnKontaktPerson.add(array3.get(i));
         }
-        System.out.println("funka");
+        KontaktPerson kntktPerson = new KontaktPerson(arrayFinnKontaktPerson);
+        register.registrer(kntktPerson);
+        return kntktPerson;
     }
     
-    public void LokaleTilCSV(){
-        PrintWriter printWriter = null;
+    public Artist FinnArtist(ArrayList<String> array3){
+        //Artist NyArtist = new Artist();
+        ArrayList<String> arrayFinnArtist = new ArrayList<>();
+        for (int i = 0 ; i< 4 ; i++){
+            //array3.get(i) = array4.add(i);
+            arrayFinnArtist.add(array3.get(i));
+        }
+        Artist NyArtist = new Artist(arrayFinnArtist);
+        register.registrer(NyArtist);
         
-            
-        try {
-            printWriter = new PrintWriter (file);
-            
-            ArrayList lokale =register.getLokale();
-            //FinnObjekter k = new FinnObjekter();
-            
-            for (int i = 0 ; i < lokale.size(); i ++){
-            String lokaleString = lokale.get(i) +"";
-            String[] lokaleStringArray = lokaleString.split("\n ");
-            for(int j = 0; j < lokaleStringArray.length; j++){
-                
-                printWriter.print(lokaleStringArray[j] + ";");
-                        
-            }
-            printWriter.print("\n");
-            }
-                    
-            printWriter.close (); 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            printWriter.close();
-        }
-        System.out.println("funka");
+        return NyArtist;
     }
     
-    public void ArrangementTilCSV(){
-        PrintWriter printWriter = null;
-        FinnObjekter k = new FinnObjekter();
-            
-        try {
-            printWriter = new PrintWriter (file);
-            
-            ArrayList arrangement =register.getArrangement();
-            
-            for (int i = 0 ; i < arrangement.size(); i ++){
-            String arrangementString = arrangement.get(i) +"";
-            String[] arrangementStringArray = arrangementString.split("\n ");
-            /*ArrayList<String> data=new ArrayList<>(arrangementStringArray);
-            Arrangement arrang=new Arrangement(data);*/
-            
-            for(int j = 0; j < arrangementStringArray.length; j++){
-               /* if (j == 0){
-                    String l = k.finnKontaktPerson(arrangement);
-                    printWriter.print(l);
-                    System.out.println("Funka1" + l);
-                }
-                if(j == 1){
-                    printWriter.print(k.finnArtist(arrangement));
-                    System.out.println("Funka2");
-                }
-                else{*/
-                printWriter.print(arrangementStringArray[j] + ";");
-                //}
+    //private Register register=Register.getInstance();
+    public void lesFil (){
+        //ArrayList<Object> objekter=new ArrayList<>();
+        try(RandomAccessFile reader = new RandomAccessFile(vei, "r")) {
+        //ArrayList<String> array = new ArrayList<>();
+        String line = reader.readLine(); // skip meta data
+        
+        while((line = reader.readLine()) != null) {
+            String[] array1 = line.split(";"); // convertere til en Arraylist
+            //List<String> array2 = Arrays.asList(line.split(";"));
+            ArrayList<String> linjeLestInn = new ArrayList<>(Arrays.asList(line.split(";")));
+            for (int i = 0 ; i< linjeLestInn.size();i++){
+                System.out.print(linjeLestInn.get(i));
             }
-            printWriter.print("\n");
-            }
-                    
-            printWriter.close (); 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            printWriter.close();
-        }
-        System.out.println("funka");
-   
-    }
-    
-    public void ArtisterTilCSV(){
+            
 
-        PrintWriter printWriter = null;
-        
-            
-        try {
-            printWriter = new PrintWriter (file);
-            
-            ArrayList artister =register.getArtister();
-            
-            for (int i = 0 ; i < artister.size(); i ++){
-            String artistString = artister.get(i) +"";
-            String[] artistStringArray = artistString.split("\n ");
-            for(int j = 0; j < artistStringArray.length; j++){
-                printWriter.print(artistStringArray[j] + ";");
-            }
-            printWriter.print("\n");
-            }
+//array=line.split(";");
+            switch(linjeLestInn.size()){
+                case 4:
+                    System.out.println("Artist");
+                    System.out.println(linjeLestInn.size()+"");
+                    Artist artist=new Artist(linjeLestInn);
+                    System.out.println(artist);
+                    //objekter.add(artist);
+                    for (Artist a : register.getArtister()){
+                        if (a.equals(artist)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
+                    register.registrer(artist);
+                    break;
+                case 7:
+                    System.out.println("Arrangement");
+                    Artist artisten=FinnArtist(linjeLestInn);
+                    KontaktPerson kontaktPerson1 =finnKontaktPerson(linjeLestInn);
                     
-            printWriter.close (); 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            printWriter.close();
-        }
-        System.out.println("funka");
-   }
-    
-   public void kontaktPersonTilCSV(){
-       PrintWriter printWriter = null;
-        
-            
-        try {
-            printWriter = new PrintWriter (file);
-            
-            ArrayList kontaktPerson =register.getKontaktPerson();
-            
-            for (int i = 0 ; i < kontaktPerson.size(); i ++){
-            String kontaktPersonString = kontaktPerson.get(i) +"";
-            String[] kontaktPersonStringArray = kontaktPersonString.split(" ");
-            for(int j = 1; j < kontaktPersonStringArray.length; j++){
-                printWriter.print(kontaktPersonStringArray[j] + ";");
-            }
-            printWriter.print("\n");
-            }
+                    ArrayList<String> arrangement1 = new ArrayList<>();
+                    for (int i = 10 ; i< linjeLestInn.size() ; i++ ){
+                        arrangement1.add(linjeLestInn.get(i));
+                    }
+                        
                     
-            printWriter.close (); 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            printWriter.close();
+                    for (Artist a : register.getArtister()){
+                        if (a.equals(artisten)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
+                    
+                  // Arrangement arrangement = new Arrangement(artisten, kontaktPerson1,arrangement1  );
+                  // register.registrer(arrangement);
+                   
+                    break;
+                case 2:
+                    System.out.println("Lokale");
+                    Lokale nyLokale = new Lokale(linjeLestInn);
+                    for (Lokale a : register.getLokale()){
+                        if (a.equals(nyLokale)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
+                    register.registrer(nyLokale);
+                    break;
+                case 3:
+                    System.out.println("Billett");
+                    //Billett billett = new Billett(array3);
+                    for (Billett a : register.getBillett()){
+                        if (a.equals(null)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
+                
+                    
+                    //register.registrer(billett);
+                    System.out.println("3");
+                    break;
+                case 6:
+                    System.out.println("Kontakt person");
+                    KontaktPerson kontaktPerson = new KontaktPerson(linjeLestInn);
+                    for (KontaktPerson a : register.getKontaktPerson()){
+                        if (a.equals(kontaktPerson)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
+                    register.registrer(kontaktPerson);
+                   
+                    break; 
+            }
+           
+            //register.registrer(objekter);
         }
-        System.out.println("funka");
-   }
-   
+        } catch (FileNotFoundException e) {
+                System.err.println("Could not find the specified file");
+        }   catch (IOException e) {
+                System.err.println("Could not read the specified file. Cause: " + e.getCause());
+            }
+
+    } 
 }

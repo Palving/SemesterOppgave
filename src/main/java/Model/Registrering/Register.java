@@ -91,16 +91,19 @@ public class Register implements Serializable {
     }
     
     
-    public void test(){
+    public void fyllRegister(){
         artister.add(new Artist("Jon","Rafoss","98419854","Sanger"));
         artister.add(new Artist("Mats","Grøsvik","97512392","Danser"));
         artister.add(new Artist("Magnus","Palving","97571228","Musiker"));
+        
+        lokale.add(new Lokale("Jæger",150));
         lokale.add(new Lokale("Garasjen",400));
      
-      
+      kontaktPerson.add(new KontaktPerson("Lars","Larsen","97562229","Lyd AS","bralyd.no","Bra mann"));
         kontaktPerson.add(new KontaktPerson("Kåre","Kent","97832131","Party AS","party.com","digger party"));
-        LocalDate kødd=LocalDate.now();
-        arrangement.add(new Arrangement(artister.get(0), kontaktPerson.get(0), "Fest","Party","Sang også dans","Oslo","23:00",kødd,50));
+        LocalDate tidNow=LocalDate.now();
+        arrangement.add(new Arrangement(artister.get(0), kontaktPerson.get(0), "Fest","Party","Sang også dans","Oslo","23:00",tidNow,50));
+        arrangement.add(new Arrangement(artister.get(1),kontaktPerson.get(1),"Dåp","Gudstjeneste"," gutt skal bli frelst","Manglerud Kirke","12:00",tidNow,10));
         billett.add(new Billett(arrangement.get(0),500,"20"));
     }
     

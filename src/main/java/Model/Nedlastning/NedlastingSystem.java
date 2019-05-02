@@ -6,23 +6,31 @@
 package Model.Nedlastning;
 
 import Model.Registrering.Register;
+import java.io.File;
 
 
 
 public abstract class NedlastingSystem {
     private String path;
+    private File file;
+    private Register register;
 
     
     
-    public NedlastingSystem (String path){
-        this.path=path;
+    public NedlastingSystem (File file){
+      this.file=file;
+   
       
         
     }
     
     public String getPath(){
-        return this.path;
+        return file.getPath();
     }
+    
+  //  public abstract void lagreFil();
+        
+   
     
     /*public KontaktPerson finnKontaktPerson(ArrayList<String> array3){
         ArrayList<String> array5 = new ArrayList<>();

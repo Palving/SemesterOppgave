@@ -8,6 +8,7 @@ package Model.Nedlastning;
 
 import Model.Domene.*;
 import Model.Registrering.Register;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -18,12 +19,14 @@ import javafx.collections.ObservableList;
 public class TilJOBJ extends NedlastingSystem{
    
     private Register register=Register.getInstance();
+    private File file;
     
-    public TilJOBJ(String path){
-        super(path);
+    public TilJOBJ(File file){
+        super(file);
     }
   
-    public void lagreTilFil(ObservableList<Object> data, String valgt){
+
+    public void lagreFil(ObservableList<Object> data, String valgt){
        
         
         try{
@@ -47,7 +50,8 @@ public class TilJOBJ extends NedlastingSystem{
                         System.out.print(a.toString());
                     }
                      //out.writeObject(artistListe);
-                    out.writeObject(new ArrayList<Artist>(artistListe));
+                    System.out.println("artistliste lagret");
+                    out.writeObject(artistListe);
                      break;
                   
                 case "Lokale":

@@ -31,4 +31,10 @@ public class ThreadSystem extends Task<Void> {
         
     }
     
+    @Override
+    protected void failed(){
+        System.err.println(getException());
+    }
+        
+    
 }

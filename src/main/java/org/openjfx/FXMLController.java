@@ -1,9 +1,8 @@
 package org.openjfx;
 
 
-import Model.Nedlastning.TilCSV;
+import Model.Avvik.InvalidJavaObjectFormatException;
 import Model.Nedlastning.TilJOBJ;
-import Model.Opplastning.FraCSV;
 import Model.Opplastning.FraJOBJ;
 import Model.Registrering.Register;
 import Model.Tråder.ThreadSystem;
@@ -23,6 +22,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -56,7 +57,7 @@ public class FXMLController {
     @FXML
     private Button registrer;
     @FXML
-    private Button endre;
+    private Button endre, lastInn, lastNed;
    
     @FXML
     private void registrer(ActionEvent event) throws IOException{
@@ -82,6 +83,14 @@ public class FXMLController {
     }
     
     // private ExecutorService service = Executors.newSingleThreadExecutor();
+    
+    private void visFeilmelding(String msg){
+   Alert alert = new Alert(AlertType.INFORMATION);
+   alert.setTitle("Feil");
+   alert.setContentText(msg);
+
+   alert.showAndWait();
+    }
    
      @FXML
     private void lastInn(ActionEvent event) throws IOException{
@@ -97,20 +106,50 @@ public class FXMLController {
        
         String vei = ""+ file;
         System.out.println(vei);
-        Register register = Register.getInstance();
-        //FraJOBJ innlesing = new FraJOBJ(file,register);
-        TilCSV innlesing = new TilCSV(vei);
-        innlesing.lesFil();
-        System.out.println(vei);
-       //ObservableList<Object> objekter= innlesing.ReadObjectsFromFile(vei);
-        //innlesing.registrerFraFil(objekter);
-       // g.ReadObjectFromFile(vei);
+       // Register register = Register.getInstance();
+        FraJOBJ javaOBJinnlesing = new FraJOBJ(file);
+        
+        try{
+             ObservableList<Object> objekter= javaOBJinnlesing.ReadObjectsFromFile(vei);
+             if(objekter==null){
+               ///  System.err.println("Ugydlig fil");
+               // runtimeexception så test bare for null
+               visFeilmelding("Ugyldig fil");
+                 return;
+             }
+               
+        for (Object obj : objekter){
+            if (obj!=null){
+                  register.registrer(obj);
+            }
+                
+              }
+       //javaOBJinnlesing.registrerFraFil(objekter);
+        }
+        catch(ClassNotFoundException e){
+            System.err.println(e.getMessage());
+            visFeilmelding(e.getMessage());
+        }
+        catch(IOException e){
+            visFeilmelding(e.getMessage());
+        }
+        catch(InvalidJavaObjectFormatException e){
+             visFeilmelding(e.getMessage());
+        }
+       
+       
+       /* TilCSV CSVinnlesing = new TilCSV(vei);
+        CSVinnlesing.lesFil();*/
+   
        
       
       // Tråder
        ExecutorService service = Executors.newSingleThreadExecutor();
+       // stop manipulering av data mens tråden kjører
        registrer.setDisable(true);
        endre.setDisable(true);
+       lastInn.setDisable(true);
+       lastNed.setDisable(true);
        
         Task<Void> task = new ThreadSystem(this::threadDone);
         service.execute(task);
@@ -130,16 +169,17 @@ public class FXMLController {
         File path = fileChooser.showSaveDialog(stage);
         String file=path.toString();
         Register register = Register.getInstance();
-        /*if (fileChooser.getSelectedExtensionFilter().equals(".jobj")){
-            TilJOBJ test=new TilJOBJ(file);
-            test.lagreTilFil(getObjects());
-        }*/
-        //else if (fileChooser.getSelectedExtensionFilter().equals(".csv")){
+       // if (fileChooser.getSelectedExtensionFilter().equals(".jobj")){
+            TilJOBJ test=new TilJOBJ(path);
+            test.lagreFil(getObjects(),valgt);
+            System.out.println("jobj lagret");
+       // }
+        /*else if (fileChooser.getSelectedExtensionFilter().equals(".csv")){
             //TilCSV test2 = new TilCSV(file);
             FraCSV f = new FraCSV(path, register);
             f.NedTilFil(1);
             //test2.lagreTilFil(getObjects());
-        //}
+        }*/
     
       
         System.out.println("file:"+file);
@@ -163,6 +203,9 @@ public class FXMLController {
         trådResult.setText("Innlesing av fil vellykket");
         registrer.setDisable(false);
         endre.setDisable(false);
+        lastInn.setDisable(false);
+        lastNed.setDisable(false);
+        
         visData(valgt);
     }
     
@@ -179,7 +222,7 @@ public class FXMLController {
    
     public void initialize() {
       
-           register.test();
+           register.fyllRegister();
            this.populerDropdown();
           
         dropdownliste.valueProperty().addListener(new ChangeListener<String>() {
@@ -222,9 +265,12 @@ public class FXMLController {
    
    private void formaterCheckBoxes(){
        
+       // refresh checkBoxes hver gang dropdownlist-onchange kalles
        deleteCheckBoxes();
+       
+       // hent attributter som tilsvarer elementet valgt i dropdownlist
        attributter=tableViewFormatter.getTableViewAttributter(valgt);
-        cbArray=new CheckBox[attributter.length];
+      cbArray=new CheckBox[attributter.length];
        
        int teller=0;
        
@@ -245,12 +291,12 @@ public class FXMLController {
        
        btn=new Button("Filtrer");
    
-     btn.setLayoutY(cbArray[teller-1].getLayoutY()+40);
+    btn.setLayoutY(cbArray[teller-1].getLayoutY()+40);
     btn.setLayoutX(700);
-      btn.addEventHandler(ActionEvent.ACTION, event->filtrerData());
-      ap.getChildren().add(btn);
-       
-       
+    btn.addEventHandler(ActionEvent.ACTION, event->filtrerData());
+    
+    ap.getChildren().add(btn);
+      
    }
    
    // Kalles på hver gang valg i radiogroup byttes
@@ -272,7 +318,7 @@ public class FXMLController {
        
        for (CheckBox cb : cbArray){
           checked.add(cb.selectedProperty().get());
-         System.out.println(cb.selectedProperty().get());  
+      
        }
        
        return checked;
