@@ -1,8 +1,8 @@
 package org.openjfx;
 
 
-import Model.Domene.Lokale;
 import Model.Nedlastning.TilJOBJ;
+import Model.Opplastning.FraCSV;
 import Model.Opplastning.FraJOBJ;
 import Model.Registrering.Register;
 import Model.Tråder.ThreadSystem;
@@ -106,11 +106,10 @@ public class FXMLController {
           register.test();
           ObservableList<Object> liste=innlesing.ReadObjectsFromFile(vei);
           for (Object o : liste){
-              if (!innlesing.sjekkDuplikat(o, valgt)){
+             
                     register.registrer(o);
-                    System.out.println("duplikat funnet");
-              }
-         
+                    
+             
           }
        // innlesing.registrerFraFil(liste);
         }
@@ -144,9 +143,22 @@ public class FXMLController {
         Register register = Register.getInstance();
         //Nedlasting r = new TilJOBJfil (file , register);
        
-         TilJOBJ test=new TilJOBJ(file);
+            TilJOBJ test=new TilJOBJ(file);
          System.out.println(valgt+"valgt");
-           test.lagreTilFil(getObjects(), valgt);
+            test.lagreTilFil(getObjects(), valgt);
+        
+        //else if (fileChooser.getSelectedExtensionFilter().equals(".csv")){
+            //TilCSV test2 = new TilCSV(file);
+            FraCSV f = new FraCSV(path, register);
+            f.NedTilFil(1);
+            //test2.lagreTilFil(getObjects());
+        //}
+    
+      
+        System.out.println("file:"+file);
+        
+        //Nedlasting r = new TilJOBJfil (file , register);
+
            
     }
     
@@ -308,3 +320,4 @@ public class FXMLController {
    }
  
 }
+
