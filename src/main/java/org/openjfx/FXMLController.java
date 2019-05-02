@@ -1,7 +1,9 @@
 package org.openjfx;
 
 
+import Model.Nedlastning.TilCSV;
 import Model.Nedlastning.TilJOBJ;
+import Model.Opplastning.FraCSV;
 import Model.Opplastning.FraJOBJ;
 import Model.Registrering.Register;
 import Model.Tråder.ThreadSystem;
@@ -93,13 +95,15 @@ public class FXMLController {
         
         File file = fileChooser.showOpenDialog(stage);
        
-                 String vei = ""+ file;
+        String vei = ""+ file;
         System.out.println(vei);
         Register register = Register.getInstance();
-        FraJOBJ innlesing = new FraJOBJ(file,register);
+        //FraJOBJ innlesing = new FraJOBJ(file,register);
+        TilCSV innlesing = new TilCSV(vei);
+        innlesing.lesFil();
         System.out.println(vei);
-       ObservableList<Object> objekter= innlesing.ReadObjectsFromFile(vei);
-        innlesing.registrerFraFil(objekter);
+       //ObservableList<Object> objekter= innlesing.ReadObjectsFromFile(vei);
+        //innlesing.registrerFraFil(objekter);
        // g.ReadObjectFromFile(vei);
        
       
@@ -119,15 +123,31 @@ public class FXMLController {
         FileChooser fileChooser = new FileChooser();
        // fileChooser.setInitialDirectory(file);
         fileChooser.setTitle("Skriv filnavn");
-    
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("csv fil", "*.csv"),
+                new FileChooser.ExtensionFilter("jobj fil", "*.jobj")
+        );
         File path = fileChooser.showSaveDialog(stage);
         String file=path.toString();
-        System.out.println("file:"+file);
         Register register = Register.getInstance();
+        /*if (fileChooser.getSelectedExtensionFilter().equals(".jobj")){
+            TilJOBJ test=new TilJOBJ(file);
+            test.lagreTilFil(getObjects());
+        }*/
+        //else if (fileChooser.getSelectedExtensionFilter().equals(".csv")){
+            //TilCSV test2 = new TilCSV(file);
+            FraCSV f = new FraCSV(path, register);
+            f.NedTilFil(1);
+            //test2.lagreTilFil(getObjects());
+        //}
+    
+      
+        System.out.println("file:"+file);
+        
         //Nedlasting r = new TilJOBJfil (file , register);
        
-         TilJOBJ test=new TilJOBJ(file);
-           test.lagreTilFil(getObjects());
+         /*TilJOBJ test=new TilJOBJ(file);
+           test.lagreTilFil(getObjects());*/
            
     }
     

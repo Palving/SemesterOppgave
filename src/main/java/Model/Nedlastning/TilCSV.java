@@ -6,6 +6,7 @@
 package Model.Nedlastning;
 
 import Model.Domene.Artist;
+import Model.Domene.Billett;
 import Model.Domene.KontaktPerson;
 import Model.Domene.Lokale;
 import Model.Registrering.Register;
@@ -28,23 +29,23 @@ public class TilCSV extends NedlastingSystem {
     
     
      public KontaktPerson finnKontaktPerson(ArrayList<String> array3){
-        ArrayList<String> array5 = new ArrayList<>();
+        ArrayList<String> arrayFinnKontaktPerson = new ArrayList<>();
         for (int i = 4 ; i< 10 ; i++){
-            array5.add(array3.get(i));
+            arrayFinnKontaktPerson.add(array3.get(i));
         }
-        KontaktPerson kntktPerson = new KontaktPerson(array5);
+        KontaktPerson kntktPerson = new KontaktPerson(arrayFinnKontaktPerson);
         register.registrer(kntktPerson);
         return kntktPerson;
     }
     
     public Artist FinnArtist(ArrayList<String> array3){
         //Artist NyArtist = new Artist();
-        ArrayList<String> array4 = new ArrayList<>();
+        ArrayList<String> arrayFinnArtist = new ArrayList<>();
         for (int i = 0 ; i< 4 ; i++){
             //array3.get(i) = array4.add(i);
-            array4.add(array3.get(i));
+            arrayFinnArtist.add(array3.get(i));
         }
-        Artist NyArtist = new Artist(array4);
+        Artist NyArtist = new Artist(arrayFinnArtist);
         register.registrer(NyArtist);
         
         return NyArtist;
@@ -60,15 +61,18 @@ public class TilCSV extends NedlastingSystem {
         while((line = reader.readLine()) != null) {
             String[] array1 = line.split(";"); // convertere til en Arraylist
             //List<String> array2 = Arrays.asList(line.split(";"));
-            ArrayList<String> array3 = new ArrayList<>(Arrays.asList(line.split(";")));
-            
+            ArrayList<String> linjeLestInn = new ArrayList<>(Arrays.asList(line.split(";")));
+            for (int i = 0 ; i< linjeLestInn.size();i++){
+                System.out.print(linjeLestInn.get(i));
+            }
             
 
 //array=line.split(";");
-            switch(array3.size()){
+            switch(linjeLestInn.size()){
                 case 4:
                     System.out.println("Artist");
-                    Artist artist=new Artist(array3);
+                    System.out.println(linjeLestInn.size()+"");
+                    Artist artist=new Artist(linjeLestInn);
                     System.out.println(artist);
                     //objekter.add(artist);
                     for (Artist a : register.getArtister()){
@@ -81,12 +85,12 @@ public class TilCSV extends NedlastingSystem {
                     break;
                 case 7:
                     System.out.println("Arrangement");
-                    Artist artisten=FinnArtist(array3);
-                    KontaktPerson kontaktPerson1 =finnKontaktPerson(array3);
+                    Artist artisten=FinnArtist(linjeLestInn);
+                    KontaktPerson kontaktPerson1 =finnKontaktPerson(linjeLestInn);
                     
                     ArrayList<String> arrangement1 = new ArrayList<>();
-                    for (int i = 10 ; i< array3.size() ; i++ ){
-                        arrangement1.add(array3.get(i));
+                    for (int i = 10 ; i< linjeLestInn.size() ; i++ ){
+                        arrangement1.add(linjeLestInn.get(i));
                     }
                         
                     
@@ -103,16 +107,38 @@ public class TilCSV extends NedlastingSystem {
                     break;
                 case 2:
                     System.out.println("Lokale");
-                    Lokale nyLokale = new Lokale(array3);
+                    Lokale nyLokale = new Lokale(linjeLestInn);
+                    for (Lokale a : register.getLokale()){
+                        if (a.equals(nyLokale)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
+                    register.registrer(nyLokale);
                     break;
                 case 3:
                     System.out.println("Billett");
+                    //Billett billett = new Billett(array3);
+                    for (Billett a : register.getBillett()){
+                        if (a.equals(billett)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
+                
                     
-                    
+                    //register.registrer(billett);
+                    System.out.println("3");
                     break;
                 case 6:
                     System.out.println("Kontakt person");
-                    KontaktPerson kontaktPerson = new KontaktPerson(array3);
+                    KontaktPerson kontaktPerson = new KontaktPerson(linjeLestInn);
+                    for (KontaktPerson a : register.getKontaktPerson()){
+                        if (a.equals(kontaktPerson)){
+                            System.out.println("samme fornavn!!!");
+                        }
+                        
+                    }
                     register.registrer(kontaktPerson);
                    
                     break; 
