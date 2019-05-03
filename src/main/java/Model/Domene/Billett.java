@@ -111,6 +111,10 @@ public class Billett implements Serializable  {
     public String toString(){
       return this.plassNummer+"\n "+this.kundeTlf+"\n "+this.lokaleNavn+"\n "+DatoFormat.formaterDato(dato, klokkeslett)+"\n "+this.pris+"kr"+"\n "+this.arrangementNavn;
     }
+    
+    public String toCSV(){
+         return this.plassNummer+";"+this.kundeTlf+";"+this.lokaleNavn+";"+DatoFormat.formaterDato(dato, klokkeslett)+";"+this.pris+";"+this.arrangementNavn+";";
+    }
   
     public boolean equals(Billett billett){
         if (this==billett){

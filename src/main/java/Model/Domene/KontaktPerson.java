@@ -59,6 +59,9 @@ public class KontaktPerson extends Person implements Serializable  {
     public String toString() {
         return super.toString()+"\n " + nettSide + "\n " + firma + "\n " + info;
     }
+    public String toCSV(){
+        return super.toCSV()+ nettSide + ";" + firma + ";" + info+";";
+    }
     
     public boolean equals(KontaktPerson kontaktPerson){
         if (this==kontaktPerson){

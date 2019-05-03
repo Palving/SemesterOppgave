@@ -24,8 +24,12 @@ public class Lokale implements Serializable {
        
     }
     
+    @Override
     public String toString(){
         return lokaleNavn+"\n "+antallPlasser;
+    }
+    public String toCSV(){
+        return lokaleNavn+";"+antallPlasser+";";
     }
 
     public String getLokaleNavn(){

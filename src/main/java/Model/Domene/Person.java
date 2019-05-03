@@ -52,6 +52,10 @@ public abstract class Person implements Serializable {
         return fornavn +"\n "+ etternavn+"\n "+ tlf ;
     }
     
+    public String toCSV(){
+         return fornavn +";"+ etternavn+";"+ tlf+";" ;
+    }
+    
     
     
 }

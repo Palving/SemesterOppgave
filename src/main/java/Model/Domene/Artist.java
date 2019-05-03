@@ -60,7 +60,7 @@ public class Artist extends Person implements Serializable  {
         return super.getFornavn()+"\n "+super.getEtternavn()+"\n "+super.getTlf()+"\n "+getTypeArtist();
     }
     public String toCSV(){
-        return  super.getFornavn()+";"+super.getEtternavn()+";"+super.getTlf()+";"+getTypeArtist()+";";
+        return  super.toCSV()+getTypeArtist()+";";
     }
     
 }
