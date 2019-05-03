@@ -71,15 +71,12 @@ private TextField[] input=null;
  private ComboBox ddlLokale=null;
  private ComboBox ddlArrangement=null;
  
- private ObservableList<Artist> obsArtister;
- private ObservableList<KontaktPerson> obsKontaktPerson;
- private ObservableList<Lokale> obsLokale;
- private ObservableList<Arrangement> obsArrangement;
  
  // peker på element i listen basert på valg i combobox
  private int artistIndex;
  private int kontaktPersonIndex;
  private int lokaleIndex;
+ private int arrangementIndex;
  
  // date elementer
  private DatePicker datePicker=null;
@@ -101,28 +98,32 @@ private TextField[] input=null;
  public int getLokaleIndex() throws InvalidComboBoxValueException{
     return inputFormatter.getArtistIndex(ddlLokale);
  }
+ public int getArrangementIndex() throws InvalidComboBoxValueException{
+     return inputFormatter.getArrangementIndex(ddlArrangement);
+ }
   
    
    
    private void endreObjekt(){
+       
          objekter=new ArrayList<>();
+         
       ArrayList<String> data=null;
      try{
           data=new ArrayList<>(inputFormatter.getTextFieldData());
      }
      catch(InvalidTextFieldInputException e){
-        // utskriftRegistrert.setText(e.getMessage());
-         System.err.println(e.getMessage());
+        FeilmeldingSystem.visFeilmelding(e.getMessage());
          return;
      }
-   /* try {
+     
+    try {
          ValideringSystem.validerInputiTextFields(input);
      }
      catch(InvalidInputException e){
-         //utskriftRegistrert.setText(e.getMessage());
-         System.err.println(e.getMessage());
+         FeilmeldingSystem.visFeilmelding(e.getMessage());
          return;
-     }*/
+     }
     
     
    
@@ -152,13 +153,14 @@ private TextField[] input=null;
               }
               catch (InvalidComboBoxValueException e){
               //  utskriftRegistrert.setText((e.getMessage()));
-                  System.out.println(e.getMessage());
+                  FeilmeldingSystem.visFeilmelding(e.getMessage());
                   return;
               }
+              
               Arrangement arrang=(Arrangement)objToChange;
               // må ta vare på antall solgte billetter, siden den settes 0 i konstruktøren
               int billettSalg=arrang.getBillettSalg();
-             // utskriftRegistrert.setText("\n"+artist.toString());
+ 
              endreSystem.endreObject(arrang, "Arrangement");
             
             
@@ -185,14 +187,23 @@ private TextField[] input=null;
               break;
               
           case "Billett":
+              try{
+                  arrangementIndex=inputFormatter.getArrangementIndex(ddlArrangement);
+              }
+              catch(InvalidComboBoxValueException e){
+                   FeilmeldingSystem.visFeilmelding(e.getMessage());
+                   return;
+              }
                ObservableList<Arrangement> obsArrangement=FXCollections.observableArrayList(register.getArrangement());
-               Arrangement tilhørendeArrangement=obsArrangement.get(ddlArrangement.getSelectionModel().getSelectedIndex());
+               Arrangement tilhørendeArrangement=obsArrangement.get(arrangementIndex);
                
                Billett billett=(Billett) objToChange;
                endreSystem.endreObject(objToChange, "Billett");
-           billett=new Billett(tilhørendeArrangement,data);
-             // utskriftRegistrert.setText(billett.toString());
-           register.registrer(billett);
+               
+               billett=new Billett(tilhørendeArrangement,data);
+         
+               register.registrer(billett);
+               
               break;
           
       }

@@ -31,7 +31,7 @@ public class TilJOBJ extends NedlastingSystem{
         
         try{
            //  ArrayList<Artist> artister=register.getArtister();
-             FileOutputStream fos = new FileOutputStream(super.getPath()+".jobj");
+             FileOutputStream fos = new FileOutputStream(super.getPath());
               ObjectOutputStream out= new ObjectOutputStream(fos);
            // ObjectOutputStream out=null;
           // ObservableList<Lokale> liste=FXCollections.observableArrayList();

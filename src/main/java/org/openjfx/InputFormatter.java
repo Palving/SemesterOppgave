@@ -46,16 +46,13 @@ private TextField[] input=null;
  private int artistIndex;
  private int kontaktPersonIndex;
  private int lokaleIndex;
+ private int arrangementIndex;
  
  // date elementer
  private DatePicker datePicker=null;
 
 private String[] attributter; 
- @FXML
- private AnchorPane anchorPane;
- 
- @FXML
- private Button btn;
+
  
  private Register register=Register.getInstance();
  
@@ -218,6 +215,14 @@ private String[] attributter;
          throw new InvalidComboBoxValueException("Du må velge lokale");
      }
      return lokaleIndex;
+ }
+ 
+ public int getArrangementIndex(ComboBox ddlArrang) throws InvalidComboBoxValueException{
+     arrangementIndex=ddlArrangement.getSelectionModel().getSelectedIndex();
+     if (arrangementIndex==-1){
+         throw new InvalidComboBoxValueException("Du må velge et arrangement");
+     }
+     return arrangementIndex;
  }
     
 }

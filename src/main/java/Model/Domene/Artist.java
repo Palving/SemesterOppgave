@@ -34,7 +34,6 @@ public class Artist extends Person implements Serializable  {
         this.typeArtist = typeArtist;
     }
     
-    
    public boolean equals(Artist artist){
         if (this==artist){
             return true;
@@ -44,12 +43,14 @@ public class Artist extends Person implements Serializable  {
         }
         Artist other=artist;
         
-        if (other.getFornavn().equals(artist.getFornavn()) && other.getEtternavn().equals(artist.getEtternavn()) && other.getTlf().equals(artist.getTlf()) && other.getTypeArtist().equals(artist.getTypeArtist())){
-            // samme info -> returner objekt som det matchet med
-           // System.out.println("samme info -> returner objekt det matchet med");
+        if (other.getFornavn().equals(artist.getFornavn()) 
+                && other.getEtternavn().equals(artist.getEtternavn()) 
+                && other.getTlf().equals(artist.getTlf()) 
+                && other.getTypeArtist().equals(artist.getTypeArtist())){
+        
             return true;
         }
-        //System.out.println("ingen match -> registrer objekt sammen med andre objekt");
+       
         return false;
         
     }

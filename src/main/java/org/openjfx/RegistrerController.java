@@ -218,17 +218,14 @@ private void formaterDatePicker(){
           data=new ArrayList<>(inputFormatter.getTextFieldData());
      }
      catch(InvalidTextFieldInputException e){
-         utskriftRegistrert.setText(e.getMessage());
-         
-         System.err.println(e.getMessage());
+          FeilmeldingSystem.visFeilmelding(e.getMessage());
          return;
      }
     try {
          ValideringSystem.validerInputiTextFields(input);
      }
      catch(InvalidInputException e){
-         utskriftRegistrert.setText(e.getMessage());
-         System.err.println(e.getMessage());
+         FeilmeldingSystem.visFeilmelding(e.getMessage());
          return;
      }
     
@@ -254,8 +251,8 @@ private void formaterDatePicker(){
                  lokaleIndex=getLokaleIndex();
               }
               catch (InvalidComboBoxValueException e){
-                  utskriftRegistrert.setText((e.getMessage()));
-                  System.out.println(e.getMessage());
+                  FeilmeldingSystem.visFeilmelding(e.getMessage());
+                
                   return;
               }
               
@@ -263,7 +260,7 @@ private void formaterDatePicker(){
                   ValideringSystem.validerTimeFormat(data.get(0));
               }
               catch(InvalidTimeFormatException e){
-                  System.err.println(e.getMessage());
+                 FeilmeldingSystem.visFeilmelding(e.getMessage());
                   return;
               }
              

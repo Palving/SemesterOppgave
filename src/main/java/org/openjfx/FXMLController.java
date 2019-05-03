@@ -2,6 +2,7 @@ package org.openjfx;
 
 
 import Model.Avvik.InvalidJavaObjectFormatException;
+import Model.Domene.Artist;
 import Model.Nedlastning.TilJOBJ;
 import Model.Opplastning.FraJOBJ;
 import Model.Registrering.Register;
@@ -84,13 +85,7 @@ public class FXMLController {
     
     // private ExecutorService service = Executors.newSingleThreadExecutor();
     
-    private void visFeilmelding(String msg){
-   Alert alert = new Alert(AlertType.INFORMATION);
-   alert.setTitle("Feil");
-   alert.setContentText(msg);
-
-   alert.showAndWait();
-    }
+  
    
      @FXML
     private void lastInn(ActionEvent event) throws IOException{
@@ -112,30 +107,23 @@ public class FXMLController {
         try{
              ObservableList<Object> objekter= javaOBJinnlesing.ReadObjectsFromFile(vei);
              if(objekter==null){
-               ///  System.err.println("Ugydlig fil");
                // runtimeexception så test bare for null
-               visFeilmelding("Ugyldig fil");
+               FeilmeldingSystem.visFeilmelding("Filen kan ikke leses");
                  return;
              }
-               
-        for (Object obj : objekter){
-            if (obj!=null){
-                  register.registrer(obj);
-            }
-                
-              }
-       //javaOBJinnlesing.registrerFraFil(objekter);
+       
+       javaOBJinnlesing.registrerFraFil(objekter,valgt);
+    
         }
         catch(ClassNotFoundException e){
             System.err.println(e.getMessage());
-            visFeilmelding(e.getMessage());
+             FeilmeldingSystem.visFeilmelding(e.getMessage());
         }
-        catch(IOException e){
-            visFeilmelding(e.getMessage());
+        catch(IOException | InvalidJavaObjectFormatException e){
+             FeilmeldingSystem.visFeilmelding(e.getMessage());
         }
-        catch(InvalidJavaObjectFormatException e){
-             visFeilmelding(e.getMessage());
-        }
+        /* TilCSV CSVinnlesing = new TilCSV(vei);
+        CSVinnlesing.lesFil();*/
        
        
        /* TilCSV CSVinnlesing = new TilCSV(vei);
@@ -156,7 +144,8 @@ public class FXMLController {
 
    
     }
-     public String valgt;
+    // default value
+     public String valgt="Artist";
     @FXML
     private void lastNed(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
@@ -168,11 +157,11 @@ public class FXMLController {
         );
         File path = fileChooser.showSaveDialog(stage);
         String file=path.toString();
-        Register register = Register.getInstance();
+       // Register register = Register.getInstance();
        // if (fileChooser.getSelectedExtensionFilter().equals(".jobj")){
-            TilJOBJ test=new TilJOBJ(path);
-            test.lagreFil(getObjects(),valgt);
-            System.out.println("jobj lagret");
+            TilJOBJ jobjLagring=new TilJOBJ(path);
+            jobjLagring.lagreFil(getObjects(),valgt);
+           
        // }
         /*else if (fileChooser.getSelectedExtensionFilter().equals(".csv")){
             //TilCSV test2 = new TilCSV(file);
@@ -275,14 +264,16 @@ public class FXMLController {
        int teller=0;
        
        for (String attributt : attributter){
+           
            cbArray[teller]=new CheckBox(attributt);
-           if (teller==0){
-                cbArray[teller].setLayoutX(700);
-                cbArray[teller].setLayoutY(200);
+           
+           if (teller>0){
+                 cbArray[teller].setLayoutY( cbArray[teller-1].getLayoutY() + 30);
+                 cbArray[teller].setLayoutX(700);
            }
            else{
-               cbArray[teller].setLayoutY( cbArray[teller-1].getLayoutY() + 30);
-                 cbArray[teller].setLayoutX(700);
+               cbArray[teller].setLayoutX(700);
+               cbArray[teller].setLayoutY(200);
            }
           
            ap.getChildren().add(cbArray[teller]);
