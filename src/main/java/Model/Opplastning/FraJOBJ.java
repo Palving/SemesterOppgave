@@ -18,9 +18,7 @@ import org.openjfx.FeilmeldingSystem;
 
 
 public class FraJOBJ extends OpplastingSystem {
-    
-   // Register register=Register.getInstance();
-    
+  
     private File file;
     private Register register=Register.getInstance();
     
@@ -74,20 +72,18 @@ public class FraJOBJ extends OpplastingSystem {
       return liste;
         }
         catch(EOFException e){
-            System.err.println(e.getMessage());
+               FeilmeldingSystem.visFeilmelding(e.getMessage());
         }
- catch (IOException e){
-         System.err.println(e.getMessage());
-   }
+     catch (IOException e){
+            FeilmeldingSystem.visFeilmelding(e.getMessage());
+        }
         catch(ClassCastException e){
-            System.err.println(e.getMessage());
+               FeilmeldingSystem.visFeilmelding(e.getMessage());
         }
  
       return null;
     }
-
-   
-    
+ 
    }
         
     

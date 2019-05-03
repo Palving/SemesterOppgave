@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.openjfx.FeilmeldingSystem;
 
 /**
  *
@@ -79,23 +80,22 @@ public class FraCSV extends OpplastingSystem{
     }
     
     
+    @Override
+    public void lagreTilFil() throws ClassNotFoundException {
     
-    public void tilFil(){
         Register register = Register.getInstance();
-        //String csvFilNavn = "/Users/jonny/Documents/kll/Data.csv";
-       // String csvFilNavn = file.getPath();
+    
         String csvFilNavn=super.file.getPath();
         System.out.println(csvFilNavn);
         BufferedReader br = null;
         String line = "";
-        //String cvsSplitBy = ";";
+      
 
         try {
             br = new BufferedReader(new FileReader(csvFilNavn));
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                //String[] arrayAvSplittetLinje = line.split(cvsSplitBy);
                 ArrayList<String> linjeLestInn = new ArrayList<>(Arrays.asList(line.split(";")));
                 if (linjeLestInn.size()!=4 )
                 System.out.print("funka :" + linjeLestInn.size());
@@ -105,112 +105,55 @@ public class FraCSV extends OpplastingSystem{
                     System.out.println("Artist");
                     
                     Artist artist=new Artist(linjeLestInn);
-                    System.out.println(artist);
-                    //objekter.add(artist);
-                    for (Artist a : register.getArtister()){
-                        if (a.equals(artist)){
-                            System.out.println("samme fornavn!!!");
-                        }
-                        
-                    }
+               
                     register.registrer(artist);
                     break;
                 case 17:
-                    System.out.println("Arrangement");
-                    Artist artisten=FinnArtist(linjeLestInn);
-                    KontaktPerson kontaktPerson1 =finnKontaktPerson(linjeLestInn);
-                    
-                   /* ArrayList arrangement1 = new ArrayList<>();
-                    for (int i = 10 ; i< linjeLestInn.size() ; i++ ){
-                        arrangement1.add(linjeLestInn.get(i));
-                    }
-                    */ //System.out.print("\n" + arrangement1.get(5) + "\n" +arrangement1.get(6));
-                    /*String k = linjeLestInn.get(15);
-                    String l =k.replace(".", "");
-                    System.out.print(k);
-                    
-                   LocalDate dato =  LocalDate.parse(l);
-                    int billettSalg = Integer.parseInt(linjeLestInn.get(16));*/
-                   
-                    Arrangement arrangement = FinnArrangement(linjeLestInn);
-                   //Arrangement arrangement = new Arrangement(artisten, kontaktPerson1, linjeLestInn.get(10) , linjeLestInn.get(11) , linjeLestInn.get(12) , linjeLestInn.get(13) ,linjeLestInn.get(14), dato , billettSalg );
+                   Arrangement arrangement = FinnArrangement(linjeLestInn);
+            
                    register.registrer(arrangement);
-                   
                     break;
                 case 2:
-                    System.out.println("Lokale");
                     Lokale nyLokale = new Lokale(linjeLestInn);
-                    for (Lokale a : register.getLokale()){
-                        if (a.equals(nyLokale)){
-                            System.out.println("samme fornavn!!!");
-                        }
-                        
-                    }
+                  
                     register.registrer(nyLokale);
                     break;
                 case 19:
-                    System.out.println("Billett");
                     Arrangement arrangementIBillet = FinnArrangement(linjeLestInn);
-                   // String arrangementNavn = arrangementIBillet.getNavnPaaArrangement();
-                    int pris = Integer.parseInt(linjeLestInn.get(16));
-                    //Billett billett = new Billett(array3);
-                   /* for (Billett a : register.getBillett()){
-                        if (a.equals(null)){
-                            System.out.println("samme fornavn!!!");
-                        }
-                        
-                    }*/
+                  
+                    int pris = Integer.parseInt(linjeLestInn.get(16));           
                     register.registrer(new Billett(arrangementIBillet,pris, linjeLestInn.get(17)));
-                
-                    
-                    //register.registrer(billett);
-                    
-                   
-                
-                    
-                    //register.registrer(billett);
-                    System.out.println("3");
                     break;
                 case 6:
-                    System.out.println("Kontakt person");
                     KontaktPerson kontaktPerson = new KontaktPerson(linjeLestInn);
-                    /*for (KontaktPerson a : register.getKontaktPerson()){
-                        if (a.equals(kontaktPerson)){
-                            System.out.println("samme fornavn!!!");
-                        }*/
-                        
-                    
-                    register.registrer(kontaktPerson);
-                   
+                 
+                    register.registrer(kontaktPerson); 
                     break; 
                 
+                }   
             }
-                
-                
-            }
-                
-
-            
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
+         
+        } 
+        catch (FileNotFoundException e) {
+               FeilmeldingSystem.visFeilmelding(e.getMessage());
+        } 
+        catch (IOException e) {
+               FeilmeldingSystem.visFeilmelding(e.getMessage());
+        } 
+        finally {
             if (br != null) {
                 try {
                     br.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                       FeilmeldingSystem.visFeilmelding(e.getMessage());
                 }
             }
         }
     }
 
-    @Override
-    public void lagreTilFil() throws ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+   
+
+   
 }
 
 

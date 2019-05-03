@@ -1,8 +1,10 @@
 package org.openjfx;
 
 
+import Model.Avvik.InvalidJavaObjectFormatException;
 import Model.Nedlastning.TilCSV;
 import Model.Nedlastning.TilJOBJ;
+import Model.Opplastning.FraCSV;
 import Model.Opplastning.FraJOBJ;
 import Model.Registrering.Register;
 import Model.Tråder.ThreadSystem;
@@ -98,23 +100,31 @@ public class FXMLController {
        
         String vei = ""+ file;
         System.out.println(vei);
-       // Register register = Register.getInstance();
-        FraJOBJ javaOBJinnlesing = new FraJOBJ(file);
-        
+      
+         if (fileChooser.getSelectedExtensionFilter().getDescription().equals("jobj fil")){
+         try{
+             FraJOBJ jobjInnlesing=new FraJOBJ(file);
+           jobjInnlesing.lagreTilFil();
+         }
+         catch(ClassNotFoundException e){
+             FeilmeldingSystem.visFeilmelding(e.getMessage());
+             return;
+         }
+            
+           
+      }
+         else if (fileChooser.getSelectedExtensionFilter().getDescription().equals("csv fil")){
+           
         try{ 
-       javaOBJinnlesing.lagreTilFil();
+      FraCSV CSVInnlesning = new FraCSV(file);
+       CSVInnlesning.lagreTilFil();
         }
         catch(ClassNotFoundException e){
              FeilmeldingSystem.visFeilmelding(e.getMessage());
+             return;
         }
-       
-        /* TilCSV CSVinnlesing = new TilCSV(vei);
-        CSVinnlesing.lesFil();*/
-       
-       
-       /* TilCSV CSVinnlesing = new TilCSV(vei);
-        CSVinnlesing.lesFil();*/
-   
+          
+        }
        
       
       // Tråder
@@ -142,30 +152,22 @@ public class FXMLController {
                 new FileChooser.ExtensionFilter("jobj fil", "*.jobj")
         );
         File file = fileChooser.showSaveDialog(stage);
-        String path=file.toString();
-       // Register register = Register.getInstance();
-     /* if (fileChooser.getSelectedExtensionFilter().equals(".jobj")){
+  
+  
+      if (fileChooser.getSelectedExtensionFilter().getDescription().equals("jobj fil")){
+         
             TilJOBJ jobjLagring=new TilJOBJ(file);
             jobjLagring.lagreTilFil(getObjects(),valgt);
            
-        }*/
-     //   else if (fileChooser.getSelectedExtensionFilter().equals(".csv")){
-            //TilCSV test2 = new TilCSV(file);
-            System.out.println("if setning funker");
+      }
+         else if (fileChooser.getSelectedExtensionFilter().getDescription().equals("csv fil")){
+         
             TilCSV csvLagring = new TilCSV(file);
             csvLagring.lagreTilFil(getObjects(), valgt);
           
-            //test2.lagreTilFil(getObjects());
-       // }
+        }
     
-      
-        System.out.println("file:"+file);
-        
-        //Nedlasting r = new TilJOBJfil (file , register);
-       
-         /*TilJOBJ test=new TilJOBJ(file);
-           test.lagreTilFil(getObjects());*/
-           
+ 
     }
     
     private ObservableList<Object> getObjects(){
@@ -187,7 +189,6 @@ public class FXMLController {
     
     
     public void populerDropdown(){
-       //dropdownlist.getItems().addAll("Artist","Lokale","Arrangement","Kontaktperson","Billett");
       ObservableList<String> valg=FXCollections.observableArrayList("Artist","Lokale","Arrangement","KontaktPerson","Billett");
     
       for (String elementer : valg){
@@ -225,11 +226,9 @@ public class FXMLController {
        tabell.setPrefWidth(658);
        
        ap.getChildren().add(tabell);
-       //layoutX="25.0" layoutY="111.0" prefHeight="522.0" prefWidth="658.0" />
+      
    }    
-        // private TableColumn[] columns;
-    
-   
+       
    public void refreshTableView(){
        for (Object column : tabell.getColumns()){
            tabell.getColumns().remove(column);

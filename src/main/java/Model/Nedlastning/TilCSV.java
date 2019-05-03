@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.openjfx.FeilmeldingSystem;
 
 
 public class TilCSV extends NedlastingSystem {
@@ -22,9 +23,9 @@ public class TilCSV extends NedlastingSystem {
     
     @Override
     public void lagreTilFil(ObservableList<Object> objekter,String valgt){
+        
         switch (valgt){
             case "Arrangement":
-                System.out.println("i switch arrangement");
                 ArrangementTilCSV(FXCollections.observableList(register.getArrangement()));
                 break;
             case "KontaktPerson":
@@ -39,15 +40,12 @@ public class TilCSV extends NedlastingSystem {
             case "Billett":
                 BillettTilCSV(FXCollections.observableList(register.getBillett()));
                 break;
-                    
-            
-                    
-                    }
+                  
+           }
     }
     
     private void BillettTilCSV(ObservableList<Billett> objekter){
          PrintWriter printWriter = null;
-       
        
         try {
             printWriter = new PrintWriter(super.file);
@@ -60,7 +58,7 @@ public class TilCSV extends NedlastingSystem {
         }
         
       catch(FileNotFoundException e){
-          
+          FeilmeldingSystem.visFeilmelding(e.getMessage());
                     }
 
     }
@@ -80,8 +78,8 @@ public class TilCSV extends NedlastingSystem {
         }
         
       catch(FileNotFoundException e){
-          
-                    }
+              FeilmeldingSystem.visFeilmelding(e.getMessage());
+      }
 
     }
     
@@ -100,8 +98,8 @@ public class TilCSV extends NedlastingSystem {
         }
         
       catch(FileNotFoundException e){
-          
-                    }
+              FeilmeldingSystem.visFeilmelding(e.getMessage());
+     }
 
 }
    
@@ -121,8 +119,8 @@ public class TilCSV extends NedlastingSystem {
         }
         
       catch(FileNotFoundException e){
-          
-                    }
+              FeilmeldingSystem.visFeilmelding(e.getMessage());
+       }
 
    }
     
@@ -141,8 +139,8 @@ public class TilCSV extends NedlastingSystem {
         }
         
       catch(FileNotFoundException e){
-          
-                    }
+           FeilmeldingSystem.visFeilmelding(e.getMessage());
+        }
 
    }
 }

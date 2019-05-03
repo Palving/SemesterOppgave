@@ -35,25 +35,17 @@ public class KontaktPerson extends Person implements Serializable  {
         return nettSide;
     }
 
-    public void setNettSide(String nettSide) {
-        this.nettSide = nettSide;
-    }
+  
 
     public String getFirma() {
         return firma;
     }
 
-    public void setFirma(String firma) {
-        this.firma = firma;
-    }
 
     public String getInfo() {
         return info;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
-    }
 
     @Override
     public String toString() {
@@ -82,7 +74,6 @@ public class KontaktPerson extends Person implements Serializable  {
            
                      return true;
                  }
-        //System.out.println("ingen match -> registrer objekt sammen med andre objekt");
         return false;
         
     }

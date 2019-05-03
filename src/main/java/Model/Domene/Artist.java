@@ -30,10 +30,6 @@ public class Artist extends Person implements Serializable  {
         return typeArtist;
     }
 
-    public void setTypeArtist(String typeArtist) {
-        this.typeArtist = typeArtist;
-    }
-    
    public boolean equals(Artist artist){
         if (this==artist){
             return true;

@@ -90,7 +90,7 @@ public class Register implements Serializable {
         return billett;
     }
     
-    
+    // for visualisering
     public void fyllRegister(){
         artister.add(new Artist("Jon","Rafoss","98419854","Sanger"));
         artister.add(new Artist("Mats","Grøsvik","97512392","Danser"));

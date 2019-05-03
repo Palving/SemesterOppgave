@@ -152,7 +152,6 @@ private TextField[] input=null;
                  lokaleIndex=getLokaleIndex();
               }
               catch (InvalidComboBoxValueException e){
-              //  utskriftRegistrert.setText((e.getMessage()));
                   FeilmeldingSystem.visFeilmelding(e.getMessage());
                   return;
               }
@@ -163,9 +162,6 @@ private TextField[] input=null;
  
              endreSystem.endreObject(arrang, "Arrangement");
             
-            
-              //sted
-              // burde heller kanskje lagre selve objektet i det og heller hente stedet et annet sted
         ObservableList<Artist> obsArtister=FXCollections.observableArrayList(register.getArtister());
         ObservableList<Lokale> obsLokale=FXCollections.observableArrayList(register.getLokale());         
         ObservableList<KontaktPerson> obsKontaktPerson=FXCollections.observableArrayList(register.getKontaktPerson());
@@ -174,13 +170,12 @@ private TextField[] input=null;
              
            arrang=new Arrangement(obsArtister.get(artistIndex),obsKontaktPerson.get(kontaktPersonIndex),data,datePicker.getValue());
            arrang.setBillettSalg(billettSalg);
-           //utskriftRegistrert.setText(arrang.toString());
           register.registrer(arrang);
              break;
               
           case "KontaktPerson":
               KontaktPerson kontaktPerson=(KontaktPerson)objToChange;
-             // utskriftRegistrert.setText("\n"+artist.toString());
+            
              endreSystem.endreObject(kontaktPerson, "KontaktPerson");
              kontaktPerson=new KontaktPerson(data);
              register.registrer(kontaktPerson);
@@ -202,12 +197,10 @@ private TextField[] input=null;
                
                billett=new Billett(tilhørendeArrangement,data);
          
-               register.registrer(billett);
-               
+               register.registrer(billett);     
               break;
           
       }
-    
      refreshInputElementer();
      visData(valgt);
  
@@ -240,9 +233,6 @@ private TextField[] input=null;
        anchorPane.getChildren().add(table);
    }
    
- 
-   
-   // TODO
    // Slette fra alt
    public void sletteKnapp()
     {
@@ -291,8 +281,6 @@ private TextField[] input=null;
        return obj;
        
    }
-   
- 
 
  // Fjerner textfields på radiobutton-onchange()
 private void refreshInputElementer(){
@@ -374,8 +362,6 @@ private void formaterDatePicker(){
      }
      else if(valgt.equals("Billett")){
          formaterDropdownBillett();
-        // Billett b=(Billett)objToChange;
-        // datePicker.setValue(b.getDato());
         
      }
     

@@ -5,6 +5,7 @@ import Model.Registrering.DatoFormat;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import org.openjfx.FeilmeldingSystem;
 
 
 
@@ -42,7 +43,7 @@ public class Billett implements Serializable  {
     try {
          arrang.plussBillettsalg();
         this.plassNummer=Integer.parseInt(data.get(0));
-         this.kundeTlf=data.get(1);
+        this.kundeTlf=data.get(1);
         this.lokaleNavn=arrang.getSted();
         this.dato=arrang.getDato();
         this.klokkeslett=arrang.getTidspunkt();
@@ -51,7 +52,7 @@ public class Billett implements Serializable  {
        
     }    
     catch(Exception e){
-        System.out.println(e.getMessage());
+       FeilmeldingSystem.visFeilmelding("Plassnummer må være tall");
     }
     
     }
@@ -60,48 +61,32 @@ public class Billett implements Serializable  {
         return plassNummer;
     }
 
-    public void setPlassNummer(int plassNummer) {
-        this.plassNummer = plassNummer;
-    }
+   
 
     public String getLokaleNavn() {
         return lokaleNavn;
     }
 
-    public void setLokaleNavn(String lokaleNavn) {
-        this.lokaleNavn = lokaleNavn;
-    }
+   
 
     public LocalDate getDato() {
         return dato;
     }
 
-    public void setDato(LocalDate dato) {
-        this.dato = dato;
-    }
 
     public int getPris() {
         return pris;
     }
 
-    public void setPris(int pris) {
-        this.pris = pris;
-    }
+  
 
     public String getKundeTlf() {
         return kundeTlf;
     }
 
-    public void setKundeTlf(String kundeTlf) {
-        this.kundeTlf = kundeTlf;
-    }
 
     public String getArrangementNavn() {
         return arrangementNavn;
-    }
-
-    public void setArrangementNavn(String arrangementNavn) {
-        this.arrangementNavn = arrangementNavn;
     }
 
    
@@ -131,11 +116,10 @@ public class Billett implements Serializable  {
                 && other.getPris()==billett.getPris()
                 && other.getPlassNummer()==billett.getPlassNummer()
                 && other.getDato().equals(billett.getDato())){
-            // samme info -> returner objekt som det matchet med
-           // System.out.println("samme info -> returner objekt det matchet med");
+          
             return true;
         }
-        //System.out.println("ingen match -> registrer objekt sammen med andre objekt");
+       
         return false;
         
     }

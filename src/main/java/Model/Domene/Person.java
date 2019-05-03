@@ -27,24 +27,13 @@ public abstract class Person implements Serializable {
         return fornavn;
     }
 
-    public void setFornavn(String fornavn) {
-        this.fornavn = fornavn;
-    }
-
     public String getEtternavn() {
         return etternavn;
     }
 
-    public void setEtternavn(String etternavn) {
-        this.etternavn = etternavn;
-    }
 
     public String getTlf() {
         return tlf;
-    }
-
-    public void setTlf(String tlf) {
-        this.tlf = tlf;
     }
 
     @Override

@@ -2,6 +2,7 @@ package Model.Domene;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import org.openjfx.FeilmeldingSystem;
 
 public class Lokale implements Serializable {
     private String lokaleNavn;
@@ -18,11 +19,20 @@ public class Lokale implements Serializable {
              this.lokaleNavn=data.get(0);
              this.antallPlasser=Integer.parseInt(data.get(1));
         }
-        catch(Exception e){
-            
+        catch(NumberFormatException e){
+            FeilmeldingSystem.visFeilmelding("Antall plasser må være tall");
         }
        
     }
+    
+     public String getLokaleNavn(){
+        return lokaleNavn;
+    }
+
+    public int getAntallPlasser(){
+        return antallPlasser;
+    }
+
     
     @Override
     public String toString(){
@@ -32,19 +42,4 @@ public class Lokale implements Serializable {
         return lokaleNavn+";"+antallPlasser+";";
     }
 
-    public String getLokaleNavn(){
-        return lokaleNavn;
-    }
-
-    public void setLokaleNavn(String lokale){
-        this.lokaleNavn = lokale;
-    }
-
-    public int getAntallPlasser(){
-        return antallPlasser;
-    }
-
-    public void setAntallPlasser(int antallPlasser){
-        this.antallPlasser = antallPlasser;
-    }
 }

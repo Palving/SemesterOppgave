@@ -9,7 +9,7 @@ import javafx.scene.control.TextField;
 public class ValideringSystem {
     
     public static boolean validerInputiTextFields(TextField[] input) throws InvalidInputException{
-        String regex="^[A-Za-zæøåÆØÅ0-9:\\s]{1,30}$";
+        String regex="^[A-Za-zæøåÆØÅ0-9:\\s.]{1,30}$";
         
         for (TextField textfield : input){
             if (!textfield.getText().matches(regex)){

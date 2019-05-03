@@ -8,6 +8,7 @@ package Model.Registrering;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import org.openjfx.FeilmeldingSystem;
 
 /**
  *
@@ -30,7 +31,7 @@ public static String formaterDato(LocalDate dato, String klokkeslett){
     return formatter.format(dato)+" "+klokkeslett;
     }
     catch(Exception e){
-        System.err.println(e.getMessage());
+          FeilmeldingSystem.visFeilmelding(e.getMessage());
     }
     
       return "Feil";

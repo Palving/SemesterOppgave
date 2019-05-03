@@ -2,6 +2,7 @@
 package Model.Tråder;
 
 import javafx.concurrent.Task;
+import org.openjfx.FeilmeldingSystem;
 
 
 public class ThreadSystem extends Task<Void> {
@@ -20,7 +21,6 @@ public class ThreadSystem extends Task<Void> {
       catch(InterruptedException e){
           
       }
-      System.out.print("tråd ferdig");
       return null;
   }
   
@@ -33,7 +33,7 @@ public class ThreadSystem extends Task<Void> {
     
     @Override
     protected void failed(){
-        System.err.println(getException());
+       FeilmeldingSystem.visFeilmelding(getException().getMessage());
     }
         
     

@@ -29,7 +29,6 @@ public class TilJOBJ extends NedlastingSystem{
  @Override
     public void lagreTilFil(ObservableList<Object> data, String valgt){
        
-        
         try{
              FileOutputStream fos = new FileOutputStream(super.getPath());
              ObjectOutputStream out= new ObjectOutputStream(fos);
@@ -47,8 +46,7 @@ public class TilJOBJ extends NedlastingSystem{
                         artistListe.add((Artist)a);
                         System.out.print(a.toString());
                     }
-                     //out.writeObject(artistListe);
-                    System.out.println("artistliste lagret");
+
                     out.writeObject(artistListe);
                      break;
                   
@@ -60,11 +58,11 @@ public class TilJOBJ extends NedlastingSystem{
                       out.writeObject(lokaleListe);
                       break;
             
-            case "Arrangement":
-            ArrayList<Arrangement> arrangListe=new ArrayList<>();
-            for(Object a : liste){
-            arrangListe.add((Arrangement)a);
-        }
+                 case "Arrangement":
+                ArrayList<Arrangement> arrangListe=new ArrayList<>();
+                    for(Object a : liste){
+                    arrangListe.add((Arrangement)a);
+                          }
             out.writeObject(arrangListe);
             break;
             
