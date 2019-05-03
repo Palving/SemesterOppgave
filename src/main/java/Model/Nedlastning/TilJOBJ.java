@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javafx.collections.ObservableList;
+import org.openjfx.FeilmeldingSystem;
 
 
 public class TilJOBJ extends NedlastingSystem{
@@ -25,22 +26,19 @@ public class TilJOBJ extends NedlastingSystem{
         super(file);
     }
   
-
-    public void lagreFil(ObservableList<Object> data, String valgt){
+ @Override
+    public void lagreTilFil(ObservableList<Object> data, String valgt){
        
         
         try{
-           //  ArrayList<Artist> artister=register.getArtister();
              FileOutputStream fos = new FileOutputStream(super.getPath());
-              ObjectOutputStream out= new ObjectOutputStream(fos);
-           // ObjectOutputStream out=null;
-          // ObservableList<Lokale> liste=FXCollections.observableArrayList();
+             ObjectOutputStream out= new ObjectOutputStream(fos);
+        
            ArrayList<Object> liste=new ArrayList<>();
             for (Object a : data){
-                //out.
+              
                liste.add(a);
-               // out.writeObject(a);
-               // out.close();
+             
             }
             switch(valgt){
                 case "Artist":
@@ -86,19 +84,19 @@ public class TilJOBJ extends NedlastingSystem{
                 out.writeObject(billettListe);
                 break;
             }
-           // out.writeObject(liste);
-          
+         
              out.close();
          
           
         }
         catch(IOException e){
-            
+               FeilmeldingSystem.visFeilmelding(e.getMessage());
+                 
+             }
         }
         
     
     }
     
-    
-}
+
 

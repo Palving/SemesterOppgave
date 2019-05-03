@@ -154,4 +154,9 @@ public class FraCSV extends OpplastingSystem {
             }
 
     } 
+
+    @Override
+    public void lagreTilFil() throws ClassNotFoundException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

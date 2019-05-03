@@ -17,6 +17,8 @@ public abstract class OpplastingSystem {
         this.file = file;
        
     }
+    
+    public abstract void lagreTilFil() throws ClassNotFoundException;
 }
 
 

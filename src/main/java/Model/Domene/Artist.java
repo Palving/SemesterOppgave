@@ -59,5 +59,8 @@ public class Artist extends Person implements Serializable  {
     public String toString(){
         return super.getFornavn()+"\n "+super.getEtternavn()+"\n "+super.getTlf()+"\n "+getTypeArtist();
     }
+    public String toCSV(){
+        return  super.getFornavn()+";"+super.getEtternavn()+";"+super.getTlf()+";"+getTypeArtist()+";";
+    }
     
 }

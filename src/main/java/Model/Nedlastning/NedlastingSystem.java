@@ -7,12 +7,13 @@ package Model.Nedlastning;
 
 import Model.Registrering.Register;
 import java.io.File;
+import javafx.collections.ObservableList;
 
 
 
 public abstract class NedlastingSystem {
     private String path;
-    private File file;
+    public File file;
     private Register register;
 
     
@@ -20,15 +21,13 @@ public abstract class NedlastingSystem {
     public NedlastingSystem (File file){
       this.file=file;
    
-      
-        
     }
     
     public String getPath(){
         return file.getPath();
     }
     
-  //  public abstract void lagreFil();
+ public abstract void lagreTilFil(ObservableList<Object> data, String valgt);
         
    
     

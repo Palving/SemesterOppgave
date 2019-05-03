@@ -1,16 +1,18 @@
 
 package Model.Nedlastning;
 
-import Model.Domene.Arrangement;
-import Model.Domene.KontaktPerson;
-import Model.Opplastning.OpplastingSystem;
+import Model.Domene.*;
 import Model.Registrering.Register;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 class FinnObjekter{
+    
     public String finnKontaktPerson(ArrayList artistStringArray){
         Register register = Register.getInstance();
         ArrayList KP =register.getKontaktPerson();
@@ -89,20 +91,23 @@ public class TilCSV extends NedlastingSystem {
         super(file);
     }
     
-    public void lagreFil(int valgt){
+    @Override
+    public void lagreTilFil(ObservableList<Object> objekter,String valgt){
         switch (valgt){
-            case 1:
-                ArrangementTilCSV();
+            case "Arrangement":
+                System.out.println("i switch arrangement");
+                ArrangementTilCSV(FXCollections.observableList(register.getArrangement()));
                 break;
-            case 2:
+            case "KontaktPerson":
                 kontaktPersonTilCSV();
                 break;
-            case 3:
+            case "Lokale":
                 LokaleTilCSV();
                 break;
-            case 4:
+            case "Artist":
+                ArtisterTilCSV(objekter);
                 break;
-            case 5:
+            case "Billett":
                 break;
                     
             
@@ -149,7 +154,7 @@ public class TilCSV extends NedlastingSystem {
         
             
         try {
-            printWriter = new PrintWriter (file);
+            printWriter = new PrintWriter (super.file);
             
             ArrayList lokale =register.getLokale();
             //FinnObjekter k = new FinnObjekter();
@@ -174,14 +179,30 @@ public class TilCSV extends NedlastingSystem {
         System.out.println("funka");
     }
     
-    public void ArrangementTilCSV(){
+    public void ArrangementTilCSV(ObservableList<Arrangement> objekter){
         PrintWriter printWriter = null;
         FinnObjekter k = new FinnObjekter();
-            
+       
         try {
-            printWriter = new PrintWriter (file);
+            printWriter = new PrintWriter(super.file);
             
-            ArrayList arrangement =register.getArrangement();
+            for (Arrangement arrang : objekter){
+           /*     Artist artist=arrang.getArtist();
+                KontaktPerson kontaktPerson=arrang.getKontaktPerson();
+                
+             String[] data=arrang.toString().split("\n ");
+             ArrayList<String> dataToReg=new ArrayList<String>(Arrays.asList(data));
+             Arrangement arrangToWrite=new Arrangement(artist, kontaktPerson, dataToReg, arrang.getDato());
+                */
+          
+                printWriter.print(arrang.getArtist().toCSV()+arrang.toCSV());
+            }
+            printWriter.close();
+        }
+            catch(FileNotFoundException e){
+                    }
+           /* ArrayList arrangement =register.getArrangement();
+           
             
             for (int i = 0 ; i < arrangement.size(); i ++){
             String arrangementString = arrangement.get(i) +"";
@@ -189,7 +210,7 @@ public class TilCSV extends NedlastingSystem {
             /*ArrayList<String> data=new ArrayList<>(arrangementStringArray);
             Arrangement arrang=new Arrangement(data);*/
             
-            for(int j = 0; j < arrangementStringArray.length; j++){
+          /*  for(int j = 0; j < arrangementStringArray.length; j++){
                /* if (j == 0){
                     String l = k.finnKontaktPerson(arrangement);
                     printWriter.print(l);
@@ -200,48 +221,59 @@ public class TilCSV extends NedlastingSystem {
                     System.out.println("Funka2");
                 }
                 else{*/
-                printWriter.print(arrangementStringArray[j] + ";");
+              //  printWriter.print(arrangementStringArray[j] + ";");
                 //}
-            }
+           /* }
             printWriter.print("\n");
-            }
+            }*/
                     
             printWriter.close (); 
-        } catch (FileNotFoundException e) {
+      /* catch (FileNotFoundException e) {
             e.printStackTrace();
-        } finally {
+        finally {
             printWriter.close();
         }
-        System.out.println("funka");
+        System.out.println("funka");*/
+}
    
-    }
     
-    public void ArtisterTilCSV(){
+    public void ArtisterTilCSV(ObservableList<Object> objekter){
 
         PrintWriter printWriter = null;
         
             
-        try {
-            printWriter = new PrintWriter (file);
+        /*try {
+            printWriter = new PrintWriter (super.file);*/
+            try {
+            printWriter = new PrintWriter(super.file);
             
-            ArrayList artister =register.getArtister();
-            
-            for (int i = 0 ; i < artister.size(); i ++){
+            for (Object o : objekter){
+                printWriter.print((Artist)o);
+            }
+            printWriter.close();
+        }
+            catch(FileNotFoundException e){
+                    }
+            //ArrayList artister =register.getArtister();
+            /*for (Object o : objekter){
+                printWriter.print((Artister)o);
+            }
+           /* for (int i = 0 ; i < artister.size(); i ++){
             String artistString = artister.get(i) +"";
             String[] artistStringArray = artistString.split("\n ");
             for(int j = 0; j < artistStringArray.length; j++){
                 printWriter.print(artistStringArray[j] + ";");
-            }
-            printWriter.print("\n");
-            }
+            }*/
+           // printWriter.print("\n");
+           // }
                     
-            printWriter.close (); 
-        } catch (FileNotFoundException e) {
+           // printWriter.close (); 
+       /* } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
             printWriter.close();
         }
-        System.out.println("funka");
+        System.out.println("funka");*/
    }
     
    public void kontaktPersonTilCSV(){

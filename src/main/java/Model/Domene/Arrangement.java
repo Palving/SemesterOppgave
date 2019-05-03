@@ -150,6 +150,10 @@ public class Arrangement implements Serializable {
      public String toString() {
         return  tidspunkt+"\n "+ type + "\n " + navnPaaArrangement + "\n " + program + "\n " + billettPris+"kr"+"\n "+ tidspunkt;
      }
+     
+     public String toCSV(){
+         return  tidspunkt+";"+ type + ";" + navnPaaArrangement + ";" + program + ";" + billettPris+";";
+     }
     
   public boolean equals(Arrangement arrang){
         if (this==arrang){
